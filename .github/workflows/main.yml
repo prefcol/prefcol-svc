@@ -1,0 +1,87 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - develop  # Change this if your deployment branch is different.
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies and build React app
+      run: |
+        npm install
+        npm run build
+
+    # Step 1: Set up a timestamp variable for logging
+    - name: Set up date variable for backup folder
+      run: echo "BACKUP_DIR=backup-$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+
+    - name: Install lftp
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y lftp
+        
+    - name: Backup existing files
+      env:
+        FTP_SERVER: www.chamberoflearning.com
+        FTP_USERNAME: bkzh1y56g0yp
+        FTP_PASSWORD: Col@#2025
+      run: |
+        lftp -u "$FTP_USERNAME,$FTP_PASSWORD" "ftp://$FTP_SERVER" << EOF
+        set ssl:verify-certificate no
+        set ftp:passive-mode on
+        mirror \
+          --only-newer \
+          --include 'assets/*' \
+          --include 'index.html' \
+          --include '.htaccess' \
+          --exclude '.git/*' \
+          --exclude 'Backup/*' \
+          --exclude 'build/*' \
+          --parallel=4 /public_html/test/ temp/${{ env.BACKUP_DIR }}/
+        bye
+        EOF
+        
+    - name: Compress backup folder
+      run: zip -r temp/${{ env.BACKUP_DIR }}.zip temp/${{ env.BACKUP_DIR }}/
+
+    - name: Upload backup to FTP server
+      env:
+        FTP_SERVER: www.chamberoflearning.com
+        FTP_USERNAME: bkzh1y56g0yp
+        FTP_PASSWORD: Col@#2025
+      run: |
+        lftp -u "$FTP_USERNAME,$FTP_PASSWORD" "ftp://$FTP_SERVER" << EOF
+        set ssl:verify-certificate no
+        set ftp:passive-mode on
+        # mkdir -p /public_html/test/Backup/${{ env.BACKUP_DIR }}/
+        put temp/${{ env.BACKUP_DIR }}.zip -o /public_html/test/Backup/${{ env.BACKUP_DIR }}.zip
+        bye
+        EOF
+
+    - name: Deploy React build
+      env:
+        FTP_SERVER: www.chamberoflearning.com
+        FTP_USERNAME: bkzh1y56g0yp
+        FTP_PASSWORD: Col@#2025
+      run: |
+        lftp -u "$FTP_USERNAME,$FTP_PASSWORD" "ftp://$FTP_SERVER" << EOF
+        set ssl:verify-certificate no
+        set ftp:passive-mode on
+        mirror --parallel=4 ./dist/ /public_html/test/build/
+        mirror \
+          --include 'assets/*' \
+          --include 'index.html' \
+          --exclude '.htaccess' \
+          --include 'vite.svg' \
+          --exclude 'Backup/*' \
+          --reverse --delete --parallel=4 ./dist/ /public_html/test/
+        bye
+        EOF

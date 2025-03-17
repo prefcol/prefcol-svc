@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* src/index.css or a global CSS file */
+:root {
+    --background-color: #fff;
+    --text-color: #000;
+  }
+  
+  .dark {
+    --background-color: #000;
+    --text-color: #fff;
+  }
+  
+  /* Apply these variables globally */
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  

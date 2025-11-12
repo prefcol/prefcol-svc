@@ -1,0 +1,67 @@
+/src
+├── /assets                                 # Static files (images, fonts, etc.)
+│   └── /images
+├── /components                             # Reusable components
+│   ├── /common                             # Shared components between portals
+│   │   ├── Header.jsx
+│   │   ├── Sidebar.jsx
+│   │   ├── Footer.jsx
+│   │   └── Notification.jsx
+│   ├── /admin                          # Admin portal specific components
+│   │   ├── UserManagement.jsx
+│   │   ├── CourseControl.jsx
+│   │   ├── Analytics.jsx
+│   │   ├── PaymentManagement.jsx            # New component for payments
+│   │   ├── InvoiceManagement.jsx            # New component for invoices
+│   │   ├── SystemSettings.jsx               # Updated system settings
+│   │   └── Logs.jsx                         # Updated logs
+│   └── /common                             # Shared components across all portals
+│       ├── Table.jsx
+│       ├── Modal.jsx
+│       ├── Pagination.jsx
+│       └── FormInput.jsx
+├── /pages                              # Pages corresponding to each section
+│   ├── /admin
+│   │   ├── AdminDashboard.jsx
+│   │   ├── UserManagementPage.jsx
+│   │   ├── CourseControlPage.jsx
+│   │   ├── AnalyticsPage.jsx
+│   │   ├── PaymentManagementPage.jsx        # New page for payments
+│   │   ├── InvoiceManagementPage.jsx        # New page for invoices
+│   │   ├── SystemSettingsPage.jsx           # Page for system settings
+│   │   └── LogsPage.jsx                     # Page for system logs
+│   ├── /teacher
+│   │   ├── TeacherDashboard.jsx
+│   │   ├── AttendancePage.jsx
+│   │   ├── VideoManagementPage.jsx
+│   │   └── ReportsPage.jsx
+│   └── /student
+│       ├── StudentDashboard.jsx
+│       ├── CourseAccessPage.jsx
+│       ├── PerformancePage.jsx
+│       └── AttendancePage.jsx
+├── /routes                          # Routing files for different portals
+│   ├── AdminRoutes.jsx
+│   ├── TeacherRoutes.jsx
+│   └── StudentRoutes.jsx
+├── /services                        # API services and data management
+│   ├── api.js
+│   ├── auth.js
+│   ├── userService.js
+│   ├── courseService.js
+│   ├── paymentService.js              # New service for payment-related actions
+│   └── invoiceService.js              # New service for invoice-related actions
+├── /utils                         # Utility functions
+│   ├── format.js          
+│   ├── validators.js
+│   └── dateUtils.js                  # Utility for date formatting in invoices
+├── App.js                           # Main entry point for the application
+├── index.js                         # Application entry point
+└── /styles                          # Stylesheets and CSS modules
+    ├── /admin
+    │   └── admin.css
+    ├── /teacher
+    │   └── teacher.css
+    ├── /student
+    │   └── student.css
+    └── global.css

@@ -1,0 +1,407 @@
+/* Global Styles */
+.app-container {
+  min-height: 100vh;
+}
+
+.app-container.dark {
+  background-color: #141414;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.site-layout {
+  transition: margin-left 0.3s;
+}
+
+.site-content {
+  padding: 16px;
+  min-height: calc(100vh - 64px);
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+/* Video Player Styles */
+.video-player-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+@media (min-width: 992px) {
+  .video-player-container {
+    flex-direction: row;
+  }
+
+  .video-section {
+    flex: 1;
+    max-width: 75%;
+  }
+
+  .course-sidebar {
+    width: 25%;
+    min-width: 300px;
+  }
+}
+
+.video-card {
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  background-color: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-element {
+  width: 100%;
+  display: block;
+}
+
+.video-controls {
+  transition: opacity 0.3s ease;
+}
+
+.course-progress-card {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+
+/* Course Detail Styles */
+.course-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.course-header {
+  background: linear-gradient(to right, #1a365d, #2a4365);
+  padding: 32px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  color: white;
+}
+
+/* Certificate Styles */
+.certificate-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.certificate-card {
+  transition: transform 0.3s;
+}
+
+.certificate-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Dashboard Styles */
+.dashboard-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.stat-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.welcome-banner {
+  transition: transform 0.3s;
+  overflow: hidden;
+}
+
+.welcome-banner:hover {
+  transform: translateY(-5px);
+}
+
+.achievement-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.achievement-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Profile Styles */
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Course Card Styles */
+.course-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Carousel Styles */
+.carousel-dots li button {
+  background: #1890ff !important;
+}
+
+.carousel-dots li.slick-active button {
+  background: #1890ff !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .site-content {
+    padding: 8px;
+  }
+
+  .course-header {
+    padding: 16px;
+  }
+}
+
+/* Enhance responsiveness */
+@media (max-width: 576px) {
+  .site-content {
+    padding: 8px 4px;
+  }
+
+  .course-header {
+    padding: 12px 8px;
+  }
+
+  .stat-card {
+    margin-bottom: 8px;
+  }
+
+  .welcome-banner {
+    padding: 12px;
+  }
+
+  .course-card {
+    margin-bottom: 16px;
+  }
+
+  .video-player-container {
+    padding: 8px 4px;
+  }
+
+  .video-controls {
+    padding: 8px 4px;
+  }
+
+  .video-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .video-actions button {
+    margin-bottom: 8px;
+  }
+
+  .certificate-container {
+    padding: 8px 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container,
+  .profile-container,
+  .certificate-container,
+  .course-detail-container {
+    padding: 12px 8px;
+  }
+
+  .video-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .video-header h4 {
+    margin-bottom: 12px;
+  }
+
+  .course-progress-card {
+    position: relative;
+    top: 0;
+    max-height: none;
+  }
+}
+
+/* Improve touch targets for mobile */
+@media (max-width: 576px) {
+  .ant-btn {
+    padding: 8px 12px;
+    height: auto;
+  }
+
+  .ant-tabs-tab {
+    padding: 8px 12px;
+  }
+
+  .ant-list-item {
+    padding: 12px 8px;
+  }
+
+  .ant-card-body {
+    padding: 16px 12px;
+  }
+}
+
+/* Student Portal Styles */
+
+/* Course Card Styles */
+.course-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Filter Section Styles */
+.filter-section {
+  margin-bottom: 24px;
+}
+
+.search-input,
+.filter-select {
+  border-radius: 6px;
+}
+
+.reset-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+/* Courses Header Styles */
+.courses-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.courses-subtitle {
+  max-width: 800px;
+  margin: 0 auto;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+/* Loading and Empty States */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.empty-courses {
+  padding: 48px 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .courses-header {
+    margin-bottom: 16px;
+  }
+
+  .course-card {
+    margin-bottom: 16px;
+  }
+}
+
+/* Course Stats */
+.courses-stats {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Category Tags */
+.ant-tag {
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+/* Price Display */
+.price-display {
+  display: flex;
+  align-items: baseline;
+}
+
+.discount-price {
+  font-weight: bold;
+  font-size: 18px;
+  margin-left: 8px;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+}
+/* Menu container background */
+
+
+/* Hover effect for menu items */
+.custom-menu .ant-menu-item:hover {
+  background-color: #5cbaba !important;  /* lighter teal on hover */
+  color: black !important;
+}
+
+/* Active (selected) menu item background */
+.custom-menu .ant-menu-item-selected {
+  background-color: #035454 !important;  /* medium teal for active */
+  color: white !important;
+}
+
+.custom-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #006666 !important; /* Active tab text color */
+}
+
+.custom-tabs .ant-tabs-ink-bar {
+  background-color: #006666 !important; /* Active tab underline */
+}
+
+.custom-hover-teal-btn {
+  color: #006666;
+  border-color: #006666;
+}
+
+.custom-hover-teal-btn:hover,
+.custom-hover-teal-btn:focus {
+  background-color: #006666 !important;
+  color: white !important;
+  border-color: #006666 !important;
+}

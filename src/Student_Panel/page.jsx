@@ -3148,6 +3148,9 @@ import InterestWishlist from "./pages/InterestandWishlist";
 import CourseDetail from "./components/CourseDetail";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import SyllabusPage from "./pages/SyllabusPage.jsx";
+import CheckInOut from "./pages/CheckInOut.jsx";
+import Calendar from "./pages/Calendar.jsx";
+import MentorConnect from "./pages/MentorConnect.jsx";
 // Styles
 import "./styles/StudentPortal.css";
 
@@ -3286,6 +3289,18 @@ const AppWithGlobalStore = ({
                   <InterestWishlist windowWidth={windowWidth} />
                 </PrivateRoute>
               }
+            />
+            <Route
+              path="check-in-out"
+              element={<CheckInOut windowWidth={windowWidth} />}
+            />
+            <Route
+              path="mentor-connect"
+              element={<MentorConnect windowWidth={windowWidth} />}
+            />
+            <Route
+              path="calendar"
+              element={<Calendar windowWidth={windowWidth} />}
             />
             <Route
               path="checkout/:courseId"

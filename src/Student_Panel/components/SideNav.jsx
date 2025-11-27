@@ -2514,11 +2514,13 @@ import {
   LogoutOutlined,
   CreditCardOutlined,
   HeartOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useTheme } from "../contexts/ThemeContext"
 import COL from "../../assets/Prefcol.png"
 import { useAuth } from "../../Contexts/AuthContext"
+import { SwapOutlined } from "@ant-design/icons";
 
 const { Sider } = Layout
 const { Text, Title } = Typography
@@ -2563,6 +2565,8 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
 
   const userMenuItems = [
     { key: "profile", icon: <UserOutlined />, label: "My Profile", path: "/Student-portal/profile" },
+    { key: "check-in-out", icon: <SwapOutlined />, label: "Check In/Out", path: "/Student-portal/check-in-out" },
+    { key: "mentor-connect", icon: <UserSwitchOutlined />, label: "Mentor Connect", path: "/Student-portal/mentor-connect" },
     { key: "support", icon: <CustomerServiceOutlined />, label: "Support", path: "/Student-portal/support" },
    { key: "logout", icon: <LogoutOutlined />, label: "Logout" },
   ]

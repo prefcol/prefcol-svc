@@ -136,7 +136,75 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Volume Control */
+/* Volume Control - Scholly-style vertical slider: blue track, white handle, speaker at bottom */
+.volume-slider-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  position: relative;
+}
+
+/* Vertical strip: rotated so 0 is bottom, 100 is top */
+.volume-slider-vertical {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 72px;
+  height: 6px;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  outline: none;
+  background: transparent;
+}
+
+.volume-slider-vertical::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  /* Blue from bottom (0%) up to current volume, then light gray */
+  background: linear-gradient(
+    to right,
+    #3b82f6 0%,
+    #3b82f6 var(--volume-percent, 80%),
+    rgba(255, 255, 255, 0.25) var(--volume-percent, 80%),
+    rgba(255, 255, 255, 0.25) 100%
+  );
+}
+
+.volume-slider-vertical::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  margin-top: -4px;
+}
+
+.volume-slider-vertical::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.volume-slider-vertical::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider-icon {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Legacy volume control (kept for compatibility) */
 .volume-control {
   position: relative;
   display: flex;

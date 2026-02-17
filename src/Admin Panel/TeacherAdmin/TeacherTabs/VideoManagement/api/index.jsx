@@ -1,7 +1,7 @@
 // // API endpoints for the teacher portal
 
 // // Base URL for API requests
-// const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.teacherportal.example.com"
+// const API_BASE_URL = (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL) || "https://api.teacherportal.example.com"
 
 // // Helper function for making API requests
 // const fetchAPI = async (endpoint, options = {}) => {
@@ -252,7 +252,7 @@
 // API endpoints for the teacher portal
 
 // Base URL for API requests
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.teacherportal.example.com"
+const API_BASE_URL = (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL) || "https://api.teacherportal.example.com"
 
 // Helper function for making API requests
 const fetchAPI = async (endpoint, options = {}) => {

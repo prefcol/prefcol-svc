@@ -8,7 +8,6 @@ import {
   FaChevronDown,
   FaChevronUp,
 } from "react-icons/fa";
-import Logo from "../../../assets/Prefcol.png"; // Updated to use the new logo
 import AuthSystem from "../../Common/Loginpage/auth-system";
 
 const languages = [
@@ -62,7 +61,7 @@ export default function Navigationbar() {
 
   const navItems = [
     { to: "/", label: "Home" },
-    { to: "/about-us", label: "About" },
+    { to: "/live-code", label: "Live Code" },
     {
       label: "Courses",
       items: [
@@ -72,6 +71,7 @@ export default function Navigationbar() {
     },
     { to: "/contact-us", label: "Contact" },
     { to: "/careers", label: "Career" },
+    { to: "/about-us", label: "About" },
     {
       label: "Support",
       items: [
@@ -85,30 +85,20 @@ export default function Navigationbar() {
   return (
     <header
       ref={navbarRef}
-      className="fixed w-full top-0 z-50 bg-white shadow-2xl rounded-b-2xl border-b-2 border-gray-200 "
+      className="fixed w-full top-0 z-50 bg-white shadow-md border-b border-gray-200"
     >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link
-            to="/"
-            className="flex flex-col sm:flex-row items-center space-y-0 sm:space-y-0 sm:space-x-2"
+            to="/it-courses"
+            className="flex items-center h-full py-2"
           >
-            <img
-              src={Logo || "/placeholder.svg"}
-              alt="Logo"
-              className="h-16 w-auto rounded-full sm:h-16 md:h-36 transition-transform duration-300 transform hover:scale-105"
-            />
-
-            {/* <div className="bg-[#004d4d] p-1 rounded-full">
-  <img
-    src={Logo || "/placeholder.svg"}
-    alt="Logo"
-    className="h-6 w-auto sm:h-6 md:h-12 transition-transform duration-300 transform hover:scale-105"
-  />
-</div> */}
-            {/* <p className="font-bold text-[4px] sm:text-[5px] md:text-xs lg:text-sm text-teal-900 sm:text-left">
-              PREFCOL
-            </p> */}
+            <span
+              className="text-[1.75rem] font-bold text-teal-900 hover:text-teal-700 transition-colors"
+              style={{ fontFamily: '"London", serif' }}
+            >
+              Prefcol
+            </span>
           </Link>
 
           {/* Desktop Navbar */}

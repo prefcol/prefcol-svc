@@ -44,7 +44,8 @@ const { Title, Text } = Typography
 
 const COLORS = ["#FF7A00", "#00A878", "#0096C7", "#FFB347", "#FF5252"]
 
-const Dashboard = ({ videoStats, playlists, videos, analyticsData, notifications, isMobile }) => {
+const Dashboard = ({ videoStats, playlists, videos, analyticsData, notifications, isMobile, firstName }) => {
+  const welcomeName = firstName || "Teacher"
   // Get recent videos
   const recentVideos = [...videos].sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)).slice(0, 5)
 
@@ -119,7 +120,7 @@ const Dashboard = ({ videoStats, playlists, videos, analyticsData, notifications
         <Row gutter={[16, 16]} align="middle">
           <Col xs={24} md={16}>
             <Title level={3} style={{ margin: 0 }}>
-              Welcome back, Guna!
+              Welcome back, {welcomeName}!
             </Title>
             <Text type="secondary">{formattedDate}</Text>
           </Col>

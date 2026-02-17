@@ -3148,6 +3148,22 @@ import InterestWishlist from "./pages/InterestandWishlist";
 import CourseDetail from "./components/CourseDetail";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import SyllabusPage from "./pages/SyllabusPage.jsx";
+import PaymentProof from "./pages/PaymentProof";
+import Invoice from "./pages/Invoice";
+import QuizBoard from "./pages/QuizBoard";
+import CourseCatalog from "./pages/CourseCatalog";
+import SocialDashboard from "./pages/SocialDashboard";
+import ConnectWithMentor from "./pages/ConnectWithMentor";
+import Sessions from "./pages/Sessions";
+import Team from "./pages/Team";
+import DailyQuiz from "./pages/DailyQuiz";
+import WeeklyTest from "./pages/WeeklyTest";
+import CodingReview from "./pages/CodingReview";
+import MyWebinars from "./pages/MyWebinars";
+import Resume from "./pages/Resume";
+import InterviewQuestions from "./pages/InterviewQuestions";
+import ResourceCenter from "./pages/ResourceCenter";
+import ReferralBoard from "./pages/ReferralBoard";
 // Styles
 import "./styles/StudentPortal.css";
 
@@ -3299,6 +3315,134 @@ const AppWithGlobalStore = ({
               path="syllabus/:courseId"
               element={<SyllabusPage windowWidth={windowWidth} />}
             />
+            <Route
+              path="payment-proof"
+              element={
+                <PrivateRoute>
+                  <PaymentProof />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="invoice"
+              element={
+                <PrivateRoute>
+                  <Invoice />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="quiz-board"
+              element={
+                <PrivateRoute>
+                  <QuizBoard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="course-catalog"
+              element={
+                <PrivateRoute>
+                  <CourseCatalog />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="social-dashboard"
+              element={
+                <PrivateRoute>
+                  <SocialDashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="connect-mentor"
+              element={
+                <PrivateRoute>
+                  <ConnectWithMentor />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="sessions"
+              element={
+                <PrivateRoute>
+                  <Sessions />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="team"
+              element={
+                <PrivateRoute>
+                  <Team />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="daily-quiz"
+              element={
+                <PrivateRoute>
+                  <DailyQuiz />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="weekly-test"
+              element={
+                <PrivateRoute>
+                  <WeeklyTest />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="coding-review"
+              element={
+                <PrivateRoute>
+                  <CodingReview />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="webinars"
+              element={
+                <PrivateRoute>
+                  <MyWebinars />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="resume"
+              element={
+                <PrivateRoute>
+                  <Resume />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="interview-questions"
+              element={
+                <PrivateRoute>
+                  <InterviewQuestions />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="resource-center"
+              element={
+                <PrivateRoute>
+                  <ResourceCenter />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="referral-board"
+              element={
+                <PrivateRoute>
+                  <ReferralBoard />
+                </PrivateRoute>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
@@ -3351,15 +3495,19 @@ const StudentPortalContent = () => {
         theme={{
           algorithm: theme === "dark" ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
           token: {
-            colorPrimary: "#1890ff",
-            borderRadius: 4,
+            colorPrimary: "#2563EB",
+            colorSuccess: "#16A34A",
+            colorWarning: "#FACC15",
+            colorError: "#DC2626",
+            colorInfo: "#0EA5E9",
+            borderRadius: 6,
           },
         }}
       >
         <Layout
           style={{
             minHeight: "100vh",
-            background: theme === "dark" ? "#141414" : "#f5f5f5",
+            background: theme === "dark" ? "#0F172A" : "#F8FAFC",
             overflow: "hidden",
           }}
         >

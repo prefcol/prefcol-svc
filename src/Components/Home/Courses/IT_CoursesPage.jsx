@@ -26,6 +26,7 @@ import {
 // import { fetchCoursesByType } from './fetchCoursesByType';
 import { useCourseContext } from "../../../Contexts/CourseContext";
 import ITCourses from '../../../Student_Panel/pages/ITCourses';
+import MotionFadeIn from '../../Common/MotionFadeIn';
 
 const iconMap = {
   FaJava: FaJava,
@@ -224,6 +225,15 @@ const IT_Courses = () => {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
+  const gradients = React.useMemo(() => [
+    'linear-gradient(90deg,#FFD54F 0%, #FFB74D 100%)',
+    'linear-gradient(90deg,#64B5F6 0%, #42A5F5 100%)',
+    'linear-gradient(90deg,#4FC3F7 0%, #29B6F6 100%)',
+    'linear-gradient(90deg,#66BB6A 0%, #43A047 100%)',
+    'linear-gradient(90deg,#FF7043 0%, #FF8A65 100%)',
+    'linear-gradient(90deg,#7986CB 0%, #5C6BC0 100%)',
+  ], []);
+
 
 
   // const filteredCourses = React.useMemo(() => 
@@ -262,23 +272,25 @@ const IT_Courses = () => {
         <Box
           sx={{
             minHeight: '100vh',
-            background: theme.palette.background.default,
+            // Soft mint background similar to reference design
+            background: '#f6fbf9',
             py: { xs: 4, md: 6 },
           }}
         >
           <Container maxWidth="xl">
+            <MotionFadeIn>
             <Box sx={{ 
               py: { xs: 4, md: 6 }, 
               px: { xs: 2, md: 4 },
               mb: { xs: 3, md: 5 }, 
-              background: theme.palette.mode === 'light' 
-                ? 'linear-gradient(135deg, #004d40 0%, #004c40 100%)'
-                : 'linear-gradient(135deg, #48a999 0%, #004d40 100%)',
+              // Light header panel instead of dark gradient
+              background: '#ffffff',
               borderRadius: '24px',
               textAlign: 'center',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+              boxShadow: '0 20px 60px rgba(15, 118, 110, 0.08)',
               position: 'relative',
               overflow: 'hidden',
+              border: '1px solid #e3f3ec',
             }}>
               <Logo />
               <Typography 
@@ -286,13 +298,13 @@ const IT_Courses = () => {
                 component="h1" 
                 gutterBottom 
                 sx={{ 
-                  color: theme.palette.mode === 'light' ? 'white' : 'rgba(0,0,0,0.87)', 
+                  color: '#12352f',
                   mb: { xs: 2, md: 3 }, 
                   fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.1)'
+                  textShadow: '0 1px 2px rgba(15, 23, 42, 0.12)'
                 }}
               >
-                Explore Our Courses
+                All IT Courses
               </Typography>
               <Box sx={{ maxWidth: '600px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
                 <TextField
@@ -360,6 +372,7 @@ const IT_Courses = () => {
                 </IconButton>
               </Tooltip> */}
             </Box>
+            </MotionFadeIn>
 
             <AnimatePresence>
               <Grid container spacing={3}>
@@ -371,66 +384,92 @@ const IT_Courses = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.3, delay: index * 0.05 }}
+        whileHover={{ y: -6, scale: 1.01 }}
+        whileTap={{ scale: 0.99, y: 0 }}
+        transition={{ type: "spring", stiffness: 220, damping: 20, delay: index * 0.05 }}
       >
         <Card 
           onClick={() => handleCardClick(course)}
           sx={{ 
-            height: '100%', 
-            display: 'flex', 
+            height: '100%',
+            display: 'flex',
             flexDirection: 'column',
             cursor: 'pointer',
-            background: course.available 
-              ? theme.palette.background.paper
-              : theme.palette.action.disabledBackground,
+            backgroundColor: '#ffffff',
+            borderRadius: '20px',
+            border: '1px solid #e3f3ec',
+            boxShadow: '0 16px 40px rgba(15, 118, 110, 0.06)',
             position: 'relative',
             overflow: 'hidden',
+            transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
+            '&:hover': {
+              transform: 'translateY(-4px)',
+              boxShadow: '0 24px 60px rgba(15, 118, 110, 0.12)',
+              borderColor: '#00b074',
+            },
           }}
         >
-          <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 3, position: 'relative', zIndex: 1 }}>
+          <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 0, position: 'relative', zIndex: 1 }} className="course-card">
+            {/* Top banner area – soft green accent like reference cards */}
             <Box
+              className="course-hero"
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                mb: 2,
+                background: '#f0faf5',
+                borderBottom: '1px solid #e3f3ec',
+                px: 2.5,
+                py: 1.75,
               }}
             >
-              <Avatar
+              <Typography
+                variant="h6"
+                component="h3"
                 sx={{
-                  width: 60,
-                  height: 60,
-                  backgroundColor: course.available ? theme.palette.primary.main : theme.palette.action.disabled,
-                  color: theme.palette.background.paper,
-                  boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                  color: '#12352f',
+                  fontWeight: 700,
+                  textAlign: 'left',
+                  width: '100%',
+                  fontSize: '1rem',
                 }}
               >
-                {React.cloneElement(<IconComponent />, { size: 30 })}
-              </Avatar>
+                {course.courseName}
+              </Typography>
             </Box>
-            <Typography variant="h6" component="h2" gutterBottom sx={{ color: theme.palette.text.primary, mb: 2, fontSize: '1.1rem', textAlign: 'center' }}>
-              {course.courseName}
-            </Typography>
-            <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 3, flexGrow: 1, textAlign: 'center' }}>
-              {course.description}
-            </Typography>
-            <Button 
-              variant="contained" 
-              fullWidth
-              sx={{ 
-                mt: 'auto',
-                backgroundColor: course.available ? '#004d40' : theme.palette.action.disabled,
-                color: theme.palette.background.paper,
-                transition: 'all 0.3s ease-in-out',
-                '&:hover': {
-                    transform: 'translateY(-5px)',
-                    boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
-                    backgroundColor: course.available ? '#004c40' : theme.palette.action.disabled,
-                }
-              }}
-            >
-              {course.available ? 'Learn More' : 'Coming Soon'}
-            </Button>
+            <Box className="course-card-body" sx={{ flexGrow: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
+                <Avatar
+                  sx={{
+                    width: 56,
+                    height: 56,
+                    backgroundColor: course.available ? theme.palette.primary.main : theme.palette.action.disabled,
+                    color: theme.palette.background.paper,
+                    boxShadow: '0 6px 18px rgba(2,6,23,0.06)',
+                    transform: 'translateY(-28px)'
+                  }}
+                >
+                  {React.cloneElement(<IconComponent />, { size: 26 })}
+                </Avatar>
+              </Box>
+              <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 3, flexGrow: 1, textAlign: 'center' }}>
+                {course.description}
+              </Typography>
+              <Button 
+                variant="contained" 
+                fullWidth
+                sx={{ 
+                  mt: 'auto',
+                  backgroundColor: course.available ? '#004d40' : theme.palette.action.disabled,
+                  color: theme.palette.background.paper,
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: '0 10px 20px rgba(0,0,0,0.18)',
+                      backgroundColor: course.available ? '#004c40' : theme.palette.action.disabled,
+                  }
+                }}
+              >
+                {course.available ? 'Learn More' : 'Coming Soon'}
+              </Button>
+            </Box>
           </CardContent>
           {!course.available && (
             <Chip

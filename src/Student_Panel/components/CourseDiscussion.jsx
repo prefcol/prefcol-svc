@@ -367,7 +367,7 @@
 // //   const fetchComments = async () => {
 // //     setLoading(true)
 // //     try {
-// //       const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/discussions/${courseId}`, {
+// //       const response = await axios.get(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/${courseId}`, {
 // //         params: { videoId, filter },
 // //       })
 // //       setComments(response.data)
@@ -390,7 +390,7 @@
 // //     }
 
 // //     try {
-// //       const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/discussions`, commentData)
+// //       const response = await axios.post(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions`, commentData)
 // //       setComments([response.data, ...comments])
 // //       setNewComment("")
 // //       message.success("Comment added successfully")
@@ -405,7 +405,7 @@
 // //     if (!replyContent.trim()) return
 
 // //     try {
-// //       const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/discussions/${commentId}/replies`, {
+// //       const response = await axios.post(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/${commentId}/replies`, {
 // //         content: replyContent,
 // //       })
 
@@ -427,8 +427,8 @@
 // //   const handleReaction = async (itemId: string, type: "like" | "dislike", isReply: boolean, parentId?: string) => {
 // //     try {
 // //       const endpoint = isReply
-// //         ? `${process.env.REACT_APP_API_URL}/api/discussions/replies/${itemId}/reaction`
-// //         : `${process.env.REACT_APP_API_URL}/api/discussions/${itemId}/reaction`
+// //         ? `${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/replies/${itemId}/reaction`
+// //         : `${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/${itemId}/reaction`
 
 // //       const response = await axios.post(endpoint, { type })
 
@@ -457,8 +457,8 @@
 // //   const reportItem = async (itemId: string, isReply: boolean) => {
 // //     try {
 // //       const endpoint = isReply
-// //         ? `${process.env.REACT_APP_API_URL}/api/discussions/replies/${itemId}/report`
-// //         : `${process.env.REACT_APP_API_URL}/api/discussions/${itemId}/report`
+// //         ? `${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/replies/${itemId}/report`
+// //         : `${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/${itemId}/report`
 
 // //       await axios.post(endpoint)
 // //       message.success("Report submitted successfully")
@@ -744,7 +744,7 @@ const CourseDiscussion = ({ courseId, videoId, currentTime }) => {
   const fetchComments = async () => {
     setLoading(true)
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/discussions/${courseId}`, {
+      const response = await axios.get(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/${courseId}`, {
         params: { videoId, filter },
       })
       setComments(response.data)
@@ -767,7 +767,7 @@ const CourseDiscussion = ({ courseId, videoId, currentTime }) => {
     }
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/discussions`, commentData)
+      const response = await axios.post(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions`, commentData)
       setComments([response.data, ...comments])
       setNewComment("")
       message.success("Comment added successfully")
@@ -782,7 +782,7 @@ const CourseDiscussion = ({ courseId, videoId, currentTime }) => {
     if (!replyContent.trim()) return
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/discussions/${commentId}/replies`, {
+      const response = await axios.post(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/${commentId}/replies`, {
         content: replyContent,
       })
 
@@ -804,8 +804,8 @@ const CourseDiscussion = ({ courseId, videoId, currentTime }) => {
   const handleReaction = async (itemId, type, isReply, parentId) => {
     try {
       const endpoint = isReply
-        ? `${process.env.REACT_APP_API_URL}/api/discussions/replies/${itemId}/reaction`
-        : `${process.env.REACT_APP_API_URL}/api/discussions/${itemId}/reaction`
+        ? `${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/replies/${itemId}/reaction`
+        : `${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/${itemId}/reaction`
 
       const response = await axios.post(endpoint, { type })
 
@@ -834,8 +834,8 @@ const CourseDiscussion = ({ courseId, videoId, currentTime }) => {
   const reportItem = async (itemId, isReply) => {
     try {
       const endpoint = isReply
-        ? `${process.env.REACT_APP_API_URL}/api/discussions/replies/${itemId}/report`
-        : `${process.env.REACT_APP_API_URL}/api/discussions/${itemId}/report`
+        ? `${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/replies/${itemId}/report`
+        : `${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/discussions/${itemId}/report`
 
       await axios.post(endpoint)
       message.success("Report submitted successfully")

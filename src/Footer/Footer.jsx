@@ -14,7 +14,7 @@ const socialLinks = [
   {
     name: "Instagram",
     icon: Instagram,
-    href: "https://www.instagram.com/chamber_of_learning?igsh=ZnFvaXdpdWs5ZHJ2",
+    href: "https://www.instagram.com/prefcol_edutech_official?igsh=ZnFvaXdpdWs5ZHJ2",
   },
   {
     name: "LinkedIn",
@@ -226,7 +226,7 @@ const ContactInfo = () => {
         </>
       ),
       phone: "+91 863-742-0643",
-      email: "info-vpm@prefcol.com",
+      email: "info@prefcol.com",
       mapUrl: "https://www.google.com/maps?q=Villupuram+Tamil+Nadu",
     },
      {
@@ -243,10 +243,19 @@ const ContactInfo = () => {
         </>
       ),
       phone: "+91 880-780-5818",
-      email: "info-tvm@prefcol.com",
+      email: "info@prefcol.com",
       mapUrl: "https://maps.app.goo.gl/e3RmQ62eQaPtB8ZC7",
     },
-
+    {
+      type: "BRANCH",
+      icon: Building2,
+      name: "Tindivanam",
+      address: "",
+      comingSoon: true,
+      phone: "+91 944-591-8818",
+      email: "info@prefcol.com",
+      mapUrl: "#",
+    },
   ];
 
   return (
@@ -280,35 +289,52 @@ const ContactInfo = () => {
               {loc.address}
             </address>
 
-            {/* Phone */}
-            <a
-              href={`tel:${loc.phone.replace(/\s/g, "")}`}
-              className="flex items-center gap-2 text-teal-800 hover:text-teal-600 text-sm mb-3 transition-colors"
-            >
-              <Phone className="h-4 w-4" />
-              {loc.phone}
-            </a>
+            {loc.comingSoon ? (
+              <>
+                <p className="text-teal-600 font-medium text-sm italic mb-3">Coming soon</p>
+                {loc.phone && (
+                  <a
+                    href={`tel:${loc.phone.replace(/\s/g, "")}`}
+                    className="flex items-center gap-2 text-teal-800 hover:text-teal-600 text-sm transition-colors"
+                  >
+                    <Phone className="h-4 w-4" />
+                    {loc.phone}
+                  </a>
+                )}
+              </>
+            ) : (
+              <>
+                {/* Phone */}
+                <a
+                  href={`tel:${loc.phone.replace(/\s/g, "")}`}
+                  className="flex items-center gap-2 text-teal-800 hover:text-teal-600 text-sm mb-3 transition-colors"
+                >
+                  <Phone className="h-4 w-4" />
+                  {loc.phone}
+                </a>
 
-            {/* Email */}
-            <a
-              href={`mailto:${loc.email}`}
-              className="flex items-center gap-2 text-teal-800 hover:text-teal-600 text-sm mb-4 transition-colors"
-            >
-              <Mail className="h-4 w-4" />
-              {loc.email}
-            </a>
+                {/* Email */}
+                <a
+                  href={`mailto:${loc.email}`}
+                  className="flex items-center gap-2 text-teal-800 hover:text-teal-600 text-sm mb-4 transition-colors"
+                >
+                  <Mail className="h-4 w-4" />
+                  {loc.email}
+                </a>
 
-            {/* Map Link */}
-            <a
-              href={loc.mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 text-xs text-teal-600 hover:text-teal-800 transition-colors"
-            >
-              <MapPin className="h-3 w-3" />
-              <ExternalLink className="h-3 w-3" />
-              View on Maps
-            </a>
+                {/* Map Link */}
+                <a
+                  href={loc.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 text-xs text-teal-600 hover:text-teal-800 transition-colors"
+                >
+                  <MapPin className="h-3 w-3" />
+                  <ExternalLink className="h-3 w-3" />
+                  View on Maps
+                </a>
+              </>
+            )}
           </div>
         ))}
       </div>

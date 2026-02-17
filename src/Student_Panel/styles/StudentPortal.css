@@ -1,11 +1,56 @@
+/* ===================================
+   🧠 PREFCOL COLOR PALETTE
+   =================================== */
+
+:root {
+  /* Primary Colors - Trust + Focus */
+  --color-primary: #2563EB;
+  --color-primary-light: #DBEAFE;
+  --color-primary-dark: #1E40AF;
+
+  /* Secondary Colors - Balance + Calm */
+  --color-secondary: #16A34A;
+  --color-secondary-light: #DCFCE7;
+  --color-secondary-dark: #15803D;
+
+  /* Accent Colors - Curiosity + Energy */
+  --color-accent: #7C3AED;
+  --color-accent-light: #EDE9FE;
+  --color-accent-dark: #6D28D9;
+
+  /* Background Colors */
+  --color-bg-main: #F8FAFC;
+  --color-bg-card: #FFFFFF;
+
+  /* Text Colors */
+  --color-text-primary: #1F2933;
+  --color-text-secondary: #6B7280;
+
+  /* Status Colors */
+  --color-warning: #FACC15;
+  --color-error: #DC2626;
+  --color-info: #0EA5E9;
+  --color-success: #16A34A;
+}
+
+/* Dark Mode Overrides */
+.app-container.dark {
+  --color-bg-main: #0F172A;
+  --color-bg-card: #1E293B;
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #CBD5E1;
+}
+
 /* Global Styles */
 .app-container {
   min-height: 100vh;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-primary);
 }
 
 .app-container.dark {
-  background-color: #141414;
-  color: rgba(255, 255, 255, 0.85);
+  background-color: var(--color-bg-main);
+  color: var(--color-text-primary);
 }
 
 .site-layout {
@@ -85,7 +130,7 @@
 }
 
 .course-header {
-  background: linear-gradient(to right, #1a365d, #2a4365);
+  background: linear-gradient(to right, var(--color-primary), var(--color-primary-dark));
   padding: 32px 16px;
   border-radius: 8px;
   margin-bottom: 24px;
@@ -163,11 +208,11 @@
 
 /* Carousel Styles */
 .carousel-dots li button {
-  background: #1890ff !important;
+  background: var(--color-primary) !important;
 }
 
 .carousel-dots li.slick-active button {
-  background: #1890ff !important;
+  background: var(--color-primary) !important;
 }
 
 /* Responsive Adjustments */
@@ -313,7 +358,7 @@
 .courses-subtitle {
   max-width: 800px;
   margin: 0 auto;
-  color: rgba(0, 0, 0, 0.65);
+  color: var(--color-text-secondary);
 }
 
 /* Loading and Empty States */
@@ -376,32 +421,156 @@
 
 /* Hover effect for menu items */
 .custom-menu .ant-menu-item:hover {
-  background-color: #5cbaba !important;  /* lighter teal on hover */
-  color: black !important;
+  background-color: var(--color-primary-light) !important;
+  color: var(--color-primary) !important;
 }
 
 /* Active (selected) menu item background */
 .custom-menu .ant-menu-item-selected {
-  background-color: #035454 !important;  /* medium teal for active */
+  background-color: var(--color-primary) !important;
   color: white !important;
 }
 
 .custom-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: #006666 !important; /* Active tab text color */
+  color: var(--color-primary) !important;
 }
 
 .custom-tabs .ant-tabs-ink-bar {
-  background-color: #006666 !important; /* Active tab underline */
+  background-color: var(--color-primary) !important;
 }
 
 .custom-hover-teal-btn {
-  color: #006666;
-  border-color: #006666;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .custom-hover-teal-btn:hover,
 .custom-hover-teal-btn:focus {
-  background-color: #006666 !important;
+  background-color: var(--color-primary) !important;
   color: white !important;
-  border-color: #006666 !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* ===================================
+   Color Utility Classes
+   =================================== */
+
+/* Primary Color Classes */
+.text-primary {
+  color: var(--color-primary);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+/* Secondary Color Classes */
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.border-secondary {
+  border-color: var(--color-secondary);
+}
+
+/* Accent Color Classes */
+.text-accent {
+  color: var(--color-accent);
+}
+
+.bg-accent {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+.border-accent {
+  border-color: var(--color-accent);
+}
+
+/* Status Color Classes */
+.text-success {
+  color: var(--color-success);
+}
+
+.bg-success {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+.bg-warning {
+  background-color: var(--color-warning);
+  color: var(--color-text-primary);
+}
+
+.text-error {
+  color: var(--color-error);
+}
+
+.bg-error {
+  background-color: var(--color-error);
+  color: white;
+}
+
+.text-info {
+  color: var(--color-info);
+}
+
+.bg-info {
+  background-color: var(--color-info);
+  color: white;
+}
+
+/* Card Styling with Theme Colors */
+.card-primary {
+  background-color: var(--color-primary-light);
+  border-left: 4px solid var(--color-primary);
+}
+
+.card-secondary {
+  background-color: var(--color-secondary-light);
+  border-left: 4px solid var(--color-secondary);
+}
+
+.card-accent {
+  background-color: var(--color-accent-light);
+  border-left: 4px solid var(--color-accent);
+}
+
+/* Badge and Tag Styles */
+.badge-primary {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.badge-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.badge-accent {
+  background-color: var(--color-accent);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
 }

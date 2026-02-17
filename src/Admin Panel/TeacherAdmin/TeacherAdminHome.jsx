@@ -384,7 +384,10 @@ import {
   Box, Flex, Heading, Text, Button, VStack, HStack, Divider, 
   Grid, GridItem, Badge, SimpleGrid, useMediaQuery, IconButton, 
   Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, 
-  DrawerCloseButton, useDisclosure, Stat, StatLabel, StatNumber, StatHelpText
+  DrawerCloseButton, useDisclosure, Stat, StatLabel, StatNumber, StatHelpText,
+  Spinner,
+  Link,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { 
   FaChalkboardTeacher, FaPlus, FaCog, FaBook, FaClipboardList, 
@@ -392,19 +395,49 @@ import {
   FaQuestionCircle, FaSearch
 } from 'react-icons/fa';
 import TeacherAdminSidebar from './TeacherAdminSidebar';
+import { getTeacherDashboard } from './api/teacherApi';
+import { useAuth } from '../../Contexts/AuthContext';
 
 const TeacherAdminHome = () => {
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [sidebarWidth, setSidebarWidth] = useState(280); // Default sidebar width
+  const [sidebarWidth, setSidebarWidth] = useState(280);
+  const [dashboard, setDashboard] = useState(null);
+  const [dashboardLoading, setDashboardLoading] = useState(true);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    let cancelled = false;
+    getTeacherDashboard()
+      .then((data) => {
+        if (!cancelled) setDashboard(data);
+      })
+      .catch(() => { /* use fallback stats */ })
+      .finally(() => {
+        if (!cancelled) setDashboardLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  const displayName = user?.firstName || user?.name || (user?.email || "").split("@")[0] || "Teacher";
+  const contentBg = useColorModeValue("gray.50", "gray.900");
+  const statBg = useColorModeValue("white", "gray.800");
+  const borderColor = useColorModeValue("gray.200", "gray.700");
   
-  // Sample data for quick stats
-  const quickStats = [
-    { label: "Active Teachers", value: 24, change: "+2 this month" },
-    { label: "Courses", value: 36, change: "98% completion rate" },
-    { label: "Students", value: 450, change: "85% attendance" },
-    { label: "Upcoming Events", value: 8, change: "Next: Friday" }
-  ];
+  // Dashboard-driven or fallback quick stats
+  const quickStats = dashboard
+    ? [
+        { label: "Total Students", value: dashboard.totalStudents ?? 0, change: "Assigned to you" },
+        { label: "Online", value: dashboard.studentsOnline ?? 0, change: "Active now" },
+        { label: "Offline", value: dashboard.studentsOffline ?? 0, change: "Not online" },
+        { label: "Today's Classes", value: dashboard.todaysClassesCount ?? 0, change: dashboard.pendingAssignmentsCount != null ? `${dashboard.pendingAssignmentsCount} pending assignments` : "Upcoming" },
+      ]
+    : [
+        { label: "Active Teachers", value: 24, change: "+2 this month" },
+        { label: "Courses", value: 36, change: "98% completion rate" },
+        { label: "Students", value: 450, change: "85% attendance" },
+        { label: "Upcoming Events", value: 8, change: "Next: Friday" },
+      ];
 
   // Sample data for recent notifications
   const notifications = [
@@ -477,40 +510,75 @@ const TeacherAdminHome = () => {
       <Box
         p={{ base: 4, md: 8 }}
         pt={{ base: 16, md: 8 }}
-        bg="gray.50"
-        color="gray.700"
+        bg={contentBg}
         width="100%"
-        ml={{ base: 0, md: `${sidebarWidth}px` }} // Add margin to prevent content from being hidden
+        ml={{ base: 0, md: `${sidebarWidth}px` }}
         transition="margin-left 0.3s ease"
       >
         {/* Welcome Section */}
         <Box mb={8} textAlign={{ base: "center", md: "left" }}>
           <Heading size={{ base: "xl", md: "2xl" }} mb={2} color="teal.600">
-            Welcome to the Teacher Admin Panel
+            Welcome back, {displayName}!
           </Heading>
           <Text fontSize={{ base: "md", md: "lg" }}>
-            Manage teacher-related tasks and information efficiently.
+            {dashboard?.teacherName ? `${dashboard.teacherName} · ` : ""}
+            Manage your classes, students, and tasks.
           </Text>
         </Box>
 
         {/* Quick Stats Section */}
-        <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={4} mb={8}>
-          {quickStats.map((stat, index) => (
-            <Stat 
-              key={index} 
-              bg="white" 
-              p={4} 
-              borderRadius="md" 
-              boxShadow="sm" 
-              border="1px"
-              borderColor="gray.200"
-            >
-              <StatLabel color="gray.500">{stat.label}</StatLabel>
-              <StatNumber fontSize="2xl" color="teal.600">{stat.value}</StatNumber>
-              <StatHelpText>{stat.change}</StatHelpText>
-            </Stat>
-          ))}
-        </SimpleGrid>
+        {dashboardLoading ? (
+          <Flex justify="center" py={8}>
+            <Spinner size="lg" color="teal.500" />
+          </Flex>
+        ) : (
+          <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={4} mb={8}>
+            {quickStats.map((stat, index) => (
+              <Stat 
+                key={index} 
+                bg={statBg} 
+                p={4} 
+                borderRadius="md" 
+                boxShadow="sm" 
+                border="1px"
+                borderColor={borderColor}
+              >
+                <StatLabel color="gray.500">{stat.label}</StatLabel>
+                <StatNumber fontSize="2xl" color="teal.600">{stat.value}</StatNumber>
+                <StatHelpText>{stat.change}</StatHelpText>
+              </Stat>
+            ))}
+          </SimpleGrid>
+        )}
+
+        {/* Today's Classes from API */}
+        {dashboard?.todaysClasses?.length > 0 && (
+          <Box bg={statBg} p={5} borderRadius="md" boxShadow="sm" border="1px" borderColor={borderColor} mb={8}>
+            <Heading size="md" color="teal.600" mb={4}>
+              <Flex align="center">
+                <FaCalendarAlt mr={2} />
+                Today&apos;s Classes
+              </Flex>
+            </Heading>
+            <VStack align="stretch" spacing={3}>
+              {dashboard.todaysClasses.map((c) => (
+                <Flex key={c.id} justify="space-between" align="center" p={3} bg="gray.50" borderRadius="md">
+                  <Box>
+                    <Text fontWeight="medium">{c.title}</Text>
+                    <Text fontSize="sm" color="gray.500">
+                      {c.batchType} · {c.startTime} – {c.endTime}
+                    </Text>
+                  </Box>
+                  {c.meetingLink && (
+                    <Link href={c.meetingLink} isExternal colorScheme="teal" fontSize="sm">
+                      Join
+                    </Link>
+                  )}
+                </Flex>
+              ))}
+            </VStack>
+          </Box>
+        )}
 
         {/* Main Action Buttons - More responsive grid */}
         <Grid 
@@ -603,7 +671,7 @@ const TeacherAdminHome = () => {
         {/* New Features Section */}
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6} mb={8}>
           {/* Recent Notifications */}
-          <Box bg="white" p={5} borderRadius="md" boxShadow="sm" border="1px" borderColor="gray.200">
+          <Box bg={statBg} p={5} borderRadius="md" boxShadow="sm" border="1px" borderColor={borderColor}>
             <Flex justify="space-between" align="center" mb={4}>
               <Heading size="md" color="teal.600">
                 <Flex align="center">
@@ -628,7 +696,7 @@ const TeacherAdminHome = () => {
           </Box>
 
           {/* Quick Access */}
-          <Box bg="white" p={5} borderRadius="md" boxShadow="sm" border="1px" borderColor="gray.200">
+          <Box bg={statBg} p={5} borderRadius="md" boxShadow="sm" border="1px" borderColor={borderColor}>
             <Heading size="md" mb={4} color="teal.600">
               <Flex align="center">
                 <FaSearch mr={2} />

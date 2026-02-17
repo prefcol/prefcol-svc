@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaJava, FaPython, FaRegFileAlt, FaCogs, FaShieldAlt, FaMobileAlt, FaDatabase, FaUserCog, FaSearch, FaGraduationCap, FaSun, FaMoon, FaBook, FaPalette, FaChartBar, FaHeartbeat, FaGavel, FaGlobeAmericas, FaUserTie, FaCamera, FaMicrophone, FaTheaterMasks, FaLeaf, FaUtensils } from 'react-icons/fa';
 import { motion, AnimatePresence } from "framer-motion";
 import { useCourseContext } from "../../../Contexts/CourseContext";
+import MotionFadeIn from "../../Common/MotionFadeIn";
 
 const iconMap = {
   FaJava: FaJava,
@@ -148,6 +149,21 @@ const Non_IT_Courses = () => {
   const [mode, setMode] = useState("light");
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
+  // Colorful gradient palette for Non‑IT course cards
+  const gradients = useMemo(
+    () => [
+      "linear-gradient(135deg,#FF9A9E 0%,#FAD0C4 100%)",
+      "linear-gradient(135deg,#A18CD1 0%,#FBC2EB 100%)",
+      "linear-gradient(135deg,#FBC2EB 0%,#A6C1EE 100%)",
+      "linear-gradient(135deg,#F6D365 0%,#FDA085 100%)",
+      "linear-gradient(135deg,#84FAB0 0%,#8FD3F4 100%)",
+      "linear-gradient(135deg,#FFE29F 0%,#FFA99F 48%,#FF719A 100%)",
+      "linear-gradient(135deg,#89F7FE 0%,#66A6FF 100%)",
+      "linear-gradient(135deg,#F5576C 0%,#F093FB 100%)",
+    ],
+    []
+  );
+
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
@@ -211,6 +227,7 @@ const filteredCourses = useMemo(() => {
         }`}
       >
         <div className="container mx-auto px-4">
+          <MotionFadeIn>
           <div
             className={`py-8 md:py-12 px-4 md:px-8 mb-6 md:mb-10 rounded-3xl text-center relative overflow-hidden ${
               mode === "light" ? "bg-white" : "bg-black"
@@ -236,6 +253,7 @@ const filteredCourses = useMemo(() => {
               <FaSearch className="absolute right-3 top-1/2  transform -translate-y-1/2 text-gray-400" />
             </div>
           </div>
+          </MotionFadeIn>
 
           <AnimatePresence>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -243,23 +261,25 @@ const filteredCourses = useMemo(() => {
                 const IconComponent = iconMap[course.icon] || FaGraduationCap;
 
                 return (
-               
                   <motion.div
                     key={course.courseId}
                     initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                >
-                  <div
-                    onClick={() => handleCardClick(course)}
-                    className={`h-full flex flex-col rounded-xl overflow-hidden cursor-pointer  ${
-                      course.available
-                        ? "bg-teal-900 hover:bg-teal-700"
-                        : "bg-teal-900 hover:bg-gray-700"
-                    }`}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    whileHover={{ y: -6, scale: 1.01 }}
+                    whileTap={{ scale: 0.99, y: 0 }}
+                    transition={{ type: "spring", stiffness: 220, damping: 20, delay: index * 0.05 }}
                   >
-                    <div className="p-6 flex-grow flex flex-col relative z-10">
+                    <div
+                      onClick={() => handleCardClick(course)}
+                      className="h-full flex flex-col rounded-xl overflow-hidden cursor-pointer shadow-lg transition-transform transform hover:-translate-y-1"
+                      style={{
+                        background: course.available
+                          ? gradients[index % gradients.length]
+                          : "linear-gradient(135deg,#4B5563 0%,#1F2933 100%)",
+                      }}
+                    >
+                      <div className="p-6 flex-grow flex flex-col relative z-10">
                       <div className="flex items-center justify-center mb-4">
                         <div
                           className={`w-16 h-16 rounded-full flex items-center justify-center ${
@@ -272,16 +292,12 @@ const filteredCourses = useMemo(() => {
                         </div>
                       </div>
                       <h2
-                        className={`text-xl font-semibold mb-2 text-center ${
-                          mode === "light" ? "text-white" : "text-teal-100"
-                        }`}
+                        className="text-xl font-semibold mb-2 text-center text-white drop-shadow-sm"
                       >
                         {course.courseName}
                       </h2>
                       <p
-                        className={`text-sm mb-4 flex-grow text-center ${
-                          mode === "light" ? "text-white" : "text-teal-200"
-                        }`}
+                        className="text-sm mb-4 flex-grow text-center text-white/90"
                       >
                         {course.description}
                       </p>
@@ -295,20 +311,19 @@ const filteredCourses = useMemo(() => {
                         {course.available ? "Learn More" : "Coming Soon"}
                       </button>
                     </div>
-                    {!course.available && (
-                      <div className="absolute top-4 right-4 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                        Coming Soon
-                      </div>
-                    )}
-                    <div
-                      className="absolute inset-0 opacity-10 bg-cover bg-center z-0"
-                      style={{ backgroundImage: `url(${course.character})` }}
-                    />
-                  </div>
-                </motion.div>
-              
-               );
-})}
+                      {!course.available && (
+                        <div className="absolute top-4 right-4 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                          Coming Soon
+                        </div>
+                      )}
+                      <div
+                        className="absolute inset-0 opacity-10 bg-cover bg-center z-0"
+                        style={{ backgroundImage: `url(${course.character})` }}
+                      />
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </AnimatePresence>
 

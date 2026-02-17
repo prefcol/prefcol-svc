@@ -748,7 +748,7 @@ const Certificate = ({ courseId, userId }) => {
   const fetchCourseData = async () => {
     setLoading(true)
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/courses/${courseId}`)
+      const response = await axios.get(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/courses/${courseId}`)
       setCourseData(response.data)
     } catch (error) {
       console.error("Error fetching course data:", error)
@@ -760,7 +760,7 @@ const Certificate = ({ courseId, userId }) => {
 
   const fetchCompletedVideos = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/progress/${userId}/${courseId}/completed`)
+      const response = await axios.get(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/progress/${userId}/${courseId}/completed`)
       setCompletedVideos(response.data.completedVideos || [])
     } catch (error) {
       console.error("Error fetching completed videos:", error)
@@ -846,7 +846,7 @@ const Certificate = ({ courseId, userId }) => {
       doc.save(`${courseData.title.replace(/\s+/g, "_")}_Certificate.pdf`)
 
       // Record certificate generation in the database
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/certificates`, {
+      await axios.post(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/certificates`, {
         userId,
         courseId,
         courseTitle: courseData.title,

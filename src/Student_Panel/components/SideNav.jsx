@@ -2514,6 +2514,11 @@ import {
   LogoutOutlined,
   CreditCardOutlined,
   HeartOutlined,
+  FileTextOutlined,
+  PlayCircleOutlined,
+  VideoCameraOutlined,
+  RocketOutlined,
+  TeamOutlined,
 } from "@ant-design/icons"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useTheme } from "../contexts/ThemeContext"
@@ -2555,9 +2560,52 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
     { key: "courses", icon: <BookOutlined />, label: "My Courses", path: "/Student-portal/courses" },
     { key: "it-courses", icon: <LaptopOutlined />, label: "IT Courses", path: "/Student-portal/it-courses" },
     { key: "non-it-courses", icon: <ReadOutlined />, label: "Non-IT Courses", path: "/Student-portal/non-it-courses" },
-    { key: "certificates", icon: <TrophyOutlined />, label: "Certificates", path: "/Student-portal/certificates" },
-    { key: "assignments", icon: <FileDoneOutlined />, label: "Assignments", path: "/Student-portal/assignments" },
-    { key: "payments", icon: <CreditCardOutlined />, label: "Payments", path: "/Student-portal/payments" },
+    {
+      key: "payments-group",
+      icon: <CreditCardOutlined />,
+      label: "My Payments",
+      children: [
+        { key: "payments", label: "Payment History", path: "/Student-portal/payments" },
+        { key: "payment-proof", label: "Payment Proof", path: "/Student-portal/payment-proof" },
+        { key: "invoice", label: "Invoice", path: "/Student-portal/invoice" },
+      ],
+    },
+    { key: "quiz-board", icon: <FileTextOutlined />, label: "Quiz Board", path: "/Student-portal/quiz-board" },
+    { key: "course-catalog", icon: <BookOutlined />, label: "Course Catalog", path: "/Student-portal/course-catalog" },
+    { key: "social-dashboard", icon: <TeamOutlined />, label: "Social Dashboard", path: "/Student-portal/social-dashboard" },
+    {
+      key: "live-courses-group",
+      icon: <PlayCircleOutlined />,
+      label: "My Live Courses",
+      children: [
+        { key: "connect-mentor", label: "Connect With Mentor", path: "/Student-portal/connect-mentor" },
+        { key: "sessions", label: "Sessions", path: "/Student-portal/sessions" },
+        { key: "team", label: "Team", path: "/Student-portal/team" },
+        { key: "daily-quiz", label: "Daily Quiz", path: "/Student-portal/daily-quiz" },
+        { key: "weekly-test", label: "Weekly Test", path: "/Student-portal/weekly-test" },
+        { key: "coding-review", label: "Coding Review", path: "/Student-portal/coding-review" },
+        { key: "certificates", label: "Certificate", path: "/Student-portal/certificates" },
+      ],
+    },
+    {
+      key: "webinars-group",
+      icon: <VideoCameraOutlined />,
+      label: "My Webinars",
+      children: [
+        { key: "webinars", label: "Webinars", path: "/Student-portal/webinars" },
+      ],
+    },
+    {
+      key: "future-group",
+      icon: <RocketOutlined />,
+      label: "My Future",
+      children: [
+        { key: "resume", label: "Resume", path: "/Student-portal/resume" },
+        { key: "interview-questions", label: "Interview Questions", path: "/Student-portal/interview-questions" },
+        { key: "resource-center", label: "Resource Center", path: "/Student-portal/resource-center" },
+        { key: "referral-board", label: "Referral Board", path: "/Student-portal/referral-board" },
+      ],
+    },
     { key: "InterestWishlist", icon: <HeartOutlined />, label: "Enquired & Wishlist", path: "/Student-portal/InterestWishlist" },
   ]
 
@@ -2570,6 +2618,26 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
   const handleMenuClick = (path) => {
     navigate(path)
     if (isMobile) setCollapsed(true)
+  }
+
+  const transformMenuItems = (items) => {
+    return items.map((item) => {
+      if (item.children) {
+        return {
+          key: item.key,
+          icon: item.icon,
+          label: item.label,
+          children: transformMenuItems(item.children),
+        }
+      } else {
+        return {
+          key: item.key,
+          icon: item.icon,
+          label: item.label,
+          onClick: () => handleMenuClick(item.path),
+        }
+      }
+    })
   }
 
   const SideNavContent = () => (
@@ -2673,36 +2741,6 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
       )}
 
       {/* Menus */}
-      {/* <div style={{ padding: "16px 0" }}>
-        <Menu
-          className="custom-menu"
-          theme={theme === "dark" ? "dark" : "light"}
-          mode="inline"
-          selectedKeys={selectedKeys}
-          inlineCollapsed={!isMobile && collapsed}
-          items={menuItems.map((item) => ({
-            ...item,
-            onClick: () => handleMenuClick(item.path),
-          }))}
-        />
-
-        <Divider style={{ margin: "8px 0" }} />
-
-        <Menu
-          className="custom-menu"
-          theme={theme === "dark" ? "dark" : "light"}
-          mode="inline"
-          selectedKeys={selectedKeys}
-          inlineCollapsed={!isMobile && collapsed}
-          items={userMenuItems.map((item) => ({
-            ...item,
-            onClick: () => handleMenuClick(item.path),
-          }))}
-        />
-
-        <Divider style={{ margin: "8px 0" }} />
-      </div> */}
-      {/* Menus */}
 <div style={{ padding: "16px 0" }}>
   <Menu
     className="custom-menu"
@@ -2710,10 +2748,7 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
     mode="inline"
     selectedKeys={selectedKeys}
     inlineCollapsed={!isMobile && collapsed}
-    items={menuItems.map((item) => ({
-      ...item,
-      onClick: () => handleMenuClick(item.path),
-    }))}
+    items={transformMenuItems(menuItems)}
   />
 
   <Divider style={{ margin: "8px 0" }} />
@@ -2730,7 +2765,6 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
         if (item.key === "logout") {
           logout()
           navigate("/")
-          message.success("Logged out successfully")
         } else {
           handleMenuClick(item.path)
         }

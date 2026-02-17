@@ -159,7 +159,7 @@ import axios from "axios"
 
 // Create an axios instance with default config
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "https://api.chamberoflearning.com/v1",
+  baseURL: (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL) || "https://api.chamberoflearning.com/v1",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
@@ -313,6 +313,10 @@ export const paymentsAPI = {
   getInvoiceById: (invoiceId) => api.get(`/payments/invoices/${invoiceId}`),
   makePayment: (courseId, paymentData) => api.post(`/payments/courses/${courseId}`, paymentData),
   downloadInvoice: (invoiceId) => api.get(`/payments/invoices/${invoiceId}/download`, { responseType: "blob" }),
+  // Payment proofs (receipts) – connect to your backend
+  getPaymentProofs: () => api.get("/payments/proofs"),
+  getPaymentProofById: (proofId) => api.get(`/payments/proofs/${proofId}`),
+  downloadPaymentProof: (proofId) => api.get(`/payments/proofs/${proofId}/download`, { responseType: "blob" }),
 }
 
 // Community API
@@ -339,6 +343,30 @@ export const resourcesAPI = {
   getResourceCategories: () => api.get("/resources/categories"),
   getResourcesByCategory: (categoryId) => api.get(`/resources/categories/${categoryId}`),
   searchResources: (query) => api.get("/resources/search", { params: { query } }),
+}
+
+// Sessions / Live courses API – join, recording, notes
+export const sessionsAPI = {
+  getSessions: (params) => api.get("/sessions", { params }),
+  getSessionById: (sessionId) => api.get(`/sessions/${sessionId}`),
+  joinSession: (sessionId) => api.post(`/sessions/${sessionId}/join`),
+  getRecordingUrl: (sessionId) => api.get(`/sessions/${sessionId}/recording`),
+  getNotesUrl: (sessionId) => api.get(`/sessions/${sessionId}/notes`),
+}
+
+// Webinars API
+export const webinarsAPI = {
+  getScheduled: () => api.get("/webinars/scheduled"),
+  getCompleted: () => api.get("/webinars/completed"),
+  setReminder: (webinarId) => api.post(`/webinars/${webinarId}/reminder`),
+  getRecordingUrl: (webinarId) => api.get(`/webinars/${webinarId}/recording`),
+}
+
+// Resume / profile documents – file storage or blob URLs
+export const resumeAPI = {
+  getResume: () => api.get("/user/resume"),
+  uploadResume: (formData) => api.post("/user/resume", formData, { headers: { "Content-Type": "multipart/form-data" } }),
+  downloadResume: () => api.get("/user/resume/download", { responseType: "blob" }),
 }
 
 // Help Center API

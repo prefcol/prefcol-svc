@@ -95,9 +95,20 @@
 
 
 import { Routes, Route, Navigate } from 'react-router-dom';
+import TeacherAdminLayout from './TeacherAdmin/TeacherAdminLayout';
 import TeacherAdminHome from './TeacherAdmin/TeacherAdminHome';
-// import TeacherVideoManagement from './TeacherAdmin/TeacherTabs/VideoManagement/Videomanagement';
 import TeacherVideoPortal from './TeacherAdmin/TeacherTabs/VideoManagement/teacher-video-portal';
+import ComingSoonPage from './TeacherAdmin/ComingSoonPage';
+import LogoutPage from './TeacherAdmin/LogoutPage';
+import EmployeeDashboard from './TeacherAdmin/EmployeePortal/EmployeeDashboard';
+import EmployeeAttendance from './TeacherAdmin/EmployeePortal/EmployeeAttendance';
+import EmployeePayslip from './TeacherAdmin/EmployeePortal/EmployeePayslip';
+import EmployeeLeave from './TeacherAdmin/EmployeePortal/EmployeeLeave';
+import SmartInstituteDashboard from './TeacherAdmin/SmartInstitute/SmartInstituteDashboard';
+import BatchClassManagement from './TeacherAdmin/SmartInstitute/BatchClassManagement';
+import TestAssignmentSystem from './TeacherAdmin/SmartInstitute/TestAssignmentSystem';
+import FeesPaymentTracking from './TeacherAdmin/SmartInstitute/FeesPaymentTracking';
+import StudentPerformanceAnalytics from './TeacherAdmin/SmartInstitute/StudentPerformanceAnalytics';
 
 function TeacherAdminRoute() {
   return (
@@ -105,35 +116,44 @@ function TeacherAdminRoute() {
       {/* Redirect '/teacher-admin/' to '/teacher-admin/home' */}
       <Route path="/" element={<Navigate to="home" replace />} />
 
-      {/* Home Route */}
-      <Route path="home" element={<TeacherVideoPortal />} />
+      {/* All teacher-admin routes use the same layout (sidebar + content) */}
+      <Route element={<TeacherAdminLayout />}>
+        <Route path="home" element={<TeacherAdminHome />} />
+        <Route path="institute" element={<SmartInstituteDashboard />} />
+        <Route path="institute/batches" element={<BatchClassManagement />} />
+        <Route path="institute/tests" element={<TestAssignmentSystem />} />
+        <Route path="institute/fees" element={<FeesPaymentTracking />} />
+        <Route path="institute/analytics" element={<StudentPerformanceAnalytics />} />
+        <Route path="employee-portal">
+          <Route index element={<EmployeeDashboard />} />
+          <Route path="dashboard" element={<EmployeeDashboard />} />
+          <Route path="attendance" element={<EmployeeAttendance />} />
+          <Route path="payslip" element={<EmployeePayslip />} />
+          <Route path="leave" element={<EmployeeLeave />} />
+        </Route>
 
-      {/* Teacher Portal */}
-      <Route path="login" element={<h1>Update User Information</h1>} />
-      <Route path="schedule" element={<h1>Update User Information</h1>} />
-      <Route path="availability" element={<h1>Update User Information</h1>} />
+        {/* Video Management: all show TeacherVideoPortal (upload/manage/organization via tabs) */}
+        <Route path="videos/upload" element={<TeacherVideoPortal embedded />} />
+        <Route path="videos/manage" element={<TeacherVideoPortal embedded />} />
+        <Route path="videos/organization" element={<TeacherVideoPortal embedded />} />
 
-      {/* Attendance Management */}
-      <Route path="attendance/mark" element={<h1>Update User Information</h1>} />
-      <Route path="attendance/reports" element={<h1>Update User Information</h1>} />
+        {/* Teacher Portal – coming soon */}
+        <Route path="login" element={<ComingSoonPage title="Teacher Login" />} />
+        <Route path="schedule" element={<ComingSoonPage title="Personal Schedule" />} />
+        <Route path="availability" element={<ComingSoonPage title="Availability" />} />
 
-      {/* Video Management */}
-      <Route path="videos/upload" element={<h1>Update User Information</h1>} />
-      <Route path="videos/manage" element={<h1>Update User Information</h1>} />
-      <Route path="videos/organization" element={<h1>Update User Information</h1>} />
+        {/* Attendance Management – coming soon */}
+        <Route path="attendance/mark" element={<ComingSoonPage title="Mark Attendance" />} />
+        <Route path="attendance/reports" element={<ComingSoonPage title="Attendance Reports" />} />
 
-      {/* Student Portal */}
-      <Route path="student/login" element={<h1>Update User Information</h1>} />
-      <Route path="student/courses" element={<h1>Update User Information</h1>} />
-      <Route path="student/schedule" element={<h1>Update User Information</h1>} />
+        {/* Performance Tracking – coming soon */}
+        <Route path="performance/attendance" element={<ComingSoonPage title="Attendance Records" />} />
+        <Route path="performance/grades" element={<ComingSoonPage title="Grades & Progress Reports" />} />
+        <Route path="performance/feedback" element={<ComingSoonPage title="Feedback" />} />
 
-      {/* Performance Tracking */}
-      <Route path="performance/attendance" element={<h1>Update User Information</h1>} />
-      <Route path="performance/grades" element={<h1>Update User Information</h1>} />
-      <Route path="performance/feedback" element={<h1>Update User Information</h1>} />
-
-      {/* Logout */}
-      <Route path="logout" element={<h1>Update User Information</h1>} />
+        {/* Logout – signs out and redirects to home */}
+        <Route path="logout" element={<LogoutPage />} />
+      </Route>
     </Routes>
   );
 }

@@ -3701,8 +3701,25 @@ import {
   FaUnlock,
   FaDatabase,
   FaShieldAlt,
+  FaLayerGroup,
+  FaEdit,
+  FaMoneyBillWave,
+  FaChartLine,
 } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../../Contexts/AuthContext";
+
+/** Get display name and first name from auth user (for profile and welcome) */
+function getTeacherDisplayInfo(user) {
+  if (!user) return { displayName: "Teacher", firstName: "Teacher" };
+  const cap = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "Teacher");
+  const fromName = user.firstName || (user.name && user.name.split(/\s+/)[0]);
+  if (fromName) return { displayName: cap(fromName), firstName: cap(fromName) };
+  const emailPrefix = (user.mailId || user.email || "").split("@")[0] || "";
+  const firstPart = emailPrefix.split(".")[0] || emailPrefix || "Teacher";
+  const name = cap(firstPart);
+  return { displayName: name, firstName: name };
+}
 
 export default function TeacherAdminSidebar({ isMobile = false }) {
   // ✅ START: Inverted initial state - Start Expanded
@@ -3710,6 +3727,8 @@ export default function TeacherAdminSidebar({ isMobile = false }) {
   // ✅ END
 
   const location = useLocation?.() || { pathname: "/" };
+  const { user } = useAuth();
+  const { displayName, firstName } = getTeacherDisplayInfo(user);
   const scrollContainerRef = useRef(null);
   const sidebarRef = useRef(null);
 
@@ -3731,18 +3750,28 @@ export default function TeacherAdminSidebar({ isMobile = false }) {
     }
   }, [location.pathname]);
 
-  // Colors
-  const bgGradient = useColorModeValue(
-    "linear(to-b, blue.50, blue.100)",
-    "linear(to-b, blue.900, blue.800)"
+  // Royal green + glassy
+  const glassBg = useColorModeValue(
+    "rgba(240, 253, 244, 0.78)",
+    "rgba(6, 44, 22, 0.82)"
   );
-  const sidebarBg = useColorModeValue("white", "gray.800");
+  const bgGradient = useColorModeValue(
+    "linear(to-b, rgba(187, 247, 208, 0.6), rgba(134, 239, 172, 0.5))",
+    "linear(to-b, rgba(20, 83, 45, 0.7), rgba(6, 44, 22, 0.75))"
+  );
+  const sidebarBg = glassBg;
   const textColor = useColorModeValue("gray.800", "white");
-  const accentColor = useColorModeValue("blue.500", "blue.300");
-  const borderColor = useColorModeValue("gray.200", "gray.700");
+  const accentColor = useColorModeValue("green.600", "green.400");
+  const borderColor = useColorModeValue("rgba(34, 197, 94, 0.25)", "rgba(74, 222, 128, 0.2)");
+  const glassShadow = useColorModeValue("0 8px 32px rgba(6, 44, 22, 0.12)", "0 8px 32px rgba(0,0,0,0.3)");
 
   // ✅ Use isExpanded directly — no hover logic
   const showExpanded = isExpanded;
+
+  const glassStyle = {
+    backdropFilter: "blur(14px)",
+    WebkitBackdropFilter: "blur(14px)",
+  };
 
   return (
     <Flex
@@ -3759,10 +3788,21 @@ export default function TeacherAdminSidebar({ isMobile = false }) {
       left="0"
       borderRight="1px"
       borderColor={borderColor}
+      boxShadow={glassShadow}
+      css={glassStyle}
       zIndex="10"
     >
-      {/* Fixed Header */}
-      <Box bgGradient={bgGradient} boxShadow="sm" position="relative" flexShrink={0}>
+      {/* Fixed Header — glassy + royal green gradient */}
+      <Box
+        bgGradient={bgGradient}
+        bg={sidebarBg}
+        css={glassStyle}
+        borderBottom="1px"
+        borderColor={borderColor}
+        boxShadow="0 4px 24px rgba(6, 44, 22, 0.08)"
+        position="relative"
+        flexShrink={0}
+      >
         {/* Toggle button */}
         {!isMobile && (
           <IconButton
@@ -3781,7 +3821,7 @@ export default function TeacherAdminSidebar({ isMobile = false }) {
               setIsExpanded(newExpandedState);
               notifySidebarWidthChange(newExpandedState ? 280 : 80);
             }}
-            _hover={{ bg: "blue.600" }}
+            _hover={{ bg: "green.600" }}
           />
         )}
 
@@ -3808,20 +3848,20 @@ export default function TeacherAdminSidebar({ isMobile = false }) {
         >
           <Avatar
             size={showExpanded ? "md" : "sm"}
-            src="/placeholder.svg?height=80&width=80"
-            name="John Doe"
+            src={user?.avatar || user?.profileImage}
+            name={displayName}
             mb={showExpanded ? 0 : 2}
           />
           {showExpanded && (
             <Box ml={3}>
               <Text fontWeight="bold" fontSize="sm" color={textColor}>
-                John Doe
+                {displayName}
               </Text>
               <Text fontSize="xs" color="gray.500">
-                Mathematics Teacher
+                Teacher
               </Text>
               <HStack mt={1} spacing={1}>
-                <Badge colorScheme="green" fontSize="xs" borderRadius="full" px={2}>
+                <Badge bg="green.500" color="white" fontSize="xs" borderRadius="full" px={2}>
                   Online
                 </Badge>
               </HStack>
@@ -3830,58 +3870,110 @@ export default function TeacherAdminSidebar({ isMobile = false }) {
         </Flex>
       </Box>
 
-      {/* Scrollable Navigation */}
+      {/* Scrollable Navigation — glass */}
       <Box
         ref={scrollContainerRef}
         flex="1"
         overflowY="auto"
         overflowX="hidden"
-        bgGradient={bgGradient}
-        className="custom-scrollbar"
+        bg={sidebarBg}
         css={{
+          ...glassStyle,
           "&::-webkit-scrollbar": { width: "6px" },
           "&::-webkit-scrollbar-track": { background: "transparent" },
           "&::-webkit-scrollbar-thumb": {
-            background: useColorModeValue("blue.200", "blue.700"),
+            background: useColorModeValue("rgba(34, 197, 94, 0.4)", "rgba(74, 222, 128, 0.35)"),
             borderRadius: "24px",
           },
           "&:hover::-webkit-scrollbar-thumb": {
-            background: useColorModeValue("blue.300", "blue.600"),
+            background: useColorModeValue("green.300", "green.600"),
           },
           scrollbarWidth: "thin",
-          scrollbarColor: `${useColorModeValue("blue.200", "blue.700")} transparent`,
+          scrollbarColor: `${useColorModeValue("green.300", "green.700")} transparent`,
         }}
       >
         <VStack spacing={1} align="stretch" px={2} pb={6}>
           <SidebarLink
             icon={FaTachometerAlt}
             label="Dashboard"
-            href="/dashboard"
+            href="/teacher-admin/home"
             isExpanded={showExpanded}
-            isActive={location.pathname === "/dashboard"}
+            isActive={location.pathname === "/teacher-admin/home"}
           />
+          <SidebarLink
+            icon={FaUsersCog}
+            label="Employee Portal"
+            href="/teacher-admin/employee-portal/dashboard"
+            isExpanded={showExpanded}
+            isActive={location.pathname.startsWith("/teacher-admin/employee-portal")}
+          />
+
+          <SidebarSection title="Smart Institute" isExpanded={showExpanded}>
+            <SidebarLink
+              icon={FaSchool}
+              label="Smart Institute Dashboard"
+              href="/teacher-admin/institute"
+              isExpanded={showExpanded}
+              isActive={location.pathname === "/teacher-admin/institute"}
+            />
+            <SidebarLink
+              icon={FaLayerGroup}
+              label="Batch & Class Management"
+              href="/teacher-admin/institute/batches"
+              isExpanded={showExpanded}
+              isActive={location.pathname.startsWith("/teacher-admin/institute/batches")}
+            />
+            <SidebarLink
+              icon={FaEdit}
+              label="Test & Assignment System"
+              href="/teacher-admin/institute/tests"
+              isExpanded={showExpanded}
+              isActive={location.pathname.startsWith("/teacher-admin/institute/tests")}
+            />
+            <SidebarLink
+              icon={FaMoneyBillWave}
+              label="Fees & Payment Tracking"
+              href="/teacher-admin/institute/fees"
+              isExpanded={showExpanded}
+              isActive={location.pathname.startsWith("/teacher-admin/institute/fees")}
+            />
+            <SidebarLink
+              icon={FaChartLine}
+              label="Student Performance Analytics"
+              href="/teacher-admin/institute/analytics"
+              isExpanded={showExpanded}
+              isActive={location.pathname.startsWith("/teacher-admin/institute/analytics")}
+            />
+            <SidebarLink
+              icon={FaVideo}
+              label="Live & Recorded Classes"
+              href="/teacher-admin/videos/upload"
+              isExpanded={showExpanded}
+              isActive={location.pathname.startsWith("/teacher-admin/videos")}
+            />
+          </SidebarSection>
 
           <SidebarSection title="Teacher Portal" isExpanded={showExpanded}>
             <SidebarLink
               icon={FaUserLock}
               label="Teacher Login"
-              href="/teacher/login"
+              href="/teacher-admin/login"
               isExpanded={showExpanded}
-              isActive={location.pathname === "/teacher/login"}
+              isActive={location.pathname === "/teacher-admin/login"}
             />
             <SidebarLink
               icon={FaCalendarAlt}
               label="Personal Schedule"
-              href="/teacher/schedule"
+              href="/teacher-admin/schedule"
               isExpanded={showExpanded}
-              isActive={location.pathname === "/teacher/schedule"}
+              isActive={location.pathname === "/teacher-admin/schedule"}
             />
             <SidebarLink
               icon={FaRegClock}
               label="Availability"
-              href="/teacher/availability"
+              href="/teacher-admin/availability"
               isExpanded={showExpanded}
-              isActive={location.pathname === "/teacher/availability"}
+              isActive={location.pathname === "/teacher-admin/availability"}
             />
           </SidebarSection>
 
@@ -3889,16 +3981,47 @@ export default function TeacherAdminSidebar({ isMobile = false }) {
             <SidebarLink
               icon={FaClipboardList}
               label="Mark Attendance"
-              href="/attendance/mark"
+              href="/teacher-admin/attendance/mark"
               isExpanded={showExpanded}
-              isActive={location.pathname === "/attendance/mark"}
+              isActive={location.pathname === "/teacher-admin/attendance/mark"}
             />
             <SidebarLink
               icon={FaChartBar}
               label="Attendance Reports"
-              href="/attendance/reports"
+              href="/teacher-admin/attendance/reports"
               isExpanded={showExpanded}
-              isActive={location.pathname === "/attendance/reports"}
+              isActive={location.pathname === "/teacher-admin/attendance/reports"}
+            />
+          </SidebarSection>
+
+          <SidebarSection title="Employee Portal" isExpanded={showExpanded}>
+            <SidebarLink
+              icon={FaTachometerAlt}
+              label="Employee Dashboard"
+              href="/teacher-admin/employee-portal/dashboard"
+              isExpanded={showExpanded}
+              isActive={location.pathname.startsWith("/teacher-admin/employee-portal/dashboard")}
+            />
+            <SidebarLink
+              icon={FaClipboardList}
+              label="Attendance"
+              href="/teacher-admin/employee-portal/attendance"
+              isExpanded={showExpanded}
+              isActive={location.pathname.startsWith("/teacher-admin/employee-portal/attendance")}
+            />
+            <SidebarLink
+              icon={FaBook}
+              label="Payslip"
+              href="/teacher-admin/employee-portal/payslip"
+              isExpanded={showExpanded}
+              isActive={location.pathname.startsWith("/teacher-admin/employee-portal/payslip")}
+            />
+            <SidebarLink
+              icon={FaUsersCog}
+              label="Leave"
+              href="/teacher-admin/employee-portal/leave"
+              isExpanded={showExpanded}
+              isActive={location.pathname.startsWith("/teacher-admin/employee-portal/leave")}
             />
           </SidebarSection>
 
@@ -3913,40 +4036,16 @@ export default function TeacherAdminSidebar({ isMobile = false }) {
             <SidebarLink
               icon={FaBook}
               label="Edit/Delete Videos"
-              href="/videos/manage"
+              href="/teacher-admin/videos/manage"
               isExpanded={showExpanded}
-              isActive={location.pathname === "/videos/manage"}
+              isActive={location.pathname === "/teacher-admin/videos/manage"}
             />
             <SidebarLink
               icon={FaBookReader}
               label="Course Material Organization"
-              href="/videos/organization"
+              href="/teacher-admin/videos/organization"
               isExpanded={showExpanded}
-              isActive={location.pathname === "/videos/organization"}
-            />
-          </SidebarSection>
-
-          <SidebarSection title="Student Portal" isExpanded={showExpanded}>
-            <SidebarLink
-              icon={FaUserLock}
-              label="Student Login"
-              href="/student/login"
-              isExpanded={showExpanded}
-              isActive={location.pathname === "/student/login"}
-            />
-            <SidebarLink
-              icon={FaSchool}
-              label="Enrolled Courses"
-              href="/student/courses"
-              isExpanded={showExpanded}
-              isActive={location.pathname === "/student/courses"}
-            />
-            <SidebarLink
-              icon={FaCalendarAlt}
-              label="Schedule"
-              href="/student/schedule"
-              isExpanded={showExpanded}
-              isActive={location.pathname === "/student/schedule"}
+              isActive={location.pathname === "/teacher-admin/videos/organization"}
             />
           </SidebarSection>
 
@@ -3954,24 +4053,24 @@ export default function TeacherAdminSidebar({ isMobile = false }) {
             <SidebarLink
               icon={FaClipboardList}
               label="Attendance Records"
-              href="/performance/attendance"
+              href="/teacher-admin/performance/attendance"
               isExpanded={showExpanded}
-              isActive={location.pathname === "/performance/attendance"}
+              isActive={location.pathname === "/teacher-admin/performance/attendance"}
             />
             <SidebarLink
               icon={FaGraduationCap}
               label="Grades & Progress Reports"
-              href="/performance/grades"
+              href="/teacher-admin/performance/grades"
               isExpanded={showExpanded}
-              isActive={location.pathname === "/performance/grades"}
+              isActive={location.pathname === "/teacher-admin/performance/grades"}
               notification={3}
             />
             <SidebarLink
               icon={FaChalkboardTeacher}
               label="Feedback"
-              href="/performance/feedback"
+              href="/teacher-admin/performance/feedback"
               isExpanded={showExpanded}
-              isActive={location.pathname === "/performance/feedback"}
+              isActive={location.pathname === "/teacher-admin/performance/feedback"}
             />
           </SidebarSection>
 
@@ -4005,14 +4104,21 @@ export default function TeacherAdminSidebar({ isMobile = false }) {
         </VStack>
       </Box>
 
-      {/* Footer */}
-      <Box p={3} borderTop="1px" borderColor={borderColor} bg={sidebarBg} flexShrink={0}>
+      {/* Footer — glass */}
+      <Box
+        p={3}
+        borderTop="1px"
+        borderColor={borderColor}
+        bg={sidebarBg}
+        css={glassStyle}
+        flexShrink={0}
+      >
         <SidebarLink
           icon={FaSignOutAlt}
           label="Sign Out"
-          href="/logout"
+          href="/teacher-admin/logout"
           isExpanded={showExpanded}
-          isActive={location.pathname === "/logout"}
+          isActive={location.pathname === "/teacher-admin/logout"}
         />
       </Box>
     </Flex>
@@ -4021,9 +4127,9 @@ export default function TeacherAdminSidebar({ isMobile = false }) {
 
 // SidebarLink and SidebarSection components remain unchanged
 function SidebarLink({ icon, label, href, isExpanded, isActive = false, notification = null }) {
-  const activeBg = useColorModeValue("blue.100", "blue.700");
-  const activeColor = useColorModeValue("blue.700", "white");
-  const hoverBg = useColorModeValue("blue.50", "blue.800");
+  const activeBg = useColorModeValue("rgba(34, 197, 94, 0.25)", "rgba(74, 222, 128, 0.2)");
+  const activeColor = useColorModeValue("green.700", "green.200");
+  const hoverBg = useColorModeValue("rgba(34, 197, 94, 0.12)", "rgba(74, 222, 128, 0.15)");
   const textColor = useColorModeValue("gray.700", "gray.200");
 
   return (
@@ -4084,7 +4190,7 @@ function SidebarLink({ icon, label, href, isExpanded, isActive = false, notifica
 
 function SidebarSection({ title, children, isExpanded }) {
   const { isOpen, onToggle } = useDisclosure({ defaultIsOpen: true });
-  const textColor = useColorModeValue("gray.500", "gray.400");
+  const textColor = useColorModeValue("gray.600", "gray.400");
   const borderColor = useColorModeValue("gray.200", "gray.700");
 
   return (
@@ -4097,7 +4203,7 @@ function SidebarSection({ title, children, isExpanded }) {
           cursor="pointer"
           onClick={onToggle}
           userSelect="none"
-          _hover={{ color: useColorModeValue("blue.500", "blue.300") }}
+          _hover={{ color: useColorModeValue("green.600", "green.300") }}
           transition="color 0.2s"
         >
           <Text

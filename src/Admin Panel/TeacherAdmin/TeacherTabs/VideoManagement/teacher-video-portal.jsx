@@ -1229,7 +1229,7 @@ const { Title, Text } = Typography
 const { useBreakpoint } = Grid
 const { Search } = Input
 
-const TeacherVideoPortal = () => {
+const TeacherVideoPortal = ({ embedded = false }) => {
   const [collapsed, setCollapsed] = useState(false)
   const [activeTab, setActiveTab] = useState("dashboard")
   const [loading, setLoading] = useState(true)
@@ -1239,8 +1239,18 @@ const TeacherVideoPortal = () => {
   const [searchModalVisible, setSearchModalVisible] = useState(false)
   const [helpModalVisible, setHelpModalVisible] = useState(false)
   const [userMenuVisible, setUserMenuVisible] = useState(false)
-  const { logout } = useAuth() // ✅ Use logout from AuthContext
-const navigate = useNavigate()
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+  // First name for welcome message and profile (from user or email prefix)
+  const teacherFirstName = (() => {
+    if (!user) return "Teacher"
+    const first = user.firstName || (user.name && user.name.split(/\s+/)[0])
+    if (first) return first.charAt(0).toUpperCase() + first.slice(1).toLowerCase()
+    const email = user.mailId || user.email || ""
+    const prefix = email.split("@")[0] || ""
+    const part = prefix.split(".")[0] || prefix
+    return part ? part.charAt(0).toUpperCase() + part.slice(1).toLowerCase() : "Teacher"
+  })()
   const screens = useBreakpoint()
   const isMobile = !screens.md
   const isTablet = !screens.lg && screens.md
@@ -1541,6 +1551,11 @@ const navigate = useNavigate()
   )
 
   const handleTabChange = (key) => {
+    if (key === "employee-dashboard") {
+      navigate("/teacher-admin/employee-portal/dashboard")
+      if (isMobile) setMobileMenuVisible(false)
+      return
+    }
     setActiveTab(key)
     if (isMobile) {
       setMobileMenuVisible(false)
@@ -1552,6 +1567,11 @@ const navigate = useNavigate()
       key: "dashboard",
       icon: <DashboardOutlined />,
       label: "Dashboard",
+    },
+    {
+      key: "employee-dashboard",
+      icon: <UserOutlined />,
+      label: "Employee Dashboard",
     },
     {
       key: "videos",
@@ -1614,6 +1634,7 @@ const navigate = useNavigate()
             analyticsData={analyticsData}
             notifications={notifications.slice(0, 5)}
             isMobile={isMobile}
+            firstName={teacherFirstName}
             onVideoClick={(videoId) => {
               setActiveTab("videos")
               // Find the video and show its details
@@ -1709,6 +1730,7 @@ const navigate = useNavigate()
             analyticsData={analyticsData}
             notifications={notifications.slice(0, 5)}
             isMobile={isMobile}
+            firstName={teacherFirstName}
             onVideoClick={(videoId) => setActiveTab("videos")}
             onPlaylistClick={(playlistId) => setActiveTab("playlists")}
           />
@@ -1947,7 +1969,7 @@ const navigate = useNavigate()
       {searchResultsModal}
       {helpModal}
       <Layout style={{ minHeight: "100vh" }}>
-        {!isMobile && (
+        {!embedded && !isMobile && (
           <Sider
             trigger={null}
             collapsible
@@ -2013,7 +2035,7 @@ const navigate = useNavigate()
                 </div>
               )}
             </div>
-            <Menu mode="inline" selectedKeys={[activeTab]} onClick={({ key }) => setActiveTab(key)} items={menuItems} />
+            <Menu mode="inline" selectedKeys={[activeTab]} onClick={({ key }) => handleTabChange(key)} items={menuItems} />
 
             {!collapsed && (
               <div
@@ -2033,7 +2055,7 @@ const navigate = useNavigate()
             )}
           </Sider>
         )}
-        <Layout style={{ marginLeft: isMobile ? 0 : collapsed ? 80 : 250, transition: "all 0.2s" }}>
+        <Layout style={{ marginLeft: embedded ? 0 : isMobile ? 0 : collapsed ? 80 : 250, transition: "all 0.2s" }}>
           <Header
             style={{
               padding: "0 16px",

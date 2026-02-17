@@ -210,7 +210,7 @@ const CourseNotes = ({ courseId, videoId, currentTime }) => {
   const fetchNotes = async () => {
     setLoading(true)
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/notes/${courseId}`)
+      const response = await axios.get(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/notes/${courseId}`)
       setNotes(response.data)
     } catch (error) {
       console.error("Error fetching notes:", error)
@@ -232,7 +232,7 @@ const CourseNotes = ({ courseId, videoId, currentTime }) => {
     }
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/notes`, noteData)
+      const response = await axios.post(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/notes`, noteData)
       setNotes([...notes, response.data])
       setNewNote("")
       message.success("Note added successfully")
@@ -244,7 +244,7 @@ const CourseNotes = ({ courseId, videoId, currentTime }) => {
 
   const updateNote = async (noteId) => {
     try {
-      await axios.put(`${process.env.REACT_APP_API_URL}/api/notes/${noteId}`, {
+      await axios.put(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/notes/${noteId}`, {
         content: editingContent,
       })
 
@@ -260,7 +260,7 @@ const CourseNotes = ({ courseId, videoId, currentTime }) => {
 
   const deleteNote = async (noteId) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/api/notes/${noteId}`)
+      await axios.delete(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/notes/${noteId}`)
       setNotes(notes.filter((note) => note.id !== noteId))
       message.success("Note deleted successfully")
     } catch (error) {
@@ -271,7 +271,7 @@ const CourseNotes = ({ courseId, videoId, currentTime }) => {
 
   const togglePin = async (noteId, currentPinStatus) => {
     try {
-      await axios.put(`${process.env.REACT_APP_API_URL}/api/notes/${noteId}/pin`, {
+      await axios.put(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/notes/${noteId}/pin`, {
         isPinned: !currentPinStatus,
       })
 

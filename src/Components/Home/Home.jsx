@@ -12279,6 +12279,8 @@ import { Parallax } from "react-parallax"
 import Hero from "../../assets/HeroBoy.png"
 import Mentor from "../../assets/Mentor.png"
 import bgImage from "../../assets/HeroVideo1.mp4"
+import FounderHero from "../../assets/kumar.png"
+import PrefcolPreloaderLogo from "../../assets/Prefcol-nav.png"
 import { BarChart, Target, ArrowLeftRight, Laptop, Sparkles, Rocket, Play, Star, Users, Award } from "lucide-react"
 import CareerHero from "../../assets/CareerHero.png"
 import TypingText from "./Animatetext"
@@ -12287,7 +12289,8 @@ import TealGassyBox from "./TealGassyBox"
 import { useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import MotionFadeIn from "../Common/MotionFadeIn";
 const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 2, y: 0, transition: { duration: 4 } },
@@ -12560,7 +12563,7 @@ const CourseCard = ({ name, icon: IconComponent, description, href }) => {
 //   )
 // }
 
-const CareerPathCard = ({ icon, title, description }) => {
+const CareerPathCard = ({ icon, title, description, to }) => {
   // Color mode values
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("gray.800", "white");
@@ -12568,7 +12571,7 @@ const CareerPathCard = ({ icon, title, description }) => {
   const accentColor = "orange.500";
   const boxShadow = useColorModeValue("md", "dark-lg");
 
-  return (
+  const cardContent = (
     <MotionBox
       bg={bgColor}
       p={{ base: 5, md: 6 }}
@@ -12639,6 +12642,15 @@ const CareerPathCard = ({ icon, title, description }) => {
       </VStack>
     </MotionBox>
   );
+
+  if (to) {
+    return (
+      <RouterLink to={to} style={{ display: "block", height: "100%" }}>
+        {cardContent}
+      </RouterLink>
+    );
+  }
+  return cardContent;
 };
 
 
@@ -12662,73 +12674,177 @@ export default function Homepage() {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 300], [0, 50]);
   const y2 = useTransform(scrollY, [0, 300], [0, -50]);
-console.log("hi from home page");
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowIntro(false), 1800);
+    return () => clearTimeout(timer);
+  }, []);
   return (
-    <Box bg={bgColor} color={textColor} minHeight="100vh" overflowX="hidden" >
-        
-      <section className="relative min-h-[80vh] sm:min-h-[80vh] md:min-h-screen pt-20 pb-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-teal-900">
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div style={{ y: y1 }} className="absolute top-20 left-10 w-96 h-96 bg-teal-900/20 rounded-full blur-3xl" />
-          <motion.div style={{ y: y2 }} className="absolute top-40 right-20 w-80 h-80 bg-teal-900/20 rounded-full blur-3xl" />
-          <motion.div style={{ y: y1 }} className="absolute bottom-20 left-1/3 w-72 h-72 bg-teal-900/20 rounded-full blur-3xl" />
+    <Box bg={bgColor} color={textColor} minHeight="100vh" overflowX="hidden">
+      {/* Intro overlay before landing hero */}
+      {showIntro && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#f3fbf7]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className="flex flex-col items-center px-6 text-center"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 190, damping: 18 }}
+          >
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="text-2xl md:text-3xl font-semibold tracking-wide text-emerald-900"
+              style={{ fontFamily: '"London", serif' }}
+            >
+              Prefcol Edutech Solutions (OPC) Pvt Ltd
+            </motion.p>
+          </motion.div>
+        </motion.div>
+      )}
+
+      <MotionFadeIn>
+      <section className="page-section relative min-h-[70vh] md:min-h-[80vh] pt-20 pb-10 flex items-center bg-[#f3fbf7]">
+        {/* Soft decorative blobs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            style={{ y: y1 }}
+            className="absolute -top-10 -left-10 w-72 h-72 bg-emerald-200/40 rounded-full blur-3xl"
+          />
+          <motion.div
+            style={{ y: y2 }}
+            className="absolute -bottom-16 right-0 w-80 h-80 bg-teal-300/30 rounded-full blur-3xl"
+          />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            {/* <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 backdrop-blur-lg border border-white/30 rounded-full mb-8"
+        <div className="relative z-10 page-container max-w-7xl w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            {/* Left: copy */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="text-left"
             >
-              <Sparkles className="w-5 h-5 text-teal-300" />
-              <span className="text-white font-medium">New: AI-Powered Learning Paths</span>
-            </motion.div> */}
+              <p className="text-sm md:text-base font-semibold tracking-wide text-emerald-700 mb-3">
+                Kick Start Your Career
+              </p>
 
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              <span className="text-white">Kick Start</span><br />
-              <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Your Career!</span>
-            </h1>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
+                <span className="text-slate-900">Kick Start</span>
+                <br />
+                <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
+                  Your Career!
+                </span>
+              </h1>
 
-            <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
-             Discover your potential with expert-led courses. <br />
-Practice what you learn in real time. <br />
-Earn recognition that opens doors.
-            </p>
+              <p className="text-base md:text-lg text-slate-700 mb-4 max-w-xl">
+                Discover your potential with expert-led courses.
+              </p>
+              <p className="text-base md:text-lg text-slate-700 mb-1 max-w-xl">
+                Practice what you learn in real time.
+              </p>
+              <p className="text-base md:text-lg text-slate-700 mb-6 max-w-xl">
+                Earn recognition that opens doors.
+              </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleClick} className="group px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl font-semibold text-white shadow-2xl hover:shadow-teal-500/25 transition-all duration-300">
-                <span className="flex items-center justify-center space-x-2">
+              <div className="flex flex-wrap items-center gap-4 mb-8">
+                <motion.button
+                  whileHover={{ scale: 1.06, y: -2 }}
+                  whileTap={{ scale: 0.97, y: 0 }}
+                  transition={{ type: "spring", stiffness: 220, damping: 18 }}
+                  onClick={handleClick}
+                  className="group px-8 py-3 rounded-full bg-emerald-600 text-white font-semibold shadow-lg shadow-emerald-500/30 flex items-center gap-2"
+                >
                   <Rocket className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  <span>Get Started</span>
-                </span>
-              </motion.button>
+                  <span>Start a Course</span>
+                </motion.button>
 
-              {/* <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="group px-8 py-4 backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl font-semibold text-white hover:bg-white/20 transition-all duration-300">
-                <span className="flex items-center justify-center space-x-2">
-                  <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  <span>Watch Demo</span>
-                </span>
-              </motion.button> */}
-            </div>
+                <div className="flex items-center gap-3 text-sm text-slate-600">
+                  <div className="flex -space-x-2">
+                    <span className="w-8 h-8 rounded-full bg-emerald-200 border border-white" />
+                    <span className="w-8 h-8 rounded-full bg-teal-200 border border-white" />
+                    <span className="w-8 h-8 rounded-full bg-emerald-300 border border-white" />
+                  </div>
+                  <span>Trusted by 1,000+ learners</span>
+                </div>
+              </div>
 
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="flex flex-wrap items-center justify-center gap-8 text-gray-300">
-              <div className="flex items-center space-x-2">
-                <Star className="w-5 h-5 text-yellow-400" fill="currentColor" />
-                <span className="font-medium">4.9/5 from 50k+ reviews</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Users className="w-5 h-5" />
-                <span className="font-medium">Trusted by 1M+ learners</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Award className="w-5 h-5" />
-                <span className="font-medium">500k+ certificates issued</span>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="flex flex-wrap items-center gap-6 text-slate-700 text-sm md:text-base"
+              >
+                <div className="flex items-center gap-2">
+                  <Star className="w-4 h-4 text-yellow-400" fill="currentColor" />
+                  <span>4.8/5 average rating</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4 text-emerald-600" />
+                  <span>Live mentor support</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Award className="w-4 h-4 text-teal-600" />
+                  <span>Industry‑recognized certificates</span>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Right: hero image card */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="relative"
+            >
+              <div className="relative mx-auto max-w-md">
+                <div className="absolute -top-4 -left-4 w-24 h-24 rounded-3xl bg-emerald-200/60 blur-xl" />
+                <div className="absolute -bottom-6 -right-6 w-28 h-28 rounded-full bg-teal-300/50 blur-xl" />
+
+                <div className="relative rounded-[32px] bg-white shadow-2xl border border-emerald-50 overflow-hidden">
+                  <div className="p-4 flex items-center justify-between">
+                    <span className="text-sm font-semibold text-emerald-700">
+                      Learn from anywhere
+                    </span>
+                    <span className="text-xs text-slate-400">Live & self-paced</span>
+                  </div>
+
+                  <div className="px-4 pb-4">
+                    <AspectRatio ratio={3 / 4} className="rounded-2xl overflow-hidden bg-emerald-50">
+                      <Image
+                        src={FounderHero}
+                        alt="Learner holding a laptop"
+                        objectFit="contain"
+                      />
+                    </AspectRatio>
+
+                    <div className="mt-4 flex items-center justify-between">
+                      <div>
+                        <p className="text-xs uppercase tracking-wide text-emerald-500 font-semibold">
+                          Active learners
+                        </p>
+                        <p className="text-lg font-bold text-slate-900">1,235+</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs text-slate-500">Avg. completion</p>
+                        <p className="text-lg font-semibold text-emerald-600">89%</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
+      </MotionFadeIn>
 
       <Box as="section" py={{ base: 10, md: 16 }} px={{ base: 4, md: 0 }} position={"relative"} overflow="hidden">
         <Container maxW="container.xl">
@@ -12808,6 +12924,7 @@ Earn recognition that opens doors.
             <Box flex="1">
               <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={{ base: 4, sm: 6, md: 8 }} h="100%">
                 <CareerPathCard
+                  to="/it-courses"
                   icon={<BarChart className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />}
                   title="IT Employed"
                   description="Advance your skills to close talent gaps and switch careers."
@@ -12823,6 +12940,7 @@ Earn recognition that opens doors.
                   description="Re-skill yourself to stay ahead of competitions and in trend."
                 />
                 <CareerPathCard
+                  to="/Non_it-courses"
                   icon={<Laptop className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />}
                   title="Non IT to IT"
                   description="Learn, Get Certified with new demanding skills and Switch."

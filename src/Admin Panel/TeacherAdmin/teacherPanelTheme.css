@@ -1,0 +1,62 @@
+/* Teacher Panel – Estudy-style light dashboard */
+.prefcol-teacher-root {
+  --teacher-bg: #f0f4f8;
+  --teacher-card: #ffffff;
+  --teacher-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --teacher-sidebar-bg: #ffffff;
+  --teacher-sidebar-border: #e2e8f0;
+  --teacher-active-bar: #22c55e;
+  --teacher-text: #1a202c;
+  --teacher-text-muted: #718096;
+}
+
+/* Sidebar: clean white card, Estudy look */
+.prefcol-teacher-sidebar .prefcol-teacher-sidebar-inner {
+  background: var(--teacher-sidebar-bg) !important;
+  border-right: 1px solid var(--teacher-sidebar-border) !important;
+  box-shadow: var(--teacher-card-shadow) !important;
+  backdrop-filter: none !important;
+}
+/* Sidebar header (logo) – white, no gradient */
+.prefcol-teacher-sidebar .prefcol-teacher-sidebar-inner > div:first-of-type {
+  background: var(--teacher-sidebar-bg) !important;
+  background-image: none !important;
+  border-bottom: 1px solid var(--teacher-sidebar-border) !important;
+  box-shadow: none !important;
+}
+/* Sidebar nav item active – green left bar */
+.prefcol-teacher-sidebar .prefcol-teacher-sidebar-inner [data-active="true"],
+.prefcol-teacher-sidebar .sidebar-link-active {
+  border-left: 3px solid var(--teacher-active-bar) !important;
+  background: rgba(34, 197, 94, 0.08) !important;
+  font-weight: 600 !important;
+  color: #15803d !important;
+}
+/* Sidebar footer (sign out) */
+.prefcol-teacher-sidebar .prefcol-teacher-sidebar-inner > div:last-of-type {
+  background: var(--teacher-sidebar-bg) !important;
+  background-image: none !important;
+}
+
+/* Main content area – light grey/blue background */
+.prefcol-teacher-main {
+  background: var(--teacher-bg) !important;
+  color: var(--teacher-text);
+}
+
+/* Header bar */
+.prefcol-teacher-header {
+  background: var(--teacher-card);
+  border-radius: 12px;
+  box-shadow: var(--teacher-card-shadow);
+  padding: 16px 24px;
+  margin-bottom: 24px;
+}
+
+/* KPI and content cards – rounded, elevated */
+.prefcol-teacher-card {
+  background: var(--teacher-card);
+  border-radius: 12px;
+  box-shadow: var(--teacher-card-shadow);
+  border: 1px solid #edf2f7;
+}

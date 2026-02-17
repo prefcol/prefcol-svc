@@ -1,0 +1,25 @@
+.hc-hero{padding:48px 24px;background:linear-gradient(180deg,#F8FAFC 0%,#FFFFFF 60%);}
+.hc-trust{font-size:13px;color:#6B7280;text-align:center;margin-bottom:16px}
+.hc-hero-inner{max-width:1200px;margin:0 auto}
+.hc-title{color:#0F172A;line-height:1.05}
+.hc-sub{color:#334155;font-size:16px}
+.hc-ctas{margin-top:18px}
+.hc-audience{margin-top:14px}
+.hc-hero-mock{display:flex;justify-content:center}
+.hc-mock-card{width:320px;border-radius:12px;background:#fff;padding:18px;box-shadow:0 8px 30px rgba(16,24,40,0.08)}
+.hc-mock-header{font-weight:600;color:#0F172A;margin-bottom:8px}
+.hc-mock-body{color:#475569;margin-bottom:12px}
+.hc-mock-cta{font-weight:600;color:#2563EB}
+.hc-section{max-width:1100px;margin:40px auto}
+.hc-card{border-radius:12px}
+.hc-card-icon{font-size:28px;color:#2563EB;margin-bottom:12px}
+.hc-metrics{display:flex;flex-direction:column;align-items:flex-start}
+.hc-metric{font-size:28px;font-weight:700;color:#0F172A}
+.hc-metric-label{color:#64748B}
+.hc-testimonials{margin-top:20px}
+.hc-role{color:#6B7280;font-size:13px}
+.hc-quote{color:#0F172A}
+.hc-step{border-radius:12px}
+.hc-step-num{width:44px;height:44px;border-radius:22px;background:#2563EB;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:12px}
+.hc-final-cta{text-align:center;padding:36px;background:linear-gradient(90deg,#ffffff 0%,#F8FAFC 100%);border-radius:12px;margin:40px 24px}
+@media (max-width:768px){.hc-hero-inner{padding:0 8px}.hc-mock-card{width:100%}}

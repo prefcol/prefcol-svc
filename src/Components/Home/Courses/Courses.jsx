@@ -502,6 +502,7 @@
 
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { BarChart, Target, ArrowLeftRight, Laptop, ChevronRight } from 'lucide-react';
 import CareerHero from '../assets/CareerHero.png';
 
@@ -513,11 +514,13 @@ const EnhancedCareerGuidance = () => {
 
         <div className="flex flex-col lg:flex-row gap-8 mb-12">
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
-            <EnhancedCard
-              icon={<BarChart className="w-6 h-6 sm:w-8 sm:h-8" />}
-              title="IT Employed"
-              description="Advance your skills to close talent gaps and switch careers."
-            />
+            <Link to="/it-courses" className="block h-full">
+              <EnhancedCard
+                icon={<BarChart className="w-6 h-6 sm:w-8 sm:h-8" />}
+                title="IT Employed"
+                description="Advance your skills to close talent gaps and switch careers."
+              />
+            </Link>
             <EnhancedCard
               icon={<Target className="w-6 h-6 sm:w-8 sm:h-8" />}
               title="Fresh Graduates"
@@ -528,11 +531,13 @@ const EnhancedCareerGuidance = () => {
               title="Return from Work Break"
               description="Re-skill yourself to stay ahead of competitions and in trend."
             />
-            <EnhancedCard
-              icon={<Laptop className="w-6 h-6 sm:w-8 sm:h-8" />}
-              title="Non IT to IT"
-              description="Learn, Get Certified with new demanding skills and Switch."
-            />
+            <Link to="/Non_it-courses" className="block h-full">
+              <EnhancedCard
+                icon={<Laptop className="w-6 h-6 sm:w-8 sm:h-8" />}
+                title="Non IT to IT"
+                description="Learn, Get Certified with new demanding skills and Switch."
+              />
+            </Link>
           </div>
 
           <div className="flex-1 relative overflow-hidden rounded-lg shadow-lg">
@@ -563,7 +568,7 @@ const EnhancedCareerGuidance = () => {
 
 const EnhancedCard = ({ icon, title, description }) => {
   return (
-    <div className="bg-white rounded-ss-3xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl group">
+    <div className="bg-white rounded-ss-3xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl group h-full cursor-pointer">
       <div className="p-4 sm:p-6">
         <div className="flex items-center mb-3 sm:mb-4">
           <div className="p-2 sm:p-3 rounded-full bg-gray-200 text-gray-700 mr-3 sm:mr-4 transition-colors duration-300">

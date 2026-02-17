@@ -378,11 +378,6 @@ export default function IT_CourseDetails() {
   const [course, setCourse] = useState(null);
   const [relatedCourses, setRelatedCourses] = useState([]);
   const [progress, setProgress] = useState(0);
-  const {
-    isOpen: isVideoOpen,
-    onOpen: onVideoOpen,
-    onClose: onVideoClose,
-  } = useDisclosure();
   const toast = useToast();
   const { user, setShowForm, setRedirect, showEnrollForm, setShowEnrollForm  } = useAuth();
   
@@ -1633,9 +1628,18 @@ export default function IT_CourseDetails() {
                                             {/* Enroll Now */}<EnrollmentForm/> 
                         
                     <Button
-                      bg="white   "
+                      bg="white"
                       size={{ base: "sm", md: "md" }}
-                      onClick={onVideoOpen}
+                      onClick={() => {
+                        toast({
+                          title: "Preview available on request",
+                          description: "Please contact our team to see this course preview.",
+                          status: "info",
+                          duration: 3500,
+                          isClosable: true,
+                        });
+                        navigate("/contact-us");
+                      }}
                       leftIcon={<FaPlay />}
                     >
                       Watch Preview
@@ -2198,27 +2202,6 @@ export default function IT_CourseDetails() {
           </MotionBox>
         </Container>
 
-        {/* Video Preview Modal */}
-        <Modal
-          isOpen={isVideoOpen}
-          onClose={onVideoClose}
-          size={{ base: "full", md: "4xl" }}
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Course Preview: {course.title}</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <AspectRatio ratio={16 / 9}>
-                <iframe
-                  title="Course Preview"
-                  src={`https://www.youtube.com/embed/${course.videoId}`}
-                  allowFullScreen
-                />
-              </AspectRatio>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
       </Box>
     </>
   );

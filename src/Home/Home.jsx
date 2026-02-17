@@ -363,7 +363,7 @@ class ContactPage extends React.Component {
                 </h2>
                 <div className="flex flex-wrap gap-4">
                   <SocialButton icon={<FaFacebook />} href="https://www.facebook.com/share/1DQCBRzxdo/?mibextid=wwXIfr" />
-                  <SocialButton icon={<FaInstagram />} href="https://www.instagram.com/chamber_of_learning?igsh=ZnFvaXdpdWs5ZHJ2"/>
+                  <SocialButton icon={<FaInstagram />} href="https://www.instagram.com/prefcol_edutech_official?igsh=ZnFvaXdpdWs5ZHJ2"/>
                   <SocialButton icon={<FaYoutube />} href="https://www.youtube.com/@ChamberOfLearningOfficial" />
                   {/* <SocialButton icon={<FaGlobe />} href="https://www.prefcol.com"/> */}
                 </div>

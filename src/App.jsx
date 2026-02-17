@@ -166,8 +166,9 @@
 // }
 
 import React, { useState, useEffect } from "react";
-// import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+// Use BrowserRouter so the app uses clean URLs (no # in the path).
+// Note: BrowserRouter requires server-side routing (rewrite to index.html) when deployed.
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 // import Lenis from "@studio-freight/lenis";
 import COLChatbot from "./Chatbot/ColChatbot";
@@ -175,6 +176,7 @@ import Footer from "./Footer/Footer";
 
 // Import Components
 import Homepage from "./Components/Home/Home";
+import ConversionHomepage from "./Components/Homepage/Homepage";
 import CareersPage from "./Components/Home/CareerLogin/CareersPage";
 import IT_CourseDetails from "./Components/Home/Courses/IT_CoursesDetails";
 import IT_Courses from "./Components/Home/Courses/IT_CoursesPage";
@@ -184,6 +186,7 @@ import AboutUs from "./Components/Home/AboutUs.jsx/AboutUs";
 import ContactPage from "./Components/Common/ContactUS/ContactUs";
 import Non_IT_Courses from "./Components/Home/Courses/Non_IT_CoursePage";
 import EnrollmentForm from "./Components/Home/Courses/EnrollmentForm";
+import LiveCodePage from "./Components/LiveCode/LiveCodePage";
 import Cancellation_Refund_Policy from "./Components/Home/Support/Cancellation_Refund_Policy";
 import Privacy_Policy from "./Components/Home/Support/Privacy_Policy";
 import Shipping_Delivery_Policy from "./Components/Home/Support/Shipping_Delivery_Policy";
@@ -194,6 +197,7 @@ import StudentPortal from "./Student_Panel/page";
 
 // Admin Panel
 import MasterAdminRoutes from "./Admin Panel/MastersRoutePage";
+import { AdminGuard } from "./Admin Panel/MasterAdmin/AdminLoginPage";
 import TeacherAdminRoute from "./Admin Panel/TeacherAdminRoute";
 
 
@@ -275,6 +279,7 @@ const AppContent = ({ isDarkMode, onThemeToggle, loading, setLoading }) => {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Homepage />} />
+          <Route path="/homepage" element={<ConversionHomepage onStartDemo={() => alert('Demo booking coming soon!')} />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/careers" element={<CareersPage />} />
@@ -283,6 +288,7 @@ const AppContent = ({ isDarkMode, onThemeToggle, loading, setLoading }) => {
           <Route path="/Non_it-courses" element={<Non_IT_Courses />} />
           <Route path="/Non_it-courses/:courseId" element={<Non_IT_CourseDetails />} />
           <Route path="/enroll" element={<EnrollmentForm />} />
+          <Route path="/live-code" element={<LiveCodePage />} />
           <Route path="/Privacy_Policy" element={<Privacy_Policy />} />
           <Route path="/Cancellation_Refund_Policy" element={<Cancellation_Refund_Policy />} />
           <Route path="/Shipping_Delivery_Policy" element={<Shipping_Delivery_Policy />} />
@@ -292,7 +298,7 @@ const AppContent = ({ isDarkMode, onThemeToggle, loading, setLoading }) => {
           <Route path="/Student-portal/*" element={<StudentPortal />} />
 
           {/* Admin Routes */}
-          <Route path="/master-admin/*" element={<MasterAdminRoutes />} />
+          <Route path="/master-admin/*" element={<AdminGuard><MasterAdminRoutes /></AdminGuard>} />
           <Route path="/teacher-admin/*" element={<TeacherAdminRoute />} />
         </Routes>
 

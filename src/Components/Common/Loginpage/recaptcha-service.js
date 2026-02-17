@@ -1,7 +1,7 @@
 // Service to handle reCAPTCHA verification on the server side
 export async function verifyRecaptchaToken(token) {
   try {
-    const secretKey = process.env.RECAPTCHA_SECRET_KEY || "6LfCV5MrAAAAAPMUAzfCxFW86_NpVqaXq-xgzNM4" // Default test secret key
+    const secretKey = (typeof import.meta !== "undefined" && import.meta.env?.VITE_RECAPTCHA_SECRET_KEY) || "6LfCV5MrAAAAAPMUAzfCxFW86_NpVqaXq-xgzNM4" // Default test secret key
 
     const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",

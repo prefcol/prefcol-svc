@@ -6981,6 +6981,8 @@ import {
 } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Contexts/AuthContext";
+import { adminTheme, antdThemeConfig } from "./adminTheme";
+import { theme as antdTheme } from "antd";
 
 const { Sider } = Layout;
 const { Text } = Typography;
@@ -6988,6 +6990,10 @@ const { Text } = Typography;
 // Define all valid routes
 const routes = {
   "/master-admin/home": true,
+  "/master-admin/enquiries": true,
+  "/master-admin/add-student": true,
+  "/master-admin/add-teacher": true,
+  "/master-admin/add-employee": true,
   "/master-admin/create/user": true,
   "/master-admin/user-management/update": true,
   "/master-admin/user-management/delete": true,
@@ -7039,7 +7045,8 @@ const MasterAdminSidebar = ({
   useEffect(() => {
     const path = location.pathname;
     const parents = [];
-    if (path.includes("/user-management") || path === "/master-admin/create/user")
+    if (path.includes("/user-management") || path === "/master-admin/create/user" ||
+        path === "/master-admin/add-student" || path === "/master-admin/add-teacher" || path === "/master-admin/add-employee")
       parents.push("user-management");
     if (path.includes("/course-control") || path.includes("/videos/upload"))
       parents.push("course-content");
@@ -7102,12 +7109,16 @@ const MasterAdminSidebar = ({
 
   const menuItems = [
     { key: "/master-admin/home", icon: <HomeOutlined />, label: "Dashboard" },
+    { key: "/master-admin/enquiries", icon: <ProfileOutlined />, label: "Student Enquiries" },
     {
       key: "user-management",
       icon: <UsergroupAddOutlined />,
       label: "User Management",
       children: [
         { key: "/master-admin/create/user", icon: <UserAddOutlined />, label: "Create User" },
+        { key: "/master-admin/add-student", icon: <UserOutlined />, label: "Add Student" },
+        { key: "/master-admin/add-teacher", icon: <TeamOutlined />, label: "Add Teacher" },
+        { key: "/master-admin/add-employee", icon: <UsergroupAddOutlined />, label: "Add Employee" },
         { key: "/master-admin/user-management/update", icon: <EditOutlined />, label: "Update User" },
         { key: "/master-admin/user-management/delete", icon: <DeleteOutlined />, label: "Delete Users" },
         { key: "/master-admin/user-management/roles", icon: <SwapOutlined />, label: "Roles & Permissions" },
@@ -7164,36 +7175,50 @@ const MasterAdminSidebar = ({
     },
   ];
 
+  const sidebarTheme = {
+    ...antdThemeConfig,
+    algorithm: antdTheme.darkAlgorithm,
+    token: {
+      ...antdThemeConfig.token,
+      colorPrimary: adminTheme.accent,
+      colorBgContainer: adminTheme.bgSidebar,
+      colorBgElevated: adminTheme.bgCard,
+    },
+    components: {
+      Menu: {
+        ...antdThemeConfig.components?.Menu,
+        darkItemBg: adminTheme.bgSidebar,
+        darkItemSelectedBg: adminTheme.accentDim,
+        darkItemHoverBg: adminTheme.greenDark,
+        darkItemSelectedColor: adminTheme.accent,
+        itemSelectedBg: adminTheme.accentDim,
+        itemHoverBg: adminTheme.greenDark,
+        itemSelectedColor: adminTheme.accent,
+      },
+    },
+  };
+
   const SidebarContent = () => (
-    <ConfigProvider
-      theme={{
-        token: { colorPrimary: "#FF7A00" },
-        components: {
-          Menu: {
-            itemSelectedBg: "#FFF2E8",
-            itemHoverBg: "#FFF2E8",
-            itemSelectedColor: "#FF7A00",
-          },
-        },
-      }}
-    >
+    <ConfigProvider theme={sidebarTheme}>
       <Sider
         width={260}
         collapsedWidth={64}
         collapsible
         collapsed={collapsed}
         onCollapse={setCollapsed}
+        theme="dark"
         style={{
           height: "100vh",
           position: "fixed",
           left: 0,
           top: 0,
-          boxShadow: "2px 0 8px rgba(0,0,0,0.1)",
-          zIndex: isMobile ? 1100 : "auto", // Ensure drawer is above content
+          background: adminTheme.bgSidebar,
+          boxShadow: "2px 0 16px rgba(0,0,0,0.4)",
+          zIndex: isMobile ? 1100 : "auto",
         }}
         className="fixed-sider"
       >
-        {/* Logo */}
+        {/* Logo – PREFCOL branding */}
         <div
           style={{
             height: 50,
@@ -7201,7 +7226,7 @@ const MasterAdminSidebar = ({
             alignItems: "center",
             justifyContent: collapsed ? "center" : "space-between",
             padding: "0 16px",
-            borderBottom: "1px solid #f0f0f0",
+            borderBottom: `1px solid ${adminTheme.border}`,
           }}
         >
           {!collapsed && (
@@ -7210,17 +7235,18 @@ const MasterAdminSidebar = ({
                 style={{
                   width: 32,
                   height: 32,
-                  backgroundColor: "#FF7A00",
-                  borderRadius: 4,
+                  background: `linear-gradient(135deg, ${adminTheme.greenMid}, ${adminTheme.accent})`,
+                  borderRadius: 6,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  boxShadow: `0 0 12px ${adminTheme.accentGlow}`,
                 }}
               >
-                <HomeOutlined style={{ color: "white", fontSize: 16 }} />
+                <HomeOutlined style={{ color: adminTheme.bgDark, fontSize: 16 }} />
               </div>
-              <Text strong style={{ marginLeft: 12, fontSize: 16 }}>
-                AdminPortal
+              <Text strong style={{ marginLeft: 12, fontSize: 16, color: adminTheme.brand }}>
+                PREFCOL
               </Text>
             </div>
           )}
@@ -7228,22 +7254,20 @@ const MasterAdminSidebar = ({
             type="text"
             icon={collapsed ? <RightOutlined /> : <LeftOutlined />}
             onClick={() => setCollapsed(!collapsed)}
-            style={{ color: "#FF7A00" }}
+            style={{ color: adminTheme.accent }}
           />
         </div>
 
         {/* User Info (only when expanded) */}
         {!collapsed && userData && (
-          <div style={{ padding: "12px 16px", borderBottom: "1px solid #f0f0f0" }}>
+          <div style={{ padding: "12px 16px", borderBottom: `1px solid ${adminTheme.border}` }}>
             <Space size={10}>
-              <Badge count={userData.notifications}>
-                <Avatar src={userData.avatar} size="small" style={{ border: "2px solid #FF7A00" }} />
+              <Badge count={userData.notifications} color={adminTheme.accent}>
+                <Avatar src={userData.avatar} size="small" style={{ border: `2px solid ${adminTheme.accent}` }} />
               </Badge>
               <div>
-                <Text strong>{userData.name}</Text>
-                <Text type="secondary" style={{ fontSize: 12 }}>
-                  {userData.role}
-                </Text>
+                <Text strong style={{ color: adminTheme.textPrimary }}>{userData.name}</Text>
+                <Text style={{ fontSize: 12, color: adminTheme.textSecondary }}>{userData.role}</Text>
               </div>
             </Space>
           </div>
@@ -7261,11 +7285,12 @@ const MasterAdminSidebar = ({
         >
           {isLoading ? (
             <div style={{ padding: "20px", textAlign: "center" }}>
-              <Spin size="small" />
+              <Spin size="small" style={{ color: adminTheme.accent }} />
             </div>
           ) : (
             <Menu
               mode="inline"
+              theme="dark"
               selectedKeys={[location.pathname]}
               openKeys={openKeys}
               onOpenChange={handleOpenChange}
@@ -7273,17 +7298,21 @@ const MasterAdminSidebar = ({
               items={menuItems}
               onClick={handleMenuClick}
               tooltip={collapsed ? { placement: "right" } : null}
+              style={{
+                background: "transparent",
+                color: adminTheme.textSecondary,
+              }}
             />
           )}
         </div>
 
         {/* Footer (only when expanded) */}
         {!collapsed && (
-          <div style={{ padding: "12px 16px", borderTop: "1px solid #f0f0f0" }}>
+          <div style={{ padding: "12px 16px", borderTop: `1px solid ${adminTheme.border}` }}>
             <Dropdown menu={profileMenu}>
               <div style={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
-                <SettingOutlined style={{ color: "#FF7A00", marginRight: 12 }} />
-                <Text>Account Settings</Text>
+                <SettingOutlined style={{ color: adminTheme.accent, marginRight: 12 }} />
+                <Text style={{ color: adminTheme.textSecondary }}>Account Settings</Text>
               </div>
             </Dropdown>
           </div>

@@ -209,6 +209,10 @@ import VideoManagement from "./MasterAdmin/MasterTabs/CourseandContentControl/co
 import UpdateTeacher from "./MasterAdmin/MasterTabs/Update_User";
 import DeleteUser from "./MasterAdmin/MasterTabs/User Management/DeleteUser";
 import RolesPermissions from "./MasterAdmin/MasterTabs/User Management/RolesPermissions";
+import EnquiriesPage from "./MasterAdmin/MasterTabs/Enquiries/EnquiriesPage";
+import AddStudentPage from "./MasterAdmin/MasterTabs/User Management/AddStudentPage";
+import AddTeacherPage from "./MasterAdmin/MasterTabs/User Management/AddTeacherPage";
+import AddEmployeePage from "./MasterAdmin/MasterTabs/User Management/AddEmployeePage";
 
 const MasterAdminRoutes = () => {
   return (
@@ -219,6 +223,10 @@ const MasterAdminRoutes = () => {
 
         {/* Master Admin Routes (relative paths!) */}
         <Route path="home" element={<MasterAdminHome />} />
+        <Route path="enquiries" element={<EnquiriesPage />} />
+        <Route path="add-student" element={<AddStudentPage />} />
+        <Route path="add-teacher" element={<AddTeacherPage />} />
+        <Route path="add-employee" element={<AddEmployeePage />} />
         <Route path="videos/upload" element={<VideoManagement />} />
         <Route path="course-control/add-update-remove" element={<h1>Add/Update/Remove Courses</h1>} />
         <Route path="course-control/restrict-access" element={<h1>Restrict Content Access</h1>} />

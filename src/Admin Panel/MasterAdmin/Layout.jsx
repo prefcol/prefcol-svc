@@ -119,23 +119,22 @@
 
 // export default AdminLayout;
 
-// AdminLayout.jsx
+// AdminLayout.jsx – PREFCOL dark enchanted forest theme
+import "./adminTheme.css";
 import { Box, useBreakpointValue, IconButton, useDisclosure } from "@chakra-ui/react";
 import { FaBars } from "react-icons/fa";
 import MasterAdminSidebar from "../MasterAdmin/MasterAdminSidebar";
 import { useState } from "react";
-
+import { adminTheme } from "./adminTheme";
 
 const AdminLayout = ({ children }) => {
   const isMobile = useBreakpointValue({ base: true, md: false });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false); // 👈 lifted state
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  // Sidebar widths
   const SIDEBAR_EXPANDED_WIDTH = "260px";
   const SIDEBAR_COLLAPSED_WIDTH = "64px";
 
-  // Determine effective sidebar width for layout
   const effectiveSidebarWidth = isMobile 
     ? "0px" 
     : sidebarCollapsed 
@@ -143,37 +142,43 @@ const AdminLayout = ({ children }) => {
       : SIDEBAR_EXPANDED_WIDTH;
 
   return (
-    <Box display="flex" minHeight="100vh" position="relative">
-      {/* Desktop Sidebar */}
+    <Box className="prefcol-admin-root" display="flex" minHeight="100vh" position="relative" color={adminTheme.textPrimary}>
+      {/* Full-screen login image background */}
+      <div className="prefcol-admin-bg" aria-hidden="true" />
+      {/* Dark overlay so content stays readable */}
+      <div className="prefcol-admin-bg-overlay" aria-hidden="true" />
+      {/* Animated tree glow – makes the tree feel live */}
+      <div className="prefcol-admin-tree-glow" aria-hidden="true" />
+      <div className="prefcol-admin-tree-shine" aria-hidden="true" />
+
       {!isMobile && (
-        <Box as="aside" width={effectiveSidebarWidth} flexShrink={0}>
+        <Box as="aside" width={effectiveSidebarWidth} flexShrink={0} position="relative" zIndex={10}>
           <MasterAdminSidebar
             isMobile={false}
-            collapsed={sidebarCollapsed}        // 👈 pass current state
-            onCollapse={setSidebarCollapsed}    // 👈 pass setter
+            collapsed={sidebarCollapsed}
+            onCollapse={setSidebarCollapsed}
           />
         </Box>
       )}
 
-      {/* Mobile Drawer */}
       {isMobile && (
         <MasterAdminSidebar
           isMobile={true}
           isOpen={isOpen}
           onClose={onClose}
-          // No need to pass collapsed/onCollapse for mobile drawer
         />
       )}
 
-      {/* Main Content */}
       <Box
         as="main"
         flex="1"
-        ml={{ base: 0, md: 0 }} // 👈 dynamic margin
+        ml={{ base: 0, md: 0 }}
         p={{ base: 4, md: 6 }}
         pt={{ base: 16, md: 6 }}
+        minH="100vh"
+        position="relative"
+        zIndex={10}
       >
-        {/* Mobile Hamburger */}
         {isMobile && (
           <IconButton
             icon={<FaBars />}
@@ -183,10 +188,13 @@ const AdminLayout = ({ children }) => {
             left={4}
             zIndex={20}
             onClick={onOpen}
-            colorScheme="teal"
+            bg={adminTheme.bgCard}
+            color={adminTheme.accent}
+            borderColor={adminTheme.border}
             size="md"
             borderRadius="full"
-            boxShadow="md"
+            boxShadow={`0 0 12px ${adminTheme.accentGlow}`}
+            _hover={{ bg: adminTheme.greenDark, color: adminTheme.accent }}
           />
         )}
 

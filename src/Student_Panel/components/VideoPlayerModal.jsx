@@ -23,11 +23,13 @@ export default function VideoPlayerModal({
 
   // Handle video completion
   const handleVideoEnd = () => {
-    dispatch({
-      type: "COMPLETE_VIDEO",
-      courseId: course.id,
-      videoId: video.id
-    });
+    if (typeof dispatch === 'function') {
+      dispatch({
+        type: "COMPLETE_VIDEO",
+        courseId: course.id,
+        videoId: video.id
+      });
+    }
     message.success("Video completed!");
     onClose();
   };
@@ -168,22 +170,23 @@ export default function VideoPlayerModal({
             <video
               ref={videoRef}
               controls
-              controlsList="nodownload noremoteplayback" // ✅ Removed nofullscreen
+              controlsList="nodownload noremoteplayback"
               style={{
                 width: '100%',
                 height: '100%',
                 display: 'block',
                 outline: 'none',
                 backgroundColor: '#000',
-                objectFit: 'cover',
+                objectFit: 'contain',
                 transition: 'transform 0.2s ease',
               }}
-              src={video.url}
+              src={video.url || ''}
               onEnded={handleVideoEnd}
               onTimeUpdate={handleTimeUpdate}
               onLoadedData={handleLoadedData}
               onError={handleError}
-              preload="metadata"
+              preload="auto"
+              playsInline
             />
           </>
         ) : (

@@ -121,111 +121,138 @@
 
 // export default MasterAdminHome;
 
-// src/pages/DashboardPage.jsx
+// src/pages/DashboardPage.jsx – PREFCOL dark enchanted forest theme
 import React from 'react';
-import { Card, Tag, Avatar, Space } from 'antd';
+import { Card, Tag, ConfigProvider } from 'antd';
+import { theme as antdTheme } from 'antd';
 import { 
   UserOutlined, 
   TeamOutlined, 
   BookOutlined, 
   RiseOutlined 
 } from '@ant-design/icons';
+import { adminTheme, antdThemeConfig } from './adminTheme';
+
+const cardStyle = {
+  background: adminTheme.bgCard,
+  border: `1px solid ${adminTheme.border}`,
+  borderRadius: 8,
+  boxShadow: `0 4px 20px rgba(0,0,0,0.3)`,
+};
 
 const DashboardPage = () => {
   const stats = [
-    { 
-      title: 'Total Students', 
-      value: '1,248', 
-      change: '+12%', 
-      icon: <UserOutlined className="text-blue-500 text-xl" />,
-      color: 'bg-blue-50'
-    },
-    { 
-      title: 'Active Teachers', 
-      value: '42', 
-      change: '+3%', 
-      icon: <TeamOutlined className="text-green-500 text-xl" />,
-      color: 'bg-green-50'
-    },
-    { 
-      title: 'Courses', 
-      value: '86', 
-      change: '+5%', 
-      icon: <BookOutlined className="text-purple-500 text-xl" />,
-      color: 'bg-purple-50'
-    },
-    { 
-      title: 'Avg. Attendance', 
-      value: '87%', 
-      change: '+2%', 
-      icon: <RiseOutlined className="text-yellow-500 text-xl" />,
-      color: 'bg-yellow-50'
-    },
+    { title: 'Total Students', value: '1,248', change: '+12%', icon: <UserOutlined />, iconBg: adminTheme.tealDark },
+    { title: 'Active Teachers', value: '42', change: '+3%', icon: <TeamOutlined />, iconBg: adminTheme.greenMid },
+    { title: 'Courses', value: '86', change: '+5%', icon: <BookOutlined />, iconBg: adminTheme.greenDark },
+    { title: 'Avg. Attendance', value: '87%', change: '+2%', icon: <RiseOutlined />, iconBg: adminTheme.greenMid },
   ];
 
+  const dashboardTheme = {
+    ...antdThemeConfig,
+    algorithm: antdTheme.darkAlgorithm,
+    token: {
+      ...antdThemeConfig.token,
+      colorPrimary: adminTheme.accent,
+      colorBgContainer: adminTheme.bgCard,
+      colorBorder: adminTheme.border,
+      colorText: adminTheme.textPrimary,
+      colorTextSecondary: adminTheme.textSecondary,
+    },
+  };
+
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Overview</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {stats.map((stat, index) => (
-          <Card key={index} className="shadow-sm border border-gray-200">
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-gray-500 text-sm">{stat.title}</p>
-                <p className="text-2xl font-bold mt-1">{stat.value}</p>
-              </div>
-              <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${stat.color}`}>
-                {stat.icon}
-              </div>
-            </div>
-            <p className="text-green-500 text-sm mt-2 flex items-center">
-              <span className="mr-1">▲</span> {stat.change} from last month
-            </p>
-          </Card>
-        ))}
-      </div>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card title="Recent Activity" className="shadow-sm border border-gray-200">
-          <div className="space-y-4">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="flex items-start">
-                <div className="bg-blue-100 p-2 rounded-full mr-3">
-                  <UserOutlined className="text-blue-600" />
-                </div>
-                <div>
-                  <p className="font-medium">New student enrollment</p>
-                  <p className="text-gray-500 text-sm">Alex Johnson enrolled in Computer Science</p>
-                  <p className="text-gray-400 text-xs mt-1">2 hours ago</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Card>
+    <ConfigProvider theme={dashboardTheme}>
+      <div style={{ padding: 24 }}>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: adminTheme.brand, marginBottom: 24 }}>
+          Dashboard Overview
+        </h1>
         
-        <Card title="System Status" className="shadow-sm border border-gray-200">
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span>Database</span>
-              <Tag color="success">Operational</Tag>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 24, marginBottom: 32 }}>
+          {stats.map((stat, index) => (
+            <Card key={index} style={cardStyle} styles={{ body: { padding: 20 } }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div>
+                  <p style={{ color: adminTheme.textSecondary, fontSize: 13, margin: 0 }}>{stat.title}</p>
+                  <p style={{ color: adminTheme.textPrimary, fontSize: '1.5rem', fontWeight: 700, margin: '8px 0 0' }}>{stat.value}</p>
+                </div>
+                <div style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: 8,
+                  background: stat.iconBg,
+                  border: `1px solid ${adminTheme.border}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: adminTheme.accent,
+                  fontSize: 20,
+                }}>
+                  {stat.icon}
+                </div>
+              </div>
+              <p style={{ color: adminTheme.accent, fontSize: 13, margin: '12px 0 0', display: 'flex', alignItems: 'center' }}>
+                <span style={{ marginRight: 4 }}>▲</span> {stat.change} from last month
+              </p>
+            </Card>
+          ))}
+        </div>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
+          <Card 
+            title={<span style={{ color: adminTheme.textPrimary }}>Recent Activity</span>} 
+            style={cardStyle}
+            styles={{ header: { borderBottom: `1px solid ${adminTheme.border}`, color: adminTheme.textPrimary } }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              {[1, 2, 3].map((item) => (
+                <div key={item} style={{ display: 'flex', alignItems: 'flex-start' }}>
+                  <div style={{
+                    background: adminTheme.accentDim,
+                    padding: 10,
+                    borderRadius: '50%',
+                    marginRight: 12,
+                    color: adminTheme.accent,
+                  }}>
+                    <UserOutlined />
+                  </div>
+                  <div>
+                    <p style={{ fontWeight: 500, color: adminTheme.textPrimary, margin: 0 }}>New student enrollment</p>
+                    <p style={{ color: adminTheme.textSecondary, fontSize: 13, margin: '4px 0 0' }}>Alex Johnson enrolled in Computer Science</p>
+                    <p style={{ color: adminTheme.textMuted, fontSize: 12, margin: '4px 0 0' }}>2 hours ago</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="flex justify-between items-center">
-              <span>Authentication</span>
-              <Tag color="success">Operational</Tag>
+          </Card>
+          
+          <Card 
+            title={<span style={{ color: adminTheme.textPrimary }}>System Status</span>} 
+            style={cardStyle}
+            styles={{ header: { borderBottom: `1px solid ${adminTheme.border}`, color: adminTheme.textPrimary } }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              {[
+                { label: 'Database', status: 'Operational', color: 'success' },
+                { label: 'Authentication', status: 'Operational', color: 'success' },
+                { label: 'File Storage', status: 'Degraded', color: 'warning' },
+                { label: 'API Services', status: 'Operational', color: 'success' },
+              ].map((row, i) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: adminTheme.textSecondary }}>{row.label}</span>
+                  <Tag color={row.color === 'success' ? 'green' : 'gold'} style={{
+                    borderColor: row.color === 'success' ? adminTheme.accent : adminTheme.brand,
+                    color: row.color === 'success' ? adminTheme.accent : adminTheme.brand,
+                  }}>
+                    {row.status}
+                  </Tag>
+                </div>
+              ))}
             </div>
-            <div className="flex justify-between items-center">
-              <span>File Storage</span>
-              <Tag color="warning">Degraded</Tag>
-            </div>
-            <div className="flex justify-between items-center">
-              <span>API Services</span>
-              <Tag color="success">Operational</Tag>
-            </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
       </div>
-    </div>
+    </ConfigProvider>
   );
 };
 

@@ -841,7 +841,7 @@
 //     // Load progress from server
 //     const loadProgress = async () => {
 //       try {
-//         const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/progress/${courseId}/${videoId}`)
+//         const response = await axios.get(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/progress/${courseId}/${videoId}`)
 
 //         if (response.data.progress) {
 //           setProgress(response.data.progress)
@@ -866,7 +866,7 @@
 //     // Save progress to server
 //     const saveProgress = async () => {
 //       try {
-//         await axios.post(`${process.env.REACT_APP_API_URL}/api/progress/${courseId}/${videoId}`, {
+//         await axios.post(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/progress/${courseId}/${videoId}`, {
 //           progress,
 //           watchedSegments,
 //           hasSkipped,
@@ -985,7 +985,7 @@
 
 //   const handleGenerateCertificate = async () => {
 //     try {
-//       const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/certificates/generate`, {
+//       const response = await axios.post(`${(import.meta.env?.VITE_API_URL || "https://api.chamberoflearning.com/v1")}/api/certificates/generate`, {
 //         courseId,
 //         videoId,
 //       })
@@ -1162,6 +1162,7 @@ import {
   FileTextOutlined,
   MessageOutlined,
   TrophyOutlined,
+  SoundOutlined,
 } from "@ant-design/icons"
 import "../styles/VideoPlayer.css"
 
@@ -1187,6 +1188,7 @@ const VideoPlayer = ({ courseData, onComplete, windowWidth }) => {
     const video = videoRef.current
 
     if (video) {
+      video.volume = volume
       video.addEventListener("loadedmetadata", () => {
         setDuration(video.duration)
       })
@@ -1200,6 +1202,12 @@ const VideoPlayer = ({ courseData, onComplete, windowWidth }) => {
       }
     }
   }, [])
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.volume = volume
+    }
+  }, [volume])
 
   const handleTimeUpdate = () => {
     const video = videoRef.current
@@ -1301,6 +1309,14 @@ const VideoPlayer = ({ courseData, onComplete, windowWidth }) => {
     }
   }
 
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value)
+    setVolume(newVolume)
+    if (videoRef.current) {
+      videoRef.current.volume = newVolume
+    }
+  }
+
   const handleDownloadCertificate = () => {
     if (!completedWatching) {
       message.error("You need to watch the entire video without skipping to download the certificate")
@@ -1367,15 +1383,16 @@ const VideoPlayer = ({ courseData, onComplete, windowWidth }) => {
             </div>
 
             <div className="controls-row">
-              <Button
-                type="text"
-                icon={isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
-                onClick={togglePlay}
-                className="control-button"
-              />
-
-              <div className="time-display">
-                {formatTime(currentTime)} / {formatTime(duration)}
+              <div className="left-controls">
+                <Button
+                  type="text"
+                  icon={isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+                  onClick={togglePlay}
+                  className="control-button"
+                />
+                <div className="time-display">
+                  {formatTime(currentTime)} / {formatTime(duration)}
+                </div>
               </div>
 
               <div className="right-controls">
@@ -1386,6 +1403,20 @@ const VideoPlayer = ({ courseData, onComplete, windowWidth }) => {
                   onClick={handleFullscreen}
                   className="control-button"
                 />
+                {/* Scholly-style vertical volume slider: blue track, white handle, speaker at bottom */}
+                <div className="volume-slider-wrapper">
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value={volume}
+                    onChange={handleVolumeChange}
+                    className="volume-slider-vertical"
+                    style={{ "--volume-percent": `${volume * 100}%` }}
+                  />
+                  <SoundOutlined className="volume-slider-icon" />
+                </div>
               </div>
             </div>
           </div>

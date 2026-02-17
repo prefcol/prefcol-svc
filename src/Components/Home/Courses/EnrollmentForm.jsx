@@ -4,6 +4,7 @@ import { Button as AntButton } from "antd";
 import { Button as ChakraButton } from "@chakra-ui/react";
 import { UploadOutlined } from "@ant-design/icons";
 import { useAuth } from "../../../Contexts/AuthContext";
+import { createEnquiry } from "../../../Admin Panel/api/adminApi";
 
 const { Option } = Select;
 
@@ -46,6 +47,26 @@ const EnrollmentForm = () => {
     });
 
     formData.append("content", jsonContent);
+
+    // Send to admin panel backend so enquiry appears in Master Admin
+    const enquiryPayload = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      mobileNumber: values.mobile,
+      courses: Array.isArray(values.courses) ? values.courses.join(", ") : values.courses,
+      profession: values.profession,
+      yearOfPassedOut: values.passedOutYear,
+      pursuingYear: values.pursuingYear,
+      field: values.field,
+      experience: values.experience,
+      message: "Enrollment / enquiry from site",
+    };
+    try {
+      await createEnquiry(enquiryPayload);
+    } catch (e) {
+      console.warn("Admin enquiry sync failed:", e);
+    }
 
     try {
       const response = await fetch(

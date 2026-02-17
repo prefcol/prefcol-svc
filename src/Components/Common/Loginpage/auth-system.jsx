@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css"
 import "./toast-styles.css"
 import { API_ENDPOINTS, validateEmail, validatePassword, validateName, calculatePasswordStrength } from "./utils"
 import OtpVerificationModal from "./otp-verification-modal"
+import SocialButtons from "./SocialButtons"
 import ReCAPTCHA from "react-google-recaptcha"
 import { useAuth } from "../../../Contexts/AuthContext"
 import { useErrorHandler } from "./error-handler"
@@ -121,6 +122,7 @@ const InputField = ({
   validate,
   autoComplete = "on",
   showPasswordStrength = false,
+  glass = false,
 }) => {
   const [focused, setFocused] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -153,18 +155,20 @@ const InputField = ({
     onChange(e) // keep your parent form working
   }
 
+  const containerClass = glass
+    ? `relative flex items-center rounded-xl overflow-hidden transition-all border ${
+        focused ? "border-teal-400/80 ring-2 ring-teal-300/50" : error || localError ? "border-red-400" : "border-white/40"
+      } bg-white/25 backdrop-blur-sm`
+    : `relative flex items-center border ${
+        focused ? "border-teal-500 ring-2 ring-teal-200" : error || localError ? "border-red-500" : "border-gray-300"
+      } rounded-lg overflow-hidden transition-all`
+  const iconClass = glass ? "flex items-center justify-center w-9 h-9 bg-white/20 text-slate-600" : "flex items-center justify-center w-9 h-9 bg-gray-50 text-gray-500"
+  const inputClass = glass ? "flex-1 h-9 px-2.5 outline-none text-slate-800 text-sm w-full placeholder:text-slate-500 bg-transparent" : "flex-1 h-9 px-2.5 outline-none text-gray-700 text-sm w-full"
+
   return (
     <div className="space-y-1 w-full">
-      <div
-        className={`relative flex items-center border ${
-          focused
-            ? "border-teal-500 ring-2 ring-teal-200"
-            : error || localError
-            ? "border-red-500"
-            : "border-gray-300"
-        } rounded-lg overflow-hidden transition-all`}
-      >
-        <div className="flex items-center justify-center w-9 h-9 bg-gray-50 text-gray-500">
+      <div className={containerClass}>
+        <div className={iconClass}>
           <Icon size={16} />
         </div>
         <input
@@ -174,12 +178,12 @@ const InputField = ({
           onChange={type === "password" ? handlePasswordChange : onChange} // ✅ changed only this line
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className="flex-1 h-9 px-2.5 outline-none text-gray-700 text-sm w-full"
+          className={inputClass}
           autoComplete={autoComplete}
         />
         {type === "password" && (
           <button
-            className="px-2.5 text-gray-500 hover:text-gray-700 focus:outline-none"
+            className={glass ? "px-2.5 text-slate-600 hover:text-slate-800 focus:outline-none" : "px-2.5 text-gray-500 hover:text-gray-700 focus:outline-none"}
             onClick={togglePasswordVisibility}
             type="button"
             aria-label={showPassword ? "Hide password" : "Show password"}
@@ -371,6 +375,7 @@ export default function AuthSystem() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
     if (!validateForm()) {
       if (formType === "signup") {
         if(validFormErrors.firstName != undefined){
@@ -678,12 +683,29 @@ const handleOtpVerification = useCallback(
       // Save user data
       sessionStorage.setItem("user", JSON.stringify(data));
       sessionStorage.setItem("authToken", data.token);
+      if (data.token) {
+        sessionStorage.setItem("auth_token", data.token);
+      }
       setIsAuthenticated(true);
       login(data); // ← This sets user in AuthContext
       localStorage.setItem("isAuthenticated", "true");
       resetFormDataRef.current();
       setShowForm(false);
       showSuccess("You've been authenticated successfully!");
+
+      // Admin panel: OTP-verified admin email → master admin (uses same Sign in)
+      const email = (data.mailId || data.email || formData.mailId || "").trim().toLowerCase();
+      if (email === "prefcoledutech@gmail.com") {
+        navigate("/master-admin/home");
+        return;
+      }
+
+      // Teacher panel: this email always goes to teacher portal (uses same Sign in)
+      if (email === "manikandan.balamurugan016@gmail.com") {
+        login({ ...data, role: "teacher" });
+        navigate("/teacher-admin/home");
+        return;
+      }
 
       // ✅ FIXED REDIRECTION - Default to student portal
       if (userRole === "teacher") {
@@ -893,68 +915,65 @@ const handleOtpVerification = useCallback(
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center p-2 pointer-events-none"
+              style={{
+                backgroundImage: `url(${loginImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
               onClick={() => {
                 resetFormDataRef.current()
                 setShowForm(false)
               }}
             >
-              <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
+              <div className="absolute inset-0 bg-black/25 backdrop-blur-[2px]" />
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                 transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl w-full max-w-[95vw]  md:max-w-xl lg:max-w-3xl xl:max-w-4xl mx-auto my-4 relative flex flex-col lg:flex-row items-center sm:p-2 md:p-0 sm:h-1/2 xl:h-[80vh] 2xl:h-[60vh] pointer-events-auto "
+                className="w-full max-w-[95vw] md:max-w-xl lg:max-w-3xl xl:max-w-4xl mx-auto my-4 relative flex flex-col lg:flex-row items-center sm:p-2 md:p-0 sm:h-1/2 xl:h-[80vh] 2xl:h-[60vh] pointer-events-auto rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-white/15 backdrop-blur-xl"
                 onClick={(e) => e.stopPropagation()}
-                
               >
                 <button
                   onClick={() => {
                     resetFormDataRef.current()
                     setShowForm(false)
                   }}
-                  className="absolute right-3 top-3 p-1.5 rounded-full bg-white/90 hover:bg-gray-100 transition-colors z-50 shadow-sm"
+                  className="absolute right-3 top-3 p-2 rounded-full bg-white/20 hover:bg-white/40 border border-white/30 backdrop-blur-md transition-colors z-50 shadow-lg"
                   aria-label="Close form"
                 >
-                  <X className="w-4 h-4 text-gray-600" />
+                  <X className="w-4 h-4 text-slate-700" />
                 </button>
 
                 {/* Image panel: only on xl+ */}
-                <div className="hidden xl:block w-1/2 rounded-l-2xl relative h-full xl:h-full">
-                  <div className="absolute inset-0 flex flex-col justify-top items-top z-10 bg-black/20 text-white p-0">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2, duration: 0.5 }}
-                      className="text-white text-center"
-                      style={{
-        backgroundImage: `url(${loginImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        minHeight: "100%", // ensures full height
-      }}
-                    >
-                      <h1 className="text-xl font-bold mb-2">Welcome!</h1>
-                      <p className="text-sm opacity-90">Join our community today.</p>
-                    </motion.div>
+                <div className="hidden xl:block w-1/2 relative h-full min-h-[320px]">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url(${loginImage})` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex flex-col justify-end p-6">
+                    <span className="font-serif text-2xl xl:text-3xl font-bold text-[#0d3d38]" style={{ letterSpacing: "0.02em" }}>
+                      PREFCOL.
+                    </span>
                   </div>
                 </div>
 
-                {/* Form area: wider on large screens */}
-                <div className={`w-full ${!showForgotPassword ? 'xl:w-1/2' : 'xl:w-full'} p-4 flex flex-col overflow-hidden`}>
-                  <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent pr-1 -mr-1">
+                {/* Form area */}
+                <div className={`w-full ${!showForgotPassword ? "xl:w-1/2" : "xl:w-full"} p-5 xl:p-6 flex flex-col overflow-hidden`}>
+                  <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent pr-1 -mr-1">
                     <motion.div
-                      className="w-full max-w-lg mx-auto space-y-3"
+                      className="w-full max-w-lg mx-auto space-y-3 py-2 px-4 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 shadow-xl"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.1 }}
+                      role="dialog"
+                      aria-modal="true"
                     >
                       {accountLocked && (
                         <motion.div
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="bg-red-50 border border-red-200 rounded-lg p-2.5 mb-3 text-xs"
+                          className="bg-red-500/20 backdrop-blur-sm border border-red-400/50 rounded-xl p-2.5 mb-3 text-xs text-red-800"
                         >
                           <div className="flex items-start gap-2">
                             <AlertCircle className="text-red-500 mt-0.5 flex-shrink-0" size={14} />
@@ -974,7 +993,7 @@ const handleOtpVerification = useCallback(
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <h2 className="text-lg font-bold mb-3 text-center text-teal-900">
+                          <h2 className="text-lg font-bold mb-3 text-center text-slate-800">
                             Reset Password
                           </h2>
                           <form onSubmit={handleForgotPassword} className="space-y-3">
@@ -987,6 +1006,7 @@ const handleOtpVerification = useCallback(
                               error={errors.mailId}
                               validate={validateEmail}
                               autoComplete="email"
+                              glass
                             />
                             <div className="flex justify-center my-2 px-1">
                               <div className="w-full max-w-xs">
@@ -1006,7 +1026,7 @@ const handleOtpVerification = useCallback(
                             <motion.button
                               type="submit"
                               disabled={isLoading || accountLocked}
-                              className="w-full py-2 px-3 bg-teal-700 text-white font-medium rounded-lg text-sm"
+                              className="w-full py-2.5 px-3 rounded-xl font-medium text-sm bg-teal-600/90 hover:bg-teal-600 text-white border border-white/30 backdrop-blur-md shadow-lg transition-all"
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                             >
@@ -1019,11 +1039,12 @@ const handleOtpVerification = useCallback(
                                 "Get OTP"
                               )}
                             </motion.button>
+                            <SocialButtons onGoogle={() => handleSocialLogin && handleSocialLogin('google')} onGithub={() => handleSocialLogin && handleSocialLogin('github')} />
                           </form>
                           <div className="mt-3 text-center text-xs">
                             <button
                               onClick={() => toggleForgotPassword(false)}
-                              className="text-teal-900 font-medium hover:underline"
+                              className="text-teal-800 font-medium hover:underline"
                             >
                               Back to Login
                             </button>
@@ -1035,7 +1056,7 @@ const handleOtpVerification = useCallback(
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <h2 className="text-lg font-bold mb-3 text-center text-teal-900">
+                          <h2 className="text-lg font-bold mb-3 text-center text-slate-800">
                             {formType === "login" ? "Welcome Back!" : "Create Account"}
                           </h2>
                           <form onSubmit={handleSubmit} className="space-y-3">
@@ -1050,6 +1071,7 @@ const handleOtpVerification = useCallback(
                                   error={errors.firstName}
                                   validate={validateName}
                                   autoComplete="given-name"
+                                  glass
                                 />
                                 <InputField
                                   icon={User}
@@ -1060,6 +1082,7 @@ const handleOtpVerification = useCallback(
                                   error={errors.lastName}
                                   validate={validateName}
                                   autoComplete="family-name"
+                                  glass
                                 />
                               </div>
                             )}
@@ -1072,6 +1095,7 @@ const handleOtpVerification = useCallback(
                               error={errors.mailId}
                               validate={validateEmail}
                               autoComplete="email"
+                              glass
                             />
                             <InputField
                               icon={Lock}
@@ -1083,6 +1107,7 @@ const handleOtpVerification = useCallback(
                               validate={(value) => validatePassword(value, formData.firstName, formData.mailId)}
                               autoComplete={formType === "login" ? "current-password" : "new-password"}
                               showPasswordStrength={true}
+                              glass
                             />
                             {formType === "signup" && (
                               <InputField
@@ -1094,6 +1119,7 @@ const handleOtpVerification = useCallback(
                                 error={errors.confirmPassword}
                                 validate={(value) => (value !== formData.password ? "Passwords do not match" : undefined)}
                                 autoComplete="new-password"
+                                glass
                               />
                             )}
                             <div className="flex justify-center my-2 px-1">
@@ -1114,7 +1140,7 @@ const handleOtpVerification = useCallback(
                             <motion.button
                               type="submit"
                               disabled={isLoading || accountLocked}
-                              className="w-full py-2 px-3 bg-teal-700 text-white font-medium rounded-lg text-sm"
+                              className="w-full py-2.5 px-3 rounded-xl font-medium text-sm bg-teal-600/90 hover:bg-teal-600 text-white border border-white/30 backdrop-blur-md shadow-lg transition-all"
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                             >

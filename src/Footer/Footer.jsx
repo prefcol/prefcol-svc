@@ -250,11 +250,16 @@ const ContactInfo = () => {
       type: "BRANCH",
       icon: Building2,
       name: "Tindivanam",
-      address: "",
-      comingSoon: true,
+      address: (
+        <>
+        No.123, Main Road, Tindivanam, Tamil Nadu, 604001, India
+        </>
+      ),
+
+      comingSoon: false,
       phone: "+91 944-591-8818",
       email: "info@prefcol.com",
-      mapUrl: "#",
+      mapUrl: "https://www.google.com/maps/place/12%C2%B013'48.4%22N+79%C2%B038'58.3%22E/@12.2301176,79.6487665,18z/data=!3m1!4b1!4m4!3m3!8m2!3d12.230116!4d79.649532?entry=ttu&g_ep=EgoyMDI2MDIxMS4wIKXMDSoASAFQAw%3D%3D",
     },
   ];
 

@@ -12272,6 +12272,10 @@ import {
   Icon,
   Stack,
   AspectRatio,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react"
 import { motion } from "framer-motion"
 import { FaLaptopCode, FaGraduationCap, FaArrowRight } from "react-icons/fa"
@@ -12563,13 +12567,30 @@ const CourseCard = ({ name, icon: IconComponent, description, href }) => {
 //   )
 // }
 
-const CareerPathCard = ({ icon, title, description, to }) => {
+const CareerPathCard = ({ icon, title, description, to, onClick }) => {
   // Color mode values
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("gray.800", "white");
   const hoverTextColor = useColorModeValue("teal.700", "teal.300");
   const accentColor = "orange.500";
   const boxShadow = useColorModeValue("md", "dark-lg");
+
+  const iconCircle = (
+    <Flex
+      align="center"
+      justify="center"
+      w={{ base: 12, md: 16 }}
+      h={{ base: 12, md: 16 }}
+      bg={accentColor}
+      borderRadius="full"
+      flexShrink={0}
+      boxShadow="lg"
+    >
+      <Box as="span" w={{ base: 6, md: 8 }} h={{ base: 6, md: 8 }} color="white">
+        {icon}
+      </Box>
+    </Flex>
+  );
 
   const cardContent = (
     <MotionBox
@@ -12594,6 +12615,9 @@ const CareerPathCard = ({ icon, title, description, to }) => {
       justifyContent="flex-start"
       alignItems="flex-start"
       overflow="hidden"
+      onClick={onClick}
+      cursor={onClick ? "pointer" : "default"}
+      role={onClick ? "button" : undefined}
     >
       <VStack
         spacing={{ base: 4, md: 5 }}
@@ -12602,20 +12626,7 @@ const CareerPathCard = ({ icon, title, description, to }) => {
         height="full"
       >
         {/* Icon Circle */}
-        <Flex
-          align="center"
-          justify="center"
-          w={{ base: 12, md: 16 }}
-          h={{ base: 12, md: 16 }}
-          bg={accentColor}
-          borderRadius="full"
-          flexShrink={0}
-          boxShadow="lg"
-        >
-          <Box as="span" w={{ base: 6, md: 8 }} h={{ base: 6, md: 8 }} color="white">
-            {icon}
-          </Box>
-        </Flex>
+        {iconCircle}
 
         {/* Title */}
         <Heading
@@ -12667,9 +12678,14 @@ export default function Homepage() {
     "linear(to-br, rgba(0,0,0,0.5), rgba(255,255,255,0.2))",
     "linear(to-br, rgba(255,255,255,0.2), rgba(0,0,0,0.8))",
   )
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleClick = () => {
     navigate("/it-courses"); // replace with your actual route
+  };
+
+  const handleFreshGraduatesSelect = (path) => {
+    onClose();
+    navigate(path);
   };
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 300], [0, 50]);
@@ -12933,11 +12949,13 @@ export default function Homepage() {
                   icon={<Target className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />}
                   title="Fresh Graduates"
                   description="Get your hands-on in real-time projects and start your IT career."
+                  onClick={onOpen}
                 />
                 <CareerPathCard
                   icon={<ArrowLeftRight className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />}
                   title="Return from Work Break"
                   description="Re-skill yourself to stay ahead of competitions and in trend."
+                  onClick={onOpen}
                 />
                 <CareerPathCard
                   to="/Non_it-courses"
@@ -13058,16 +13076,18 @@ export default function Homepage() {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent mx={{ base: 4, md: 0 }}>
-          <ModalHeader>Welcome to Chamber Of Learning</ModalHeader>
+          <ModalHeader>Select your stream</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>Thank you for choosing us to enhance your skills! We are excited to help you on your journey.</Text>
+            <VStack spacing={4} align="stretch">
+              <Button colorScheme="teal" onClick={() => handleFreshGraduatesSelect("/it-courses")}>
+                IT
+              </Button>
+              <Button variant="outline" colorScheme="teal" onClick={() => handleFreshGraduatesSelect("/Non_it-courses")}>
+                NON IT
+              </Button>
+            </VStack>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="teal" onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </Box>

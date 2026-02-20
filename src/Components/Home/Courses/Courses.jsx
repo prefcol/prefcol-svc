@@ -501,7 +501,7 @@
 // export default EnhancedCareerGuidance;
 
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BarChart, Target, ArrowLeftRight, Laptop, ChevronRight } from 'lucide-react';
 import CareerHero from '../assets/CareerHero.png';
@@ -525,11 +525,19 @@ const EnhancedCareerGuidance = () => {
               icon={<Target className="w-6 h-6 sm:w-8 sm:h-8" />}
               title="Fresh Graduates"
               description="Get your hands-on in real-time projects and start your IT career."
+              menuOptions={[
+                { label: 'IT', to: '/it-courses' },
+                { label: 'NON IT', to: '/Non_it-courses' },
+              ]}
             />
             <EnhancedCard
               icon={<ArrowLeftRight className="w-6 h-6 sm:w-8 sm:h-8" />}
               title="Return from Work Break"
               description="Re-skill yourself to stay ahead of competitions and in trend."
+              menuOptions={[
+                { label: 'IT', to: '/it-courses' },
+                { label: 'NON IT', to: '/Non_it-courses' },
+              ]}
             />
             <Link to="/Non_it-courses" className="block h-full">
               <EnhancedCard
@@ -566,14 +574,61 @@ const EnhancedCareerGuidance = () => {
   );
 };
 
-const EnhancedCard = ({ icon, title, description }) => {
+const EnhancedCard = ({ icon, title, description, menuOptions }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const iconWrapper = menuOptions ? (
+    <div className="relative z-[5]">
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setMenuOpen((prev) => !prev);
+        }}
+        className="p-2 sm:p-3 rounded-full bg-orange-500 text-white mr-3 sm:mr-4 transition-colors duration-300 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 cursor-pointer"
+        aria-expanded={menuOpen}
+        aria-haspopup="true"
+      >
+        {icon}
+      </button>
+      {menuOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-[100]"
+            aria-hidden="true"
+            onClick={() => setMenuOpen(false)}
+          />
+          <div className="absolute left-0 top-full mt-1 z-[101] min-w-[120px] py-1 bg-white rounded-lg shadow-lg border border-gray-200">
+            {menuOptions.map((opt) => (
+              <Link
+                key={opt.to}
+                to={opt.to}
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-700"
+                onClick={() => setMenuOpen(false)}
+              >
+                {opt.label}
+              </Link>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  ) : (
+    <div className="p-2 sm:p-3 rounded-full bg-gray-200 text-gray-700 mr-3 sm:mr-4 transition-colors duration-300">
+      {icon}
+    </div>
+  );
+
   return (
-    <div className="bg-white rounded-ss-3xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl group h-full cursor-pointer">
+    <div
+      className="bg-white rounded-ss-3xl shadow-lg overflow-visible transition-all duration-300 hover:shadow-xl group h-full cursor-pointer"
+      onClick={menuOptions ? () => setMenuOpen((prev) => !prev) : undefined}
+      role={menuOptions ? 'button' : undefined}
+    >
       <div className="p-4 sm:p-6">
         <div className="flex items-center mb-3 sm:mb-4">
-          <div className="p-2 sm:p-3 rounded-full bg-gray-200 text-gray-700 mr-3 sm:mr-4 transition-colors duration-300">
-            {icon}
-          </div>
+          {iconWrapper}
           <h3 className="text-lg sm:text-xl font-semibold group-hover:text-teal-600 transition-colors duration-300">{title}</h3>
         </div>
         <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 transition-colors duration-300">{description}</p>

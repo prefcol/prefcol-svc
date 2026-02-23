@@ -13074,10 +13074,27 @@ export default function Homepage() {
       </Box>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay />
-        <ModalContent mx={{ base: 4, md: 0 }}>
+        <ModalOverlay
+          bg="blackAlpha.400"
+          backdropFilter="blur(8px)"
+        />
+        <ModalContent
+          mx={{ base: 4, md: 0 }}
+          bg="whiteAlpha.700"
+          backdropFilter="blur(20px)"
+          border="1px solid"
+          borderColor="whiteAlpha.500"
+          borderRadius="2xl"
+          boxShadow="0 8px 32px rgba(0,0,0,0.12)"
+          sx={{
+            WebkitBackdropFilter: "blur(20px)",
+          }}
+        >
           <ModalHeader>Select your stream</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton
+            _hover={{ bg: "whiteAlpha.600" }}
+            borderRadius="md"
+          />
           <ModalBody>
             <VStack spacing={4} align="stretch">
               <Button colorScheme="teal" onClick={() => handleFreshGraduatesSelect("/it-courses")}>

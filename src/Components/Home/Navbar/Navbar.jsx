@@ -61,7 +61,7 @@ export default function Navigationbar() {
 
   const navItems = [
     { to: "/", label: "Home" },
-    { to: "/live-code", label: "Live Code" },
+    // { to: "/live-code", label: "Live Code" },
     {
       label: "Courses",
       items: [

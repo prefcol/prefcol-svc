@@ -12283,7 +12283,17 @@ import { Parallax } from "react-parallax"
 import Hero from "../../assets/HeroBoy.png"
 import Mentor from "../../assets/Mentor.png"
 import bgImage from "../../assets/HeroVideo1.mp4"
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import FounderHero from "../../assets/mani.png"
+=======
+import FounderHero from "../../assets/Mk/kumar1.png"
+import MkCardImage from "../../assets/Mk/kumar1.png"
+>>>>>>> Stashed changes
+=======
+import FounderHero from "../../assets/Mk/kumar1.png"
+import MkCardImage from "../../assets/Mk/kumar1.png"
+>>>>>>> Stashed changes
 import PrefcolPreloaderLogo from "../../assets/Prefcol-nav.png"
 import { BarChart, Target, ArrowLeftRight, Laptop, Sparkles, Rocket, Play, Star, Users, Award } from "lucide-react"
 import CareerHero from "../../assets/CareerHero.png"
@@ -12832,11 +12842,11 @@ export default function Homepage() {
                     <span className="text-xs text-slate-400">Live & self-paced</span>
                   </div>
 
-                  <div className="px-4 pb-4">
+                    <div className="px-4 pb-4">
                     <AspectRatio ratio={3 / 4} className="rounded-2xl overflow-hidden bg-emerald-50">
                       <Image
-                        src={FounderHero}
-                        alt="Learner holding a laptop"
+                        src={MkCardImage}
+                        alt="Learn from anywhere - Mk"
                         objectFit="contain"
                       />
                     </AspectRatio>

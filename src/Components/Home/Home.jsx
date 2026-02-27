@@ -12284,7 +12284,12 @@ import Hero from "../../assets/HeroBoy.png"
 import Mentor from "../../assets/Mentor.png"
 import bgImage from "../../assets/HeroVideo1.mp4"
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import FounderHero from "../../assets/mani.png"
+=======
+import FounderHero from "../../assets/Mk/kumar1.png"
+import MkCardImage from "../../assets/Mk/kumar1.png"
+>>>>>>> Stashed changes
 =======
 import FounderHero from "../../assets/Mk/kumar1.png"
 import MkCardImage from "../../assets/Mk/kumar1.png"

@@ -181,7 +181,8 @@ export const CourseProvider = ({ children }) => {
   const [nonItCourses, setNonItCourses] = useState([]);
   const [error, setError] = useState(null);
 
-  const COURSE_API_URL = "https://y7ltnmncrd.execute-api.ap-south-1.amazonaws.com/Test/api/v1/listOfCourses"; 
+  const { apiV1Url } = require("../api/colBackend");
+  const COURSE_API_URL = apiV1Url("/listOfCourses"); 
 
   // Function to fetch courses
   const fetchCourses = async (type) => {

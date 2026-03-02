@@ -165,7 +165,7 @@ const createInitialState = () => {
   };
 };
 
-import { getApiV1Base } from "../../../api/colBackend";
+import { getApiV1Base } from "../../api/colBackend";
 
 const fetchAllCourses = async () => {
   const base = getApiV1Base();

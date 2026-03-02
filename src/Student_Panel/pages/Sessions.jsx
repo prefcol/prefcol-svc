@@ -170,54 +170,8 @@ const SessionGroup = ({ title, description, sessions, onJoin, onWatch, onViewNot
 };
 
 const Sessions = () => {
-  // Mock data - replace with API call in production
-  const [sessions] = useState([
-    {
-      id: "1",
-      mentor: "Dr. Sarah Wilson",
-      course: "Web Development",
-      date: "2024-02-10",
-      time: "2:00 PM - 3:00 PM",
-      status: "completed",
-      sessionType: "online",
-      rating: 5,
-      recordingUrl: "/recordings/web-dev-1.mp4",
-      notesUrl: "/notes/web-dev-1.pdf",
-    },
-    {
-      id: "2",
-      mentor: "Prof. James Brown",
-      course: "Advanced JavaScript",
-      date: "2024-02-22",
-      time: "3:30 PM - 4:30 PM",
-      status: "live",
-      sessionType: "online",
-      rating: null,
-      recordingUrl: null,
-    },
-    {
-      id: "3",
-      mentor: "Dr. Sarah Wilson",
-      course: "React Fundamentals",
-      date: "2024-02-25",
-      time: "1:00 PM - 2:00 PM",
-      status: "upcoming",
-      sessionType: "hybrid",
-      rating: null,
-    },
-    {
-      id: "4",
-      mentor: "Mr. Rajesh Kumar",
-      course: "CSS Mastery",
-      date: "2024-02-20",
-      time: "10:00 AM - 11:00 AM",
-      status: "recorded",
-      sessionType: "offline",
-      rating: null,
-      recordingUrl: "/recordings/css-mastery-1.mp4",
-      notesUrl: "/notes/css-mastery-1.pdf",
-    },
-  ]);
+  // Start with no sessions; will be populated from API in future
+  const [sessions] = useState([]);
 
   // Memoized session grouping - optimized to prevent unnecessary recalculations
   const groupedSessions = useMemo(() => {

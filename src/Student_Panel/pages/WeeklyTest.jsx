@@ -3,44 +3,14 @@ import { Card, Row, Col, Statistic, Badge, Button, Space, Empty, List } from "an
 import { CheckCircleOutlined, ClockCircleOutlined, LineChartOutlined } from "@ant-design/icons";
 
 const WeeklyTest = () => {
-  const [tests] = useState([
-    {
-      id: "1",
-      title: "Week 1: JavaScript Fundamentals",
-      week: "Week 1",
-      questions: 50,
-      duration: "2 hours",
-      score: "88%",
-      status: "completed",
-      date: "2024-01-28",
-    },
-    {
-      id: "2",
-      title: "Week 2: DOM Manipulation",
-      week: "Week 2",
-      questions: 50,
-      duration: "2 hours",
-      score: "92%",
-      status: "completed",
-      date: "2024-02-04",
-    },
-    {
-      id: "3",
-      title: "Week 3: Asynchronous JavaScript",
-      week: "Week 3",
-      questions: 50,
-      duration: "2 hours",
-      score: null,
-      status: "scheduled",
-      date: "2024-02-11",
-    },
-  ]);
+  // Start with no weekly tests; will be populated from backend later
+  const [tests] = useState([]);
 
   const [stats] = useState({
-    completed: 2,
-    pending: 1,
-    averageScore: 90,
-    improvements: "↑ 4%",
+    completed: 0,
+    pending: 0,
+    averageScore: 0,
+    improvements: "—",
   });
 
   return (

@@ -42,6 +42,7 @@ import {
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import {useGlobalStore}  from "../contexts/GlobalStore"; // ✅ NEW: import global store
+import { allCourses } from "../data/mockData";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 
@@ -76,8 +77,9 @@ export default function NonITCourses({ windowWidth, userData = {} }) {
 
   // Filter ONLY Non-IT courses
   const nonItCourses = useMemo(() => {
-  return courses.filter(course => course.category === "Non-IT");
-}, [courses]);
+    const source = courses && courses.length ? courses : allCourses;
+    return source.filter(course => course.category === "Non-IT");
+  }, [courses]);
 
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -114,6 +116,18 @@ useEffect(() => {
   useEffect(() => {
     filterAndSortCourses();
   }, [nonItCourses, searchTerm, sortBy, filterCategory, filterLevel]);
+
+  const handleExploreClick = () => {
+    // Reset filters to show all Non-IT courses
+    setSearchTerm("");
+    setFilterCategory("all");
+    setFilterLevel("all");
+    setSortBy("popular");
+    const el = document.getElementById("courses-section");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const filterAndSortCourses = () => {
     let result = [...nonItCourses];
@@ -411,7 +425,7 @@ const handleSubmit = async () => {
                 <Button
                   type="primary"
                   icon={<SearchOutlined />}
-                  onClick={() => document.getElementById("courses-section")?.scrollIntoView({ behavior: "smooth" })}
+                  onClick={handleExploreClick}
                   style={{ background: WHITE, color: TEAL_900, fontWeight: "bold" }}
                 >
                   Explore Non-IT Courses

@@ -146,6 +146,7 @@ import {
   FaLeaf,
   FaUtensils,
 } from "react-icons/fa";
+import { apiV1Url } from "../api/colBackend";
 
 // Icon Mapping
 const iconMap = {
@@ -181,7 +182,6 @@ export const CourseProvider = ({ children }) => {
   const [nonItCourses, setNonItCourses] = useState([]);
   const [error, setError] = useState(null);
 
-  const { apiV1Url } = require("../api/colBackend");
   const COURSE_API_URL = apiV1Url("/listOfCourses"); 
 
   // Function to fetch courses

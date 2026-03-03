@@ -2528,7 +2528,7 @@ import { useAuth } from "../../Contexts/AuthContext"
 const { Sider } = Layout
 const { Text, Title } = Typography
 
-const SideNav = ({ collapsed, setCollapsed, isMobile, windowWidth, userData }) => {
+const SideNav = ({ collapsed, setCollapsed, isMobile, windowWidth, userData, menuSearch }) => {
   const location = useLocation()
   const navigate = useNavigate() // Hook for navigation
   const { theme } = useTheme()
@@ -2556,68 +2556,146 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
   }
 
   const menuItems = [
-    { key: "dashboard", icon: <DashboardOutlined />, label: "Dashboard", path: "/Student-portal/dashboard" },
-    { key: "courses", icon: <BookOutlined />, label: "My Courses", path: "/Student-portal/courses" },
-    { key: "it-courses", icon: <LaptopOutlined />, label: "IT Courses", path: "/Student-portal/it-courses" },
-    { key: "non-it-courses", icon: <ReadOutlined />, label: "Non-IT Courses", path: "/Student-portal/non-it-courses" },
+    {
+      key: "dashboard",
+      icon: <DashboardOutlined />,
+      label: "Dashboard",
+      path: "/Student-portal/dashboard",
+      keywords: ["home", "overview", "dashboard"],
+    },
+    {
+      key: "courses",
+      icon: <BookOutlined />,
+      label: "My Courses",
+      path: "/Student-portal/courses",
+      keywords: ["courses", "learning", "java", "python"],
+    },
+    {
+      key: "it-courses",
+      icon: <LaptopOutlined />,
+      label: "IT Courses",
+      path: "/Student-portal/it-courses",
+      keywords: ["it", "java", "python", "full stack", "programming", "developer"],
+    },
+    {
+      key: "non-it-courses",
+      icon: <ReadOutlined />,
+      label: "Non-IT Courses",
+      path: "/Student-portal/non-it-courses",
+      keywords: ["non it", "business", "design", "marketing"],
+    },
     {
       key: "payments-group",
       icon: <CreditCardOutlined />,
       label: "My Payments",
+      keywords: ["payment", "fee", "invoice"],
       children: [
-        { key: "payments", label: "Payment History", path: "/Student-portal/payments" },
-        { key: "payment-proof", label: "Payment Proof", path: "/Student-portal/payment-proof" },
-        { key: "invoice", label: "Invoice", path: "/Student-portal/invoice" },
+        { key: "payments", label: "Payment History", path: "/Student-portal/payments", keywords: ["payment", "history", "fees"] },
+        { key: "payment-proof", label: "Payment Proof", path: "/Student-portal/payment-proof", keywords: ["payment", "receipt", "proof"] },
+        { key: "invoice", label: "Invoice", path: "/Student-portal/invoice", keywords: ["invoice", "bills"] },
       ],
     },
-    { key: "quiz-board", icon: <FileTextOutlined />, label: "Quiz Board", path: "/Student-portal/quiz-board" },
-    { key: "course-catalog", icon: <BookOutlined />, label: "Course Catalog", path: "/Student-portal/course-catalog" },
-    { key: "social-dashboard", icon: <TeamOutlined />, label: "Social Dashboard", path: "/Student-portal/social-dashboard" },
+    {
+      key: "quiz-board",
+      icon: <FileTextOutlined />,
+      label: "Quiz Board",
+      path: "/Student-portal/quiz-board",
+      keywords: ["quiz", "assessment", "test"],
+    },
+    {
+      key: "course-catalog",
+      icon: <BookOutlined />,
+      label: "Course Catalog",
+      path: "/Student-portal/course-catalog",
+      keywords: ["catalog", "all courses", "list"],
+    },
+    {
+      key: "social-dashboard",
+      icon: <TeamOutlined />,
+      label: "Social Dashboard",
+      path: "/Student-portal/social-dashboard",
+      keywords: ["social", "community", "posts"],
+    },
     {
       key: "live-courses-group",
       icon: <PlayCircleOutlined />,
       label: "My Live Courses",
+      keywords: ["live", "sessions", "mentor", "team"],
       children: [
-        { key: "connect-mentor", label: "Connect With Mentor", path: "/Student-portal/connect-mentor" },
-        { key: "sessions", label: "Sessions", path: "/Student-portal/sessions" },
-        { key: "team", label: "Team", path: "/Student-portal/team" },
-        { key: "daily-quiz", label: "Daily Quiz", path: "/Student-portal/daily-quiz" },
-        { key: "weekly-test", label: "Weekly Test", path: "/Student-portal/weekly-test" },
-        { key: "coding-review", label: "Coding Review", path: "/Student-portal/coding-review" },
-        { key: "certificates", label: "Certificate", path: "/Student-portal/certificates" },
+        { key: "connect-mentor", label: "Connect With Mentor", path: "/Student-portal/connect-mentor", keywords: ["mentor", "support"] },
+        { key: "sessions", label: "Sessions", path: "/Student-portal/sessions", keywords: ["live session", "mentoring", "class"] },
+        { key: "team", label: "Team", path: "/Student-portal/team", keywords: ["course team", "peers"] },
+        { key: "daily-quiz", label: "Daily Quiz", path: "/Student-portal/daily-quiz", keywords: ["daily quiz", "practice"] },
+        { key: "weekly-test", label: "Weekly Test", path: "/Student-portal/weekly-test", keywords: ["weekly test", "assessment"] },
+        { key: "coding-review", label: "Coding Review", path: "/Student-portal/coding-review", keywords: ["code review", "coding"] },
+        { key: "certificates", label: "Certificate", path: "/Student-portal/certificates", keywords: ["certificate", "completion"] },
       ],
     },
     {
       key: "webinars-group",
       icon: <VideoCameraOutlined />,
       label: "My Webinars",
+      keywords: ["webinar", "live event"],
       children: [
-        { key: "webinars", label: "Webinars", path: "/Student-portal/webinars" },
+        { key: "webinars", label: "Webinars", path: "/Student-portal/webinars", keywords: ["webinar", "session"] },
       ],
     },
     {
       key: "future-group",
       icon: <RocketOutlined />,
       label: "My Future",
+      keywords: ["future", "career", "jobs"],
       children: [
-        { key: "resume", label: "Resume", path: "/Student-portal/resume" },
-        { key: "interview-questions", label: "Interview Questions", path: "/Student-portal/interview-questions" },
-        { key: "resource-center", label: "Resource Center", path: "/Student-portal/resource-center" },
-        { key: "referral-board", label: "Referral Board", path: "/Student-portal/referral-board" },
+        { key: "resume", label: "Resume", path: "/Student-portal/resume", keywords: ["resume", "cv"] },
+        { key: "interview-questions", label: "Interview Questions", path: "/Student-portal/interview-questions", keywords: ["interview", "questions", "prep"] },
+        { key: "resource-center", label: "Resource Center", path: "/Student-portal/resource-center", keywords: ["resources", "materials"] },
+        { key: "referral-board", label: "Referral Board", path: "/Student-portal/referral-board", keywords: ["referral", "jobs"] },
       ],
     },
-    { key: "InterestWishlist", icon: <HeartOutlined />, label: "Enquired & Wishlist", path: "/Student-portal/InterestWishlist" },
+    {
+      key: "InterestWishlist",
+      icon: <HeartOutlined />,
+      label: "Enquired & Wishlist",
+      path: "/Student-portal/InterestWishlist",
+      keywords: ["wishlist", "enquired", "saved courses"],
+    },
   ]
 
   const userMenuItems = [
-    { key: "profile", icon: <UserOutlined />, label: "My Profile", path: "/Student-portal/profile" },
-    { key: "support", icon: <CustomerServiceOutlined />, label: "Support", path: "/Student-portal/support" },
-   { key: "logout", icon: <LogoutOutlined />, label: "Logout" },
+    { key: "profile", icon: <UserOutlined />, label: "My Profile", path: "/Student-portal/profile", keywords: ["profile", "account", "details"] },
+    { key: "support", icon: <CustomerServiceOutlined />, label: "Support", path: "/Student-portal/support", keywords: ["support", "help", "contact"] },
+    { key: "logout", icon: <LogoutOutlined />, label: "Logout", keywords: ["logout", "sign out"] },
   ]
 
   const handleMenuClick = (path) => {
     navigate(path)
     if (isMobile) setCollapsed(true)
+  }
+
+  const filterMenuItems = (items, query) => {
+    if (!query) return items
+    const q = query.toLowerCase()
+    return items
+      .map((item) => {
+        const labelText = typeof item.label === "string" ? item.label.toLowerCase() : ""
+        const keywordHit =
+          Array.isArray(item.keywords) &&
+          item.keywords.some((k) => {
+            const kk = k.toLowerCase()
+            return kk.includes(q) || q.includes(kk)
+          })
+
+        if (item.children) {
+          const filteredChildren = filterMenuItems(item.children, query)
+          if (filteredChildren.length || labelText.includes(q) || keywordHit) {
+            return { ...item, children: filteredChildren.length ? filteredChildren : item.children }
+          }
+          return null
+        }
+
+        return labelText.includes(q) || keywordHit ? item : null
+      })
+      .filter(Boolean)
   }
 
   const transformMenuItems = (items) => {
@@ -2640,7 +2718,11 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
     })
   }
 
-  const SideNavContent = () => (
+  const SideNavContent = () => {
+    const filteredMain = filterMenuItems(menuItems, menuSearch)
+    const filteredUser = filterMenuItems(userMenuItems, menuSearch)
+
+    return (
     <>
       {/* Logo Section */}
       <div
@@ -2736,6 +2818,12 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
             <Text type="secondary" style={{ fontSize: 12 }}>
               {user?.mailId || "student@example.com"}
             </Text>
+            <Text
+              type={user?.userName && user?.mailId ? "success" : "warning"}
+              style={{ fontSize: 11, display: "block", marginTop: 2 }}
+            >
+              {user?.userName && user?.mailId ? "Profile completed" : "Profile incomplete"}
+            </Text>
           </div>
         </div>
       )}
@@ -2748,7 +2836,7 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
     mode="inline"
     selectedKeys={selectedKeys}
     inlineCollapsed={!isMobile && collapsed}
-    items={transformMenuItems(menuItems)}
+          items={transformMenuItems(filteredMain)}
   />
 
   <Divider style={{ margin: "8px 0" }} />
@@ -2759,7 +2847,7 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
     mode="inline"
     selectedKeys={selectedKeys}
     inlineCollapsed={!isMobile && collapsed}
-    items={userMenuItems.map((item) => ({
+          items={filteredUser.map((item) => ({
       ...item,
       onClick: () => {
         if (item.key === "logout") {
@@ -2776,7 +2864,7 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
 </div>
 
     </>
-  )
+  )}
 
   return (
     <>

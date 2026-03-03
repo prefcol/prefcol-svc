@@ -6,7 +6,7 @@ const ConnectWithMentor = () => {
   const [mentors] = useState([
     {
       id: "1",
-      name: "Dr. Sarah Wilson",
+      name: "Aarthi",
       title: "Web Development Expert",
       avatar: "https://via.placeholder.com/64",
       rating: 4.9,
@@ -17,7 +17,7 @@ const ConnectWithMentor = () => {
     },
     {
       id: "2",
-      name: "Prof. James Brown",
+      name: "Kowsalya",
       title: "JavaScript Specialist",
       avatar: "https://via.placeholder.com/64",
       rating: 4.7,
@@ -54,10 +54,6 @@ const ConnectWithMentor = () => {
               />
 
               <div style={{ marginTop: 16 }}>
-                <p>
-                  <Rate disabled defaultValue={mentor.rating} /> {mentor.rating} ({mentor.reviews} reviews)
-                </p>
-                <p><strong>Rate:</strong> {mentor.hourlyRate}/hour</p>
                 <p><strong>Availability:</strong> {mentor.availability}</p>
                 <p>
                   <strong>Expertise:</strong>

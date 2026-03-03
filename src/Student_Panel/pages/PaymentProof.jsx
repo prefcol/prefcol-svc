@@ -3,13 +3,13 @@ import { Card, Table, Tag, Button, Space, Empty, Modal, message, Spin } from "an
 import { DownloadOutlined, EyeOutlined } from "@ant-design/icons";
 import { fetchPaymentProofs, downloadPaymentProofFile } from "../services/studentPortalApi";
 
-const MOCK_PROOFS = [
-  { id: "1", date: "2024-01-15", amount: "$499", course: "Web Development Bootcamp", status: "Verified", receiptId: "REC-001" },
-  { id: "2", date: "2024-02-20", amount: "$299", course: "Advanced JavaScript", status: "Verified", receiptId: "REC-002" },
-];
+// const MOCK_PROOFS = [
+//   { id: "1", date: "2024-01-15", amount: "$499", course: "Web Development Bootcamp", status: "Verified", receiptId: "REC-001" },
+//   { id: "2", date: "2024-02-20", amount: "$299", course: "Advanced JavaScript", status: "Verified", receiptId: "REC-002" },
+// ];
 
 const PaymentProof = () => {
-  const [payments, setPayments] = useState(MOCK_PROOFS);
+  const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewModal, setViewModal] = useState({ open: false, record: null });
 

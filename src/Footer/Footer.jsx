@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 
 
 const socialLinks = [
-  {
-    name: "Facebook",
-    icon: Facebook,
-    href: "https://www.facebook.com/share/1DQCBRzxdo/?mibextid=wwXIfr",
-  },
+  // {
+  //   name: "Facebook",
+  //   icon: Facebook,
+  //   href: "https://www.facebook.com/share/1DQCBRzxdo/?mibextid=wwXIfr",
+  // },
   {
     name: "Instagram",
     icon: Instagram,

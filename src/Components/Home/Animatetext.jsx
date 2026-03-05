@@ -2,7 +2,7 @@
 // import { motion } from "framer-motion";
 // import { useState, useEffect } from "react";
 
-// const text = "Kick Start Your Career!";
+// const text = "Professional Revolution in Education for Future Career Outcomes & Legacy";
 
 // const TypingText = () => {
 //   const [displayedText, setDisplayedText] = useState("");
@@ -52,7 +52,7 @@
 // import { motion } from "framer-motion";
 // import { useState, useEffect } from "react";
 
-// const text = "Kick Start Your Career!";
+// const text = "Professional Revolution in Education for Future Career Outcomes & Legacy";
 
 // const TypingText = () => {
 //   const [displayedText, setDisplayedText] = useState("");
@@ -102,7 +102,7 @@ import { Heading } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
-const text = "Kick Start Your Career!";
+const text = "Professional Revolution in Education for Future Career Outcomes & Legacy";
 
 const TypingText = () => {
   const [displayedText, setDisplayedText] = useState("");

@@ -2501,6 +2501,7 @@ import {
   Typography,
   Badge,
   Drawer,
+  Progress,
 } from "antd"
 import {
   DashboardOutlined,
@@ -2528,18 +2529,40 @@ import { useAuth } from "../../Contexts/AuthContext"
 const { Sider } = Layout
 const { Text, Title } = Typography
 
+// Profile fields used for completion status (key in profile data, label shown)
+const PROFILE_COMPLETION_FIELDS = [
+  { key: "fullName", label: "Name" },
+  { key: "email", label: "Email" },
+  { key: "mobileNumber", label: "Mobile" },
+  { key: "dateOfBirth", label: "DOB" },
+  { key: "gender", label: "Gender" },
+]
+
 const SideNav = ({ collapsed, setCollapsed, isMobile, windowWidth, userData, menuSearch }) => {
   const location = useLocation()
-  const navigate = useNavigate() // Hook for navigation
+  const navigate = useNavigate()
   const { theme } = useTheme()
-  // const { user } = useAuth()
+  const { logout, user } = useAuth()
   const [selectedKeys, setSelectedKeys] = useState([])
-const { logout, user } = useAuth() // ✅ Use logout from AuthContext
+  const [profileData, setProfileData] = useState(null)
+
   useEffect(() => {
     const pathName = location.pathname
     const key = pathName.replace("/Student-portal/", "").split("/")[0] || "dashboard"
     setSelectedKeys([key])
   }, [location.pathname])
+
+  // Load profile from localStorage (same key as Profile page) so status bar reflects profile data
+  useEffect(() => {
+    const userId = user?.id || "student_001"
+    try {
+      const cached = localStorage.getItem(`profile_${userId}`)
+      const data = cached ? JSON.parse(cached) : null
+      setProfileData(data)
+    } catch {
+      setProfileData(null)
+    }
+  }, [user?.id, location.pathname])
 
   const getInitial = () => {
     if (!user?.userName) return '?'
@@ -2784,49 +2807,83 @@ const { logout, user } = useAuth() // ✅ Use logout from AuthContext
       </div>
 
       {/* Profile Section */}
-      {!collapsed && !isMobile && (
-        <div
-          style={{
-            padding: "16px 24px",
-            borderBottom: `1px solid ${theme === "dark" ? "#303030" : "#f0f0f0"}`,
-            display: "flex",
-            alignItems: "center",
-            transition: "all 0.3s ease-in-out",
-          }}
-        >
-          <Badge dot status="success">
-            <Avatar
-              src={user?.avatar}
-              icon={!user?.avatar && <span>{getInitial()}</span>}
-              size={40}
-              style={{ backgroundColor: stringToColor(user?.userName || "Student") }}
-            />
-          </Badge>
-          <div style={{ marginLeft: 12, overflow: "hidden" }}>
-            <Text
-              strong
-              style={{
-                display: "block",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                color: theme === "dark" ? "#fff" : undefined,
-              }}
-            >
-              {user?.userName || "Student"}
-            </Text>
-            <Text type="secondary" style={{ fontSize: 12 }}>
-              {user?.mailId || "student@example.com"}
-            </Text>
-            <Text
-              type={user?.userName && user?.mailId ? "success" : "warning"}
-              style={{ fontSize: 11, display: "block", marginTop: 2 }}
-            >
-              {user?.userName && user?.mailId ? "Profile completed" : "Profile incomplete"}
-            </Text>
+      {!collapsed && !isMobile && (() => {
+        const merged = {
+          fullName: profileData?.fullName?.trim() || user?.userName?.trim() || "",
+          email: profileData?.email?.trim() || user?.mailId?.trim() || "",
+          mobileNumber: profileData?.mobileNumber?.trim() || "",
+          dateOfBirth: profileData?.dateOfBirth?.trim() || "",
+          gender: profileData?.gender?.trim() || "",
+        }
+        const completedList = PROFILE_COMPLETION_FIELDS.filter(({ key }) => {
+          const v = merged[key]
+          return v != null && String(v).trim() !== ""
+        }).map(({ label }) => label)
+        const percent = Math.round((completedList.length / PROFILE_COMPLETION_FIELDS.length) * 100)
+        const isComplete = percent === 100
+        return (
+          <div
+            style={{
+              padding: "16px 24px",
+              borderBottom: `1px solid ${theme === "dark" ? "#303030" : "#f0f0f0"}`,
+              transition: "all 0.3s ease-in-out",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", marginBottom: 10 }}>
+              <Badge dot status="success">
+                <Avatar
+                  src={user?.avatar}
+                  icon={!user?.avatar && <span>{getInitial()}</span>}
+                  size={40}
+                  style={{ backgroundColor: stringToColor(user?.userName || "Student") }}
+                />
+              </Badge>
+              <div style={{ marginLeft: 12, overflow: "hidden", flex: 1 }}>
+                <Text
+                  strong
+                  style={{
+                    display: "block",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    color: theme === "dark" ? "#fff" : undefined,
+                  }}
+                >
+                  {merged.fullName || user?.userName || "Student"}
+                </Text>
+                <Text type="secondary" style={{ fontSize: 12 }}>
+                  {merged.email || user?.mailId || "student@example.com"}
+                </Text>
+              </div>
+            </div>
+            <div style={{ marginTop: 8 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                <Text
+                  type={isComplete ? "success" : "warning"}
+                  style={{ fontSize: 11 }}
+                >
+                  {isComplete ? "Complete list from profile" : "Complete your profile"}
+                </Text>
+                <Text type="secondary" style={{ fontSize: 11 }}>
+                  {percent}%
+                </Text>
+              </div>
+              <Progress
+                percent={percent}
+                size="small"
+                showInfo={false}
+                strokeColor={isComplete ? "#52c41a" : "#faad14"}
+                trailColor={theme === "dark" ? "#303030" : "#f0f0f0"}
+              />
+              {completedList.length > 0 && (
+                <Text type="secondary" style={{ fontSize: 10, display: "block", marginTop: 4 }}>
+                  {completedList.map((l) => `${l} ✓`).join(" · ")}
+                </Text>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )
+      })()}
 
       {/* Menus */}
 <div style={{ padding: "16px 0" }}>

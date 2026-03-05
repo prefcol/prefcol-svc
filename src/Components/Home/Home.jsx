@@ -12748,15 +12748,14 @@ export default function Homepage() {
               transition={{ duration: 0.7 }}
               className="text-left"
             >
-              <p className="text-sm md:text-base font-semibold tracking-wide text-emerald-700 mb-3">
-                Kick Start Your Career
-              </p>
-
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
+<p className="text-3xl font-semibold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
+  Professional Revolution in Education for Future Career Outcomes & Legacy
+</p>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
                 <span className="text-slate-900">Kick Start</span>
                 <br />
                 <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
-                  Your Career!
+                  Your Career Today
                 </span>
               </h1>
 
@@ -13022,14 +13021,14 @@ export default function Homepage() {
         textAlign="center"
       >
         <MotionText lineHeight="tall" variants={fadeInUp}>
-          Early in your career, it is essential to chase skills rather than salary. At Chamber Of
-          Learning, we provide practical experiences through visualized learning, hands-on projects,
-          fostering a growth mindset, and nurturing problem-solving skills.
+          Early in your career, it is essential to chase skills rather than salary. At PREFCOL, we
+          provide practical experiences through visualized learning, hands-on projects, fostering a
+          growth mindset, and nurturing problem-solving skills.
         </MotionText>
         <MotionText lineHeight="tall" variants={fadeInUp}>
-          Later in your career, Chamber Of Learning helps you align your passions with your work. We
-          empower you with vertical and horizontal skills to stay ahead in knowledge and finances. We work
-          with you to grow your brand and network for ongoing success.
+          Later in your career, PREFCOL helps you align your passions with your work. We empower you
+          with vertical and horizontal skills to stay ahead in knowledge and finances. We work with
+          you to grow your brand and network for ongoing success.
         </MotionText>
       </VStack>
     </MotionBox>

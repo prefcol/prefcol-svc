@@ -3177,7 +3177,9 @@ const AppWithGlobalStore = ({
   isSmallScreen, 
   userData, 
   studentId,
-  theme 
+  theme,
+  menuSearch,
+  setMenuSearch,
 }) => {
   return (
     <GlobalProvider studentId={studentId}>
@@ -3186,6 +3188,8 @@ const AppWithGlobalStore = ({
         setCollapsed={setCollapsed}
         isMobile={isSmallScreen}
         userData={userData}
+        menuSearch={menuSearch}
+        setMenuSearch={setMenuSearch}
       />
       <Content
         style={{
@@ -3461,6 +3465,7 @@ const StudentPortalContent = () => {
   const [theme, setTheme] = useState("light");
   const [collapsed, setCollapsed] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
+  const [menuSearch, setMenuSearch] = useState("");
   const isSmallScreen = windowWidth < 1024;
   const location = useLocation();
 
@@ -3548,7 +3553,8 @@ const StudentPortalContent = () => {
               setCollapsed={setCollapsed}
               isMobile={isSmallScreen}
               windowWidth={windowWidth}
-              userData={user} // ✅ Use user directly from context
+              userData={user}
+              menuSearch={menuSearch}
             />
 
             {isSmallScreen && !collapsed && (
@@ -3584,8 +3590,10 @@ const StudentPortalContent = () => {
               setCollapsed={setCollapsed}
               isSmallScreen={isSmallScreen}
               userData={user}
-              studentId={studentId} // ✅ Now correctly mailId
+              studentId={studentId}
               theme={theme}
+              menuSearch={menuSearch}
+              setMenuSearch={setMenuSearch}
             />
           </Layout>
         </Layout>

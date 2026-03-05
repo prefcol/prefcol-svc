@@ -292,12 +292,12 @@ const filteredCourses = useMemo(() => {
                         </div>
                       </div>
                       <h2
-                        className="text-xl font-semibold mb-2 text-center text-white drop-shadow-sm"
+                        className="text-xl sm:text-2xl font-semibold mb-2 text-center text-white drop-shadow-sm antialiased leading-snug"
                       >
                         {course.courseName}
                       </h2>
                       <p
-                        className="text-sm mb-4 flex-grow text-center text-white/90"
+                        className="text-base sm:text-lg mb-4 flex-grow text-center text-white/95 antialiased leading-relaxed"
                       >
                         {course.description}
                       </p>
@@ -318,7 +318,10 @@ const filteredCourses = useMemo(() => {
                       )}
                       <div
                         className="absolute inset-0 opacity-10 bg-cover bg-center z-0"
-                        style={{ backgroundImage: `url(${course.character})` }}
+                        style={{
+                          backgroundImage: course.character ? `url(${course.character})` : undefined,
+                          imageRendering: 'auto',
+                        }}
                       />
                     </div>
                   </motion.div>

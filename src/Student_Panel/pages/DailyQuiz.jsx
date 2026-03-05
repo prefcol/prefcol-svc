@@ -3,41 +3,14 @@ import { Card, Row, Col, Statistic, Badge, Button, Space, Empty, List } from "an
 import { CheckCircleOutlined, ClockCircleOutlined, PlayCircleOutlined } from "@ant-design/icons";
 
 const DailyQuiz = () => {
-  const [quizzes] = useState([
-    {
-      id: "1",
-      title: "JavaScript Basics - Day 1",
-      date: "2024-02-05",
-      questions: 10,
-      timeLimit: "15 mins",
-      score: "100%",
-      status: "completed",
-    },
-    {
-      id: "2",
-      title: "Variables and Data Types",
-      date: "2024-02-06",
-      questions: 10,
-      timeLimit: "15 mins",
-      score: "90%",
-      status: "completed",
-    },
-    {
-      id: "3",
-      title: "Functions and Scope",
-      date: "2024-02-07",
-      questions: 10,
-      timeLimit: "15 mins",
-      score: null,
-      status: "pending",
-    },
-  ]);
+  // Start with no daily quizzes; will be populated from backend later
+  const [quizzes] = useState([]);
 
   const [stats] = useState({
-    completed: 2,
-    pending: 1,
-    streak: 2,
-    averageScore: 95,
+    completed: 0,
+    pending: 0,
+    streak: 0,
+    averageScore: 0,
   });
 
   return (

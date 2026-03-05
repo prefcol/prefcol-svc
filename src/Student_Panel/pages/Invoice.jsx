@@ -3,13 +3,8 @@ import { Card, Table, Tag, Button, Space, Empty, message, Spin } from "antd";
 import { DownloadOutlined, PrinterOutlined } from "@ant-design/icons";
 import { fetchInvoices, downloadInvoiceFile } from "../services/studentPortalApi";
 
-const MOCK_INVOICES = [
-  { id: "INV-001", date: "2024-01-15", amount: "$499", course: "Web Development Bootcamp", status: "Paid", dueDate: "2024-01-20" },
-  { id: "INV-002", date: "2024-02-20", amount: "$299", course: "Advanced JavaScript", status: "Paid", dueDate: "2024-02-25" },
-];
-
 const Invoice = () => {
-  const [invoices, setInvoices] = useState(MOCK_INVOICES);
+  const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

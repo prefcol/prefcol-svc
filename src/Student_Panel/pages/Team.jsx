@@ -3,35 +3,36 @@ import { Card, Table, Avatar, Tag, Button, Space, Empty } from "antd";
 import { UserAddOutlined, MessageOutlined } from "@ant-design/icons";
 
 const Team = () => {
-  const [teammates] = useState([
-    {
-      id: "1",
-      name: "Alice Johnson",
-      avatar: "https://via.placeholder.com/32",
-      role: "Study Partner",
-      courses: "Web Development, JavaScript",
-      joinDate: "2024-01-10",
-      status: "active",
-    },
-    {
-      id: "2",
-      name: "Bob Smith",
-      avatar: "https://via.placeholder.com/32",
-      role: "Group Member",
-      courses: "Advanced JavaScript",
-      joinDate: "2024-01-15",
-      status: "active",
-    },
-    {
-      id: "3",
-      name: "Carol Williams",
-      avatar: "https://via.placeholder.com/32",
-      role: "Peer Reviewer",
-      courses: "Web Development, React",
-      joinDate: "2024-02-01",
-      status: "active",
-    },
-  ]);
+  // const [teammates] = useState([
+  //   {
+  //     id: "1",
+  //     name: "Alice Johnson",
+  //     avatar: "https://via.placeholder.com/32",
+  //     role: "Study Partner",
+  //     courses: "Web Development, JavaScript",
+  //     joinDate: "2024-01-10",
+  //     status: "active",
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "Bob Smith",
+  //     avatar: "https://via.placeholder.com/32",
+  //     role: "Group Member",
+  //     courses: "Advanced JavaScript",
+  //     joinDate: "2024-01-15",
+  //     status: "active",
+  //   },
+  //   {
+  //     id: "3",
+  //     name: "Carol Williams",
+  //     avatar: "https://via.placeholder.com/32",
+  //     role: "Peer Reviewer",
+  //     courses: "Web Development, React",
+  //     joinDate: "2024-02-01",
+  //     status: "active",
+  //   },
+  // ]);
+  const [teammates] = useState([]);
 
   const columns = [
     {

@@ -43,6 +43,7 @@ import {
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import {useGlobalStore}  from "../contexts/GlobalStore"; // ✅ NEW: import global store
+import { allCourses } from "../data/mockData";
 import { useNavigate } from "react-router-dom";
 import {useMemo } from "react";
 
@@ -77,8 +78,9 @@ const { courses, wishlist, enquiries = [], dispatch, enrolledCourses } = useGlob
 
   // Filter ONLY IT courses
   const itCourses = useMemo(() => {
-  return courses.filter(course => course.category === "IT");
-}, [courses]);
+    const source = courses && courses.length ? courses : allCourses;
+    return source.filter(course => course.category === "IT");
+  }, [courses]);
 
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

@@ -310,7 +310,7 @@ import {useGlobalStore} from "../contexts/GlobalStore"; // ✅ Default import to
 const { Header } = Layout;
 const { Text } = Typography;
 
-const TopNav = ({ collapsed, setCollapsed, isMobile, userData }) => {
+const TopNav = ({ collapsed, setCollapsed, isMobile, userData, menuSearch, setMenuSearch }) => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const { logout, user } = useAuth(); // ✅ Use logout from AuthContext
@@ -497,16 +497,30 @@ const { courses, assignments, progress } = useGlobalStore(); // ✅ Get assignme
           <div
             style={{
               padding: "0 16px",
-              maxWidth: isMobile ? "calc(100vw - 170px)" : 300,
+              maxWidth: isMobile ? "calc(100vw - 220px)" : 360,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
             }}
           >
             <Input
-              placeholder="Search courses, lessons..."
+              placeholder="Search menu..."
               prefix={<SearchOutlined />}
               style={{ borderRadius: 4 }}
+              value={menuSearch}
+              onChange={(e) => setMenuSearch?.(e.target.value)}
               onBlur={() => isMobile && setSearchVisible(false)}
               autoFocus={isMobile && searchVisible}
             />
+            {!isMobile && (
+              <Button
+                type="primary"
+                icon={<SearchOutlined />}
+                onClick={() => {/* filtering already happens on type */}}
+              >
+                Search
+              </Button>
+            )}
           </div>
         )}
       </div>

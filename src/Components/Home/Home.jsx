@@ -12283,7 +12283,7 @@ import { Parallax } from "react-parallax"
 import Hero from "../../assets/HeroBoy.png"
 import Mentor from "../../assets/Mentor.png"
 import bgImage from "../../assets/HeroVideo1.mp4"
-import FounderHero from "../../assets/kumar.png"
+import FounderHero from "../../assets/mani.png"
 import PrefcolPreloaderLogo from "../../assets/Prefcol-nav.png"
 import { BarChart, Target, ArrowLeftRight, Laptop, Sparkles, Rocket, Play, Star, Users, Award } from "lucide-react"
 import CareerHero from "../../assets/CareerHero.png"
@@ -12748,15 +12748,14 @@ export default function Homepage() {
               transition={{ duration: 0.7 }}
               className="text-left"
             >
-              <p className="text-sm md:text-base font-semibold tracking-wide text-emerald-700 mb-3">
-                Kick Start Your Career
-              </p>
-
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
+<p className="text-3xl font-semibold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
+  Professional Revolution in Education for Future Career Outcomes & Legacy
+</p>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
                 <span className="text-slate-900">Kick Start</span>
                 <br />
                 <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
-                  Your Career!
+                  Your Career Today
                 </span>
               </h1>
 
@@ -12832,11 +12831,11 @@ export default function Homepage() {
                     <span className="text-xs text-slate-400">Live & self-paced</span>
                   </div>
 
-                  <div className="px-4 pb-4">
+                    <div className="px-4 pb-4">
                     <AspectRatio ratio={3 / 4} className="rounded-2xl overflow-hidden bg-emerald-50">
                       <Image
                         src={FounderHero}
-                        alt="Learner holding a laptop"
+                        alt="Learn from anywhere - Mk"
                         objectFit="contain"
                       />
                     </AspectRatio>
@@ -13022,14 +13021,14 @@ export default function Homepage() {
         textAlign="center"
       >
         <MotionText lineHeight="tall" variants={fadeInUp}>
-          Early in your career, it is essential to chase skills rather than salary. At Chamber Of
-          Learning, we provide practical experiences through visualized learning, hands-on projects,
-          fostering a growth mindset, and nurturing problem-solving skills.
+          Early in your career, it is essential to chase skills rather than salary. At PREFCOL, we
+          provide practical experiences through visualized learning, hands-on projects, fostering a
+          growth mindset, and nurturing problem-solving skills.
         </MotionText>
         <MotionText lineHeight="tall" variants={fadeInUp}>
-          Later in your career, Chamber Of Learning helps you align your passions with your work. We
-          empower you with vertical and horizontal skills to stay ahead in knowledge and finances. We work
-          with you to grow your brand and network for ongoing success.
+          Later in your career, PREFCOL helps you align your passions with your work. We empower you
+          with vertical and horizontal skills to stay ahead in knowledge and finances. We work with
+          you to grow your brand and network for ongoing success.
         </MotionText>
       </VStack>
     </MotionBox>

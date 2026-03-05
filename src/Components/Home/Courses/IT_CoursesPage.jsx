@@ -428,7 +428,11 @@ const IT_Courses = () => {
                   fontWeight: 700,
                   textAlign: 'left',
                   width: '100%',
-                  fontSize: '1rem',
+                  fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.25rem' },
+                  letterSpacing: '0.01em',
+                  lineHeight: 1.35,
+                  WebkitFontSmoothing: 'antialiased',
+                  MozOsxFontSmoothing: 'grayscale',
                 }}
               >
                 {course.courseName}
@@ -449,7 +453,19 @@ const IT_Courses = () => {
                   {React.cloneElement(<IconComponent />, { size: 26 })}
                 </Avatar>
               </Box>
-              <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 3, flexGrow: 1, textAlign: 'center' }}>
+              <Typography
+                sx={{
+                  color: theme.palette.text.secondary,
+                  mb: 3,
+                  flexGrow: 1,
+                  textAlign: 'center',
+                  fontSize: { xs: '0.9375rem', sm: '1rem' },
+                  lineHeight: 1.55,
+                  fontWeight: 500,
+                  WebkitFontSmoothing: 'antialiased',
+                  MozOsxFontSmoothing: 'grayscale',
+                }}
+              >
                 {course.description}
               </Typography>
               <Button 
@@ -457,9 +473,12 @@ const IT_Courses = () => {
                 fullWidth
                 sx={{ 
                   mt: 'auto',
+                  fontSize: '1rem',
+                  fontWeight: 600,
                   backgroundColor: course.available ? '#004d40' : theme.palette.action.disabled,
                   color: theme.palette.background.paper,
                   transition: 'all 0.3s ease-in-out',
+                  WebkitFontSmoothing: 'antialiased',
                   '&:hover': {
                       transform: 'translateY(-5px)',
                       boxShadow: '0 10px 20px rgba(0,0,0,0.18)',

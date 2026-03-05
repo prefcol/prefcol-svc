@@ -165,14 +165,14 @@ const createInitialState = () => {
   };
 };
 
-// ✅ Fixed URL (no trailing space)
-const BASE_URL = "https://y7ltnmncrd.execute-api.ap-south-1.amazonaws.com/Test/api/v1";
+import { getApiV1Base } from "../../api/colBackend";
 
 const fetchAllCourses = async () => {
+  const base = getApiV1Base();
   try {
     const [itResponse, nonItResponse] = await Promise.all([
-      fetch(`${BASE_URL}/listOfCourses?typeOfCourse=IT`),
-      fetch(`${BASE_URL}/listOfCourses?typeOfCourse=Non-IT`)
+      fetch(`${base}/listOfCourses?typeOfCourse=IT`),
+      fetch(`${base}/listOfCourses?typeOfCourse=Non-IT`)
     ]);
 
     if (!itResponse.ok || !nonItResponse.ok) throw new Error("Course fetch failed");
@@ -189,8 +189,9 @@ const fetchAllCourses = async () => {
 
 const fetchEnrolledCourses = async (studentId) => {
   try {
+    const base = getApiV1Base();
     const response = await fetch(
-      `${BASE_URL}/student/enrolledCourses?studentId=${encodeURIComponent(studentId)}`
+      `${base}/student/enrolledCourses?studentId=${encodeURIComponent(studentId)}`
     );
     if (!response.ok) throw new Error("Enrolled courses fetch failed");
     const data = await response.json();

@@ -56,6 +56,8 @@ export default function ClassManagement() {
   const toast = useToast();
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.700");
+  const mutedText = useColorModeValue("gray.600", "gray.300");
+  const subtleText = useColorModeValue("gray.500", "gray.400");
 
   const [form, setForm] = useState({
     title: "",
@@ -173,10 +175,10 @@ export default function ClassManagement() {
 
   return (
     <Box>
-      <Heading size="lg" mb={2} color="teal.600">
+      <Heading size="lg" mb={2} color={useColorModeValue("teal.600", "teal.300")}>
         Class Management
       </Heading>
-      <Text color="gray.600" mb={6}>
+      <Text color={mutedText} mb={6}>
         Create and manage your classes, meeting links, and recorded sessions.
       </Text>
 
@@ -201,7 +203,7 @@ export default function ClassManagement() {
           <Tbody>
             {classes.length === 0 ? (
               <Tr>
-                <Td colSpan={8} textAlign="center" py={8} color="gray.500">
+                <Td colSpan={8} textAlign="center" py={8} color={subtleText}>
                   No classes yet. Add one to get started.
                 </Td>
               </Tr>

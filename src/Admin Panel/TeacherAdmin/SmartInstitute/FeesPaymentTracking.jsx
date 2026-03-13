@@ -6,6 +6,8 @@ import { FaCheckCircle, FaArrowLeft } from "react-icons/fa";
 export default function FeesPaymentTracking() {
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
+  const mutedText = useColorModeValue("gray.600", "gray.300");
+  const subtleText = useColorModeValue("gray.500", "gray.400");
 
   const features = [
     "Track pending & completed payments",
@@ -20,7 +22,7 @@ export default function FeesPaymentTracking() {
         Back to Smart Institute
       </Button>
       <Heading size="lg" mb={2}>Fees & Payment Tracking</Heading>
-      <Text color="gray.600" mb={6}>
+      <Text color={mutedText} mb={6}>
         Monitor fees collection, reminders, and revenue.
       </Text>
       <Card bg={cardBg} borderWidth="1px" borderColor={borderColor}>
@@ -36,7 +38,7 @@ export default function FeesPaymentTracking() {
               </ListItem>
             ))}
           </List>
-          <Text mt={4} fontSize="sm" color="gray.500">
+          <Text mt={4} fontSize="sm" color={subtleText}>
             Payment and revenue APIs can be wired here for your institute.
           </Text>
         </CardBody>

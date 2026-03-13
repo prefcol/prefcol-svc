@@ -16,6 +16,20 @@ export default defineConfig({
   plugins: [react()],
   build: {
     sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom", "react-router-dom"],
+          "vendor-chakra": ["@chakra-ui/react", "@emotion/react", "@emotion/styled"],
+          "vendor-motion": ["framer-motion"],
+          "vendor-antd": ["antd"],
+        },
+        chunkFileNames: "assets/[name]-[hash].js",
+        entryFileNames: "assets/[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash][extname]",
+      },
+    },
+    chunkSizeWarningLimit: 600,
   },
   server: {
     proxy: {

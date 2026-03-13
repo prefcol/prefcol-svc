@@ -225,14 +225,20 @@ const IT_Courses = () => {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  const gradients = React.useMemo(() => [
-    'linear-gradient(90deg,#FFD54F 0%, #FFB74D 100%)',
-    'linear-gradient(90deg,#64B5F6 0%, #42A5F5 100%)',
-    'linear-gradient(90deg,#4FC3F7 0%, #29B6F6 100%)',
-    'linear-gradient(90deg,#66BB6A 0%, #43A047 100%)',
-    'linear-gradient(90deg,#FF7043 0%, #FF8A65 100%)',
-    'linear-gradient(90deg,#7986CB 0%, #5C6BC0 100%)',
-  ], []);
+  // Colorful gradient palette for IT course cards – matched to Non‑IT cards
+  const gradients = React.useMemo(
+    () => [
+      "linear-gradient(135deg,#FF9A9E 0%,#FAD0C4 100%)",
+      "linear-gradient(135deg,#A18CD1 0%,#FBC2EB 100%)",
+      "linear-gradient(135deg,#FBC2EB 0%,#A6C1EE 100%)",
+      "linear-gradient(135deg,#F6D365 0%,#FDA085 100%)",
+      "linear-gradient(135deg,#84FAB0 0%,#8FD3F4 100%)",
+      "linear-gradient(135deg,#FFE29F 0%,#FFA99F 48%,#FF719A 100%)",
+      "linear-gradient(135deg,#89F7FE 0%,#66A6FF 100%)",
+      "linear-gradient(135deg,#F5576C 0%,#F093FB 100%)",
+    ],
+    []
+  );
 
 
 
@@ -378,6 +384,7 @@ const IT_Courses = () => {
               <Grid container spacing={3}>
 {filteredCourses.map((course, index) => {
   const IconComponent = iconMap[course.icon] || FaGraduationCap;
+  const gradient = gradients[index % gradients.length];
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} key={course.courseId}>
       <motion.div
@@ -410,15 +417,15 @@ const IT_Courses = () => {
           }}
         >
           <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 0, position: 'relative', zIndex: 1 }} className="course-card">
-            {/* Top banner area – soft green accent like reference cards */}
+            {/* Top banner area – gradient background to match Non‑IT cards */}
             <Box
               className="course-hero"
               sx={{
-                background: '#f0faf5',
                 borderBottom: '1px solid #e3f3ec',
                 px: 2.5,
                 py: 1.75,
               }}
+              style={{ backgroundImage: gradient, backgroundSize: 'cover' }}
             >
               <Typography
                 variant="h6"
@@ -439,55 +446,74 @@ const IT_Courses = () => {
               </Typography>
             </Box>
             <Box className="course-card-body" sx={{ flexGrow: 1 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
-                <Avatar
-                  sx={{
-                    width: 56,
-                    height: 56,
-                    backgroundColor: course.available ? theme.palette.primary.main : theme.palette.action.disabled,
-                    color: theme.palette.background.paper,
-                    boxShadow: '0 6px 18px rgba(2,6,23,0.06)',
-                    transform: 'translateY(-28px)'
-                  }}
-                >
-                  {React.cloneElement(<IconComponent />, { size: 26 })}
-                </Avatar>
+              {/* Icon styled to match Non-IT course cards */}
+              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", mb: 2 }}>
+                <div className="w-16 h-16 rounded-2xl bg-white/95 flex items-center justify-center shadow-lg -translate-y-7">
+                  {React.cloneElement(<IconComponent />, { size: 30, className: "text-teal-700" })}
+                </div>
               </Box>
-              <Typography
-                sx={{
-                  color: theme.palette.text.secondary,
-                  mb: 3,
-                  flexGrow: 1,
-                  textAlign: 'center',
-                  fontSize: { xs: '0.9375rem', sm: '1rem' },
-                  lineHeight: 1.55,
-                  fontWeight: 500,
-                  WebkitFontSmoothing: 'antialiased',
-                  MozOsxFontSmoothing: 'grayscale',
-                }}
-              >
-                {course.description}
-              </Typography>
-              <Button 
-                variant="contained" 
-                fullWidth
-                sx={{ 
-                  mt: 'auto',
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  backgroundColor: course.available ? '#004d40' : theme.palette.action.disabled,
-                  color: theme.palette.background.paper,
-                  transition: 'all 0.3s ease-in-out',
-                  WebkitFontSmoothing: 'antialiased',
-                  '&:hover': {
-                      transform: 'translateY(-5px)',
-                      boxShadow: '0 10px 20px rgba(0,0,0,0.18)',
-                      backgroundColor: course.available ? '#004c40' : theme.palette.action.disabled,
-                  }
-                }}
-              >
-                {course.available ? 'Learn More' : 'Coming Soon'}
-              </Button>
+
+              {/* Content section – match Non‑IT pattern */}
+              <div className="flex flex-col flex-1 px-1 pt-0 pb-2">
+                {/* Meta row */}
+                <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wide mb-2 text-slate-500">
+                  <div className="flex items-center gap-1">
+                    <span className="inline-flex items-center justify-center rounded-full bg-teal-50 text-teal-700 px-2 py-0.5">
+                      10x Lesson
+                    </span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
+                    IT
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h2 className="text-sm sm:text-base md:text-lg font-semibold mb-1 text-slate-900 line-clamp-2">
+                  {course.courseName}
+                </h2>
+
+                {/* Description */}
+                <p className="text-xs sm:text-sm text-slate-600 mb-3 line-clamp-2">
+                  {course.description}
+                </p>
+
+                {/* Instructor / stats row */}
+                <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mb-4">
+                  <div className="flex items-center gap-1">
+                    <span className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-semibold text-slate-700">
+                      P
+                    </span>
+                    <span className="font-medium text-slate-700">Prefcol Mentor</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                    <span>50+ Students</span>
+                  </div>
+                </div>
+
+                {/* Footer row: rating + CTA */}
+                <div className="mt-auto flex items-center justify-between pt-2 border-t border-slate-100">
+                  <div className="flex items-center gap-1 text-[11px] sm:text-xs text-amber-500">
+                    <span className="text-[13px]">★★★★★</span>
+                    <span className="text-slate-500">(10)</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (course.available) handleCardClick(course);
+                    }}
+                    disabled={!course.available}
+                    className={`text-xs sm:text-sm font-semibold inline-flex items-center gap-1 ${
+                      course.available
+                        ? "text-teal-700 hover:text-teal-900"
+                        : "text-slate-400 cursor-not-allowed"
+                    }`}
+                  >
+                    {course.available ? "Learn More+" : "Coming Soon"}
+                  </button>
+                </div>
+              </div>
             </Box>
           </CardContent>
           {!course.available && (

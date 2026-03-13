@@ -2,14 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0d9488" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <link rel="icon" type="image/png" href="./src/assets/Prefcol.png" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="preconnect" href="https://checkout.razorpay.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      media="print"
+      onload="this.media='all'"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prefcol Edutech Solutions Pvt. Ltd.</title>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /></noscript>
+    <title>PREFCOL Edutech Solutions Pvt. Ltd.</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
   </head>
   <body>
     <div id="root"></div>

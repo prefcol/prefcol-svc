@@ -29,6 +29,7 @@ const FeatureCard = ({ title, description, items, linkTo, icon: Icon, colorSchem
   const navigate = useNavigate();
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
+  const descriptionColor = useColorModeValue("gray.600", "gray.300");
 
   const handleOpen = () => {
     if (linkTo) navigate(linkTo);
@@ -46,7 +47,7 @@ const FeatureCard = ({ title, description, items, linkTo, icon: Icon, colorSchem
       </CardHeader>
       <CardBody pt={0}>
         {description && (
-          <Text fontSize="sm" color="gray.600" mb={3}>
+          <Text fontSize="sm" color={descriptionColor} mb={3}>
             {description}
           </Text>
         )}

@@ -7012,6 +7012,8 @@ const routes = {
   "/master-admin/audit-logs/view-logs": true,
   "/master-admin/audit-logs/accountability": true,
   "/master-admin/support/manage-requests": true,
+  "/master-admin/payslips/bulk-generate": true,
+  "/master-admin/payslips": true,
 };
 
 const MasterAdminSidebar = ({
@@ -7063,7 +7065,7 @@ const MasterAdminSidebar = ({
       setUserData({
         name: "Admin User",
         role: "Master Admin",
-        avatar: "/api/placeholder/40/40",
+        avatar: "",
         notifications: 2,
       });
       setIsLoading(false);
@@ -7123,6 +7125,23 @@ const MasterAdminSidebar = ({
         { key: "/master-admin/user-management/delete", icon: <DeleteOutlined />, label: "Delete Users" },
         { key: "/master-admin/user-management/roles", icon: <SwapOutlined />, label: "Roles & Permissions" },
         { key: "/master-admin/user-management/teacher-approvals", icon: <TeamOutlined />, label: "Teacher Approvals" },
+      ],
+    },
+    {
+      key: "hr-payroll",
+      icon: <CreditCardOutlined />,
+      label: "HR & Payroll",
+      children: [
+        {
+          key: "/master-admin/payslips/bulk-generate",
+          icon: <FileTextOutlined />,
+          label: "Generate Monthly Payslips",
+        },
+        {
+          key: "/master-admin/payslips",
+          icon: <FileTextOutlined />,
+          label: "Payslip History",
+        },
       ],
     },
     {

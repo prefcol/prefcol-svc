@@ -1997,6 +1997,8 @@ import {
   FaGift,
   FaCertificate,
   FaPlay,
+  FaCalendar,
+  FaDollarSign,
 } from "react-icons/fa";
 import {
   Box,
@@ -2262,6 +2264,214 @@ const coursesData = [
     videoId: "TfDVLsBXYcM",
     character: "/placeholder.svg?height=200&width=200",
   },
+  {
+    id: "NIT-113",
+    title: "Human Resources",
+    description: "Manage and develop talent in organizations.",
+    available: true,
+    icon: <FaUserTie className="text-3xl mb-2" />,
+    objectives: ["Recruitment and selection", "Employee relations and retention", "Performance management"],
+    prerequisites: "Basic understanding of business",
+    duration: "6 weeks",
+    relatedCourses: ["NIT-103", "NIT-104", "NIT-105"],
+    videoId: "8T2sS5yj7Uo",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-114",
+    title: "Finance & Accounting",
+    description: "Financial statements, budgeting, and accounting basics.",
+    available: true,
+    icon: <FaDollarSign className="text-3xl mb-2" />,
+    objectives: ["Read financial statements", "Budgeting and forecasting", "Tax and compliance basics"],
+    prerequisites: "None",
+    duration: "6 weeks",
+    relatedCourses: ["NIT-105", "NIT-106", "NIT-104"],
+    videoId: "WCRwb9JGBx8",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-115",
+    title: "Content Writing & Copywriting",
+    description: "Write for marketing, blogs, and ads.",
+    available: true,
+    icon: <FaBook className="text-3xl mb-2" />,
+    objectives: ["SEO and blog writing", "Ad copy and landing pages", "Brand voice and storytelling"],
+    prerequisites: "Good command of language",
+    duration: "4 weeks",
+    relatedCourses: ["NIT-101", "NIT-103"],
+    videoId: "R3kYWDPVR9E",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-116",
+    title: "Entrepreneurship & Startup",
+    description: "Start a business, business plans, and funding.",
+    available: true,
+    icon: <FaUserTie className="text-3xl mb-2" />,
+    objectives: ["Ideation and validation", "Business plans and pitching", "Funding and scaling"],
+    prerequisites: "None",
+    duration: "6 weeks",
+    relatedCourses: ["NIT-105", "NIT-114", "NIT-103"],
+    videoId: "962eYqe--Yc",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-117",
+    title: "Leadership & Management",
+    description: "Lead teams, decision-making, and influence.",
+    available: true,
+    icon: <FaUserCog className="text-3xl mb-2" />,
+    objectives: ["Leading teams and change", "Decision-making and delegation", "Communication and influence"],
+    prerequisites: "None",
+    duration: "5 weeks",
+    relatedCourses: ["NIT-104", "NIT-107", "NIT-109"],
+    videoId: "962eYqe--Yc",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-118",
+    title: "Event Management",
+    description: "Plan and run events and conferences.",
+    available: true,
+    icon: <FaCalendar className="text-3xl mb-2" />,
+    objectives: ["Planning and budgeting", "Vendors and logistics", "On-site execution and evaluation"],
+    prerequisites: "None",
+    duration: "5 weeks",
+    relatedCourses: ["NIT-103", "NIT-109", "NIT-110"],
+    videoId: "V7z7BAZdt2M",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-119",
+    title: "Interior Design",
+    description: "Space planning, materials, and styling.",
+    available: true,
+    icon: <FaPalette className="text-3xl mb-2" />,
+    objectives: ["Space planning and layout", "Materials and color", "Client presentation and projects"],
+    prerequisites: "None",
+    duration: "8 weeks",
+    relatedCourses: ["NIT-102", "NIT-108"],
+    videoId: "8T2sS5yj7Uo",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-120",
+    title: "Fashion Design",
+    description: "Design and create fashion and apparel.",
+    available: true,
+    icon: <FaPalette className="text-3xl mb-2" />,
+    objectives: ["Sketching and pattern-making", "Fabrics and construction", "Portfolio and industry overview"],
+    prerequisites: "None",
+    duration: "10 weeks",
+    relatedCourses: ["NIT-102", "NIT-119"],
+    videoId: "TfDVLsBXYcM",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-121",
+    title: "Animation & Video Editing",
+    description: "Create and edit video and animation content.",
+    available: true,
+    icon: <FaCamera className="text-3xl mb-2" />,
+    objectives: ["Video editing software", "Motion graphics and animation", "Export and publishing"],
+    prerequisites: "Basic computer skills",
+    duration: "6 weeks",
+    relatedCourses: ["NIT-102", "NIT-108", "NIT-103"],
+    videoId: "V7z7BAZdt2M",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-122",
+    title: "Spoken English & Communication",
+    description: "Fluency and professional communication.",
+    available: true,
+    icon: <FaMicrophone className="text-3xl mb-2" />,
+    objectives: ["Pronunciation and fluency", "Professional speaking and writing", "Presentations and interviews"],
+    prerequisites: "Basic English",
+    duration: "6 weeks",
+    relatedCourses: ["NIT-109", "NIT-101", "NIT-107"],
+    videoId: "962eYqe--Yc",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-123",
+    title: "Psychology & Soft Skills",
+    description: "Self-awareness, teamwork, and career development.",
+    available: true,
+    icon: <FaHeartbeat className="text-3xl mb-2" />,
+    objectives: ["Emotional intelligence", "Teamwork and conflict", "Career planning and growth"],
+    prerequisites: "None",
+    duration: "5 weeks",
+    relatedCourses: ["NIT-109", "NIT-117", "NIT-107"],
+    videoId: "962eYqe--Yc",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-124",
+    title: "Teaching & Train the Trainer",
+    description: "Teach and train others effectively.",
+    available: true,
+    icon: <FaBook className="text-3xl mb-2" />,
+    objectives: ["Adult learning principles", "Designing and delivering sessions", "Assessment and feedback"],
+    prerequisites: "Subject expertise",
+    duration: "4 weeks",
+    relatedCourses: ["NIT-109", "NIT-122", "NIT-117"],
+    videoId: "R3kYWDPVR9E",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-125",
+    title: "Retail Management",
+    description: "Store operations, merchandising, and customer experience.",
+    available: true,
+    icon: <FaChartBar className="text-3xl mb-2" />,
+    objectives: ["Store operations and KPIs", "Merchandising and visual display", "Customer service and sales"],
+    prerequisites: "None",
+    duration: "5 weeks",
+    relatedCourses: ["NIT-106", "NIT-103", "NIT-114"],
+    videoId: "WCRwb9JGBx8",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-126",
+    title: "Hospitality & Hotel Management",
+    description: "Tourism, hotels, and food & beverage.",
+    available: true,
+    icon: <FaUserTie className="text-3xl mb-2" />,
+    objectives: ["Front office and housekeeping", "F&B operations", "Revenue and guest experience"],
+    prerequisites: "None",
+    duration: "6 weeks",
+    relatedCourses: ["NIT-112", "NIT-118", "NIT-125"],
+    videoId: "TfDVLsBXYcM",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-127",
+    title: "Supply Chain & Logistics",
+    description: "Procurement, inventory, and distribution.",
+    available: true,
+    icon: <FaCogs className="text-3xl mb-2" />,
+    objectives: ["Procurement and sourcing", "Inventory and warehousing", "Transport and last-mile"],
+    prerequisites: "Basic business knowledge",
+    duration: "6 weeks",
+    relatedCourses: ["NIT-106", "NIT-114", "NIT-125"],
+    videoId: "WCRwb9JGBx8",
+    character: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    id: "NIT-128",
+    title: "Yoga, Fitness & Wellness",
+    description: "Lifestyle, fitness, and wellness practices.",
+    available: true,
+    icon: <FaHeartbeat className="text-3xl mb-2" />,
+    objectives: ["Yoga and mindfulness", "Fitness fundamentals", "Nutrition and lifestyle balance"],
+    prerequisites: "None",
+    duration: "4 weeks",
+    relatedCourses: ["NIT-104", "NIT-123"],
+    videoId: "V7z7BAZdt2M",
+    character: "/placeholder.svg?height=200&width=200",
+  },
 ];
 
 const PriceDisplay = ({ course }) => {
@@ -2387,16 +2597,26 @@ export default function Non_IT_CourseDetails() {
   //   }
   // }, [courseId]);
 
+  const resolveCourseId = (id) => {
+    if (!id) return null;
+    const n = parseInt(id, 10);
+    if (Number.isNaN(n)) return id;
+    return `NIT-${100 + n}`;
+  };
+
   useEffect(() => {
-  const selectedCourse = coursesData.find((c) => c.id === courseId);
-  if (selectedCourse) {
-    setCourse(selectedCourse);
-    setRelatedCourses(
-      coursesData.filter((c) => selectedCourse.relatedCourses.includes(c.id))
-    );
-    setProgress(Math.floor(Math.random() * 101));
-  }
-}, [courseId]);
+    const resolvedId = resolveCourseId(courseId) || courseId;
+    const selectedCourse = coursesData.find((c) => c.id === resolvedId || c.id === courseId);
+    if (selectedCourse) {
+      setCourse(selectedCourse);
+      setRelatedCourses(
+        coursesData.filter((c) => selectedCourse.relatedCourses.includes(c.id))
+      );
+      setProgress(Math.floor(Math.random() * 101));
+    } else {
+      setCourse(null);
+    }
+  }, [courseId]);
 
 
   if (!course) {
@@ -3532,8 +3752,105 @@ export default function Non_IT_CourseDetails() {
             "Final presentation and tasting session",
           ],
         },
-      ]
-      
+      ];
+
+      case "NIT-113": // Human Resources
+      return [
+        { week: 1, title: "Introduction to HR", lessons: ["Role of HR", "Employee life cycle", "HR metrics"] },
+        { week: 2, title: "Recruitment & Selection", lessons: ["Job descriptions", "Interviewing", "Onboarding"] },
+        { week: 3, title: "Employee Relations", lessons: ["Work culture", "Conflict resolution", "Performance management"] },
+        { week: 4, title: "HR Tech & Analytics", lessons: ["HRIS", "Data-driven HR", "Future of work"] },
+      ];
+      case "NIT-114": // Finance & Accounting
+      return [
+        { week: 1, title: "Accounting Basics", lessons: ["Financial statements", "Double-entry", "Chart of accounts"] },
+        { week: 2, title: "Budgeting", lessons: ["Budgets and forecasts", "Variance analysis", "Cash flow"] },
+        { week: 3, title: "Tax & Compliance", lessons: ["Tax basics", "Compliance overview", "Audit essentials"] },
+      ];
+      case "NIT-115": // Content Writing & Copywriting
+      return [
+        { week: 1, title: "SEO & Blog Writing", lessons: ["Keywords", "Structure", "Editing"] },
+        { week: 2, title: "Ad Copy & Landing Pages", lessons: ["Headlines", "CTAs", "A/B testing"] },
+        { week: 3, title: "Brand Voice", lessons: ["Tone", "Storytelling", "Portfolio"] },
+      ];
+      case "NIT-116": // Entrepreneurship & Startup
+      return [
+        { week: 1, title: "Ideation & Validation", lessons: ["Problem-solution fit", "Customer discovery", "MVP"] },
+        { week: 2, title: "Business Plan & Pitching", lessons: ["Business model", "Pitch deck", "Investor outreach"] },
+        { week: 3, title: "Funding & Scaling", lessons: ["Bootstrapping vs funding", "Operations", "Growth"] },
+      ];
+      case "NIT-117": // Leadership & Management
+      return [
+        { week: 1, title: "Leading Teams", lessons: ["Vision", "Delegation", "Feedback"] },
+        { week: 2, title: "Decision-Making", lessons: ["Frameworks", "Stakeholders", "Risk"] },
+        { week: 3, title: "Communication & Influence", lessons: ["Persuasion", "Difficult conversations", "Coaching"] },
+      ];
+      case "NIT-118": // Event Management
+      return [
+        { week: 1, title: "Planning & Budgeting", lessons: ["Objectives", "Budget", "Timeline"] },
+        { week: 2, title: "Vendors & Logistics", lessons: ["Venue", "Catering", "AV"] },
+        { week: 3, title: "Execution & Evaluation", lessons: ["On-site", "Crisis management", "Debrief"] },
+      ];
+      case "NIT-119": // Interior Design
+      return [
+        { week: 1, title: "Space Planning", lessons: ["Layout", "Flow", "Scale"] },
+        { week: 2, title: "Materials & Color", lessons: ["Finishes", "Color theory", "Sustainability"] },
+        { week: 3, title: "Presentation & Projects", lessons: ["Mood boards", "Client presentation", "Portfolio"] },
+      ];
+      case "NIT-120": // Fashion Design
+      return [
+        { week: 1, title: "Sketching & Pattern-Making", lessons: ["Fashion illustration", "Patterns", "Draping"] },
+        { week: 2, title: "Fabrics & Construction", lessons: ["Textiles", "Sewing", "Finishing"] },
+        { week: 3, title: "Portfolio & Industry", lessons: ["Collection", "Portfolio", "Career paths"] },
+      ];
+      case "NIT-121": // Animation & Video Editing
+      return [
+        { week: 1, title: "Video Editing", lessons: ["Software", "Cutting", "Sound"] },
+        { week: 2, title: "Motion & Animation", lessons: ["Motion graphics", "Animation basics", "Effects"] },
+        { week: 3, title: "Export & Publish", lessons: ["Formats", "Platforms", "Portfolio"] },
+      ];
+      case "NIT-122": // Spoken English & Communication
+      return [
+        { week: 1, title: "Pronunciation & Fluency", lessons: ["Sounds", "Intonation", "Practice"] },
+        { week: 2, title: "Professional Communication", lessons: ["Email", "Meetings", "Networking"] },
+        { week: 3, title: "Presentations & Interviews", lessons: ["Structure", "Confidence", "Q&A"] },
+      ];
+      case "NIT-123": // Psychology & Soft Skills
+      return [
+        { week: 1, title: "Emotional Intelligence", lessons: ["Self-awareness", "Empathy", "Regulation"] },
+        { week: 2, title: "Teamwork & Conflict", lessons: ["Collaboration", "Conflict resolution", "Feedback"] },
+        { week: 3, title: "Career Development", lessons: ["Goals", "Networking", "Growth mindset"] },
+      ];
+      case "NIT-124": // Teaching & Train the Trainer
+      return [
+        { week: 1, title: "Adult Learning", lessons: ["Andragogy", "Learning styles", "Motivation"] },
+        { week: 2, title: "Design & Delivery", lessons: ["Session design", "Delivery techniques", "Activities"] },
+        { week: 3, title: "Assessment & Feedback", lessons: ["Evaluation", "Feedback", "Improvement"] },
+      ];
+      case "NIT-125": // Retail Management
+      return [
+        { week: 1, title: "Store Operations", lessons: ["Operations", "KPIs", "Scheduling"] },
+        { week: 2, title: "Merchandising", lessons: ["Visual display", "Inventory", "Assortment"] },
+        { week: 3, title: "Customer & Sales", lessons: ["Service", "Sales techniques", "Loyalty"] },
+      ];
+      case "NIT-126": // Hospitality & Hotel Management
+      return [
+        { week: 1, title: "Front Office & Housekeeping", lessons: ["Check-in/out", "Housekeeping", "Guest care"] },
+        { week: 2, title: "F&B Operations", lessons: ["Restaurant", "Banquets", "Menu"] },
+        { week: 3, title: "Revenue & Experience", lessons: ["Revenue management", "Guest experience", "Trends"] },
+      ];
+      case "NIT-127": // Supply Chain & Logistics
+      return [
+        { week: 1, title: "Procurement & Sourcing", lessons: ["Sourcing", "Suppliers", "Contracts"] },
+        { week: 2, title: "Inventory & Warehousing", lessons: ["Inventory management", "Warehouse", "WMS"] },
+        { week: 3, title: "Transport & Last-Mile", lessons: ["Modes", "Routing", "Last-mile"] },
+      ];
+      case "NIT-128": // Yoga, Fitness & Wellness
+      return [
+        { week: 1, title: "Yoga & Mindfulness", lessons: ["Asanas", "Breathing", "Meditation"] },
+        { week: 2, title: "Fitness Fundamentals", lessons: ["Strength", "Cardio", "Recovery"] },
+        { week: 3, title: "Nutrition & Lifestyle", lessons: ["Diet basics", "Sleep", "Habits"] },
+      ];
 
       default:
         return [];

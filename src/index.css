@@ -3,38 +3,65 @@
 @tailwind utilities;
 
 :root {
-    --background-color: #fff;
-    --text-color: #000;
+  --background-color: #fff;
+  --text-color: #000;
+  --safe-area-inset-top: env(safe-area-inset-top, 0);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.dark {
+  --background-color: #000;
+  --text-color: #fff;
+}
+
+/* Base: performance and mobile/desktop optimization */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  /* Smooth scrolling and touch on mobile */
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optional: add class .touch-target for critical mobile buttons to meet 44px min */
+@media (max-width: 768px) {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
-  
-  .dark {
-    --background-color: #000;
-    --text-color: #fff;
-  }
-  
-  /* Apply these variables globally */
-  body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-  }
+}
 
 /* ---------- Global layout helpers ---------- */
 
-/* Full-width section with consistent vertical rhythm */
+/* Full-width section: responsive vertical rhythm for mobile and desktop */
 .page-section {
   width: 100%;
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
+  padding-top: clamp(1.25rem, 4vw, 2.5rem);
+  padding-bottom: clamp(1.25rem, 4vw, 2.5rem);
 }
 
-/* Centered, readable content wrapper */
+/* Centered, readable content wrapper — responsive padding */
 .page-container {
   width: 100%;
-  max-width: 1200px; /* adjust if you prefer 1120 / 1280px */
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: clamp(1rem, 4vw, 1.5rem);
+  padding-right: clamp(1rem, 4vw, 1.5rem);
 }
 
 /* Glass panel utility for frosted glass + entrance animation */
@@ -103,4 +130,3 @@
   transform: translateY(-4px);
   box-shadow: 0 12px 28px rgba(2,6,23,0.08);
 }
-  

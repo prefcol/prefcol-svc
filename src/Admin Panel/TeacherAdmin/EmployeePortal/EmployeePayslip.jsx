@@ -29,6 +29,8 @@ export default function EmployeePayslip() {
   const [downloadingId, setDownloadingId] = useState(null);
   const toast = useToast();
   const cardBg = useColorModeValue("white", "gray.800");
+  const mutedText = useColorModeValue("gray.600", "gray.300");
+  const subtleText = useColorModeValue("gray.500", "gray.400");
 
   useEffect(() => {
     const load = async () => {
@@ -102,10 +104,10 @@ export default function EmployeePayslip() {
 
   return (
     <Box>
-      <Heading size="lg" mb={2} color="teal.600">
+      <Heading size="lg" mb={2} color={useColorModeValue("teal.600", "teal.300")}>
         Payslips
       </Heading>
-      <Text color="gray.600" mb={6}>
+      <Text color={mutedText} mb={6}>
         View your monthly salary details and download payslips as PDF.
       </Text>
 
@@ -117,7 +119,7 @@ export default function EmployeePayslip() {
         </CardHeader>
         <CardBody>
           {payslips.length === 0 ? (
-            <Text color="gray.500">No payslips available.</Text>
+            <Text color={subtleText}>No payslips available.</Text>
           ) : (
             <Table size="sm">
               <Thead>

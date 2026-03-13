@@ -146,6 +146,9 @@ import {
   FaLeaf,
   FaUtensils,
   FaGraduationCap,
+  FaCloud,
+  FaCalendar,
+  FaDollarSign,
 } from "react-icons/fa";
 import { apiV1Url } from "../api/colBackend";
 
@@ -171,6 +174,9 @@ const iconMap = {
   FaTheaterMasks: FaTheaterMasks,
   FaLeaf: FaLeaf,
   FaUtensils: FaUtensils,
+  FaCloud: FaCloud,
+  FaCalendar: FaCalendar,
+  FaDollarSign: FaDollarSign,
 };
 
 const defaultIcon = () => <FaGraduationCap />;
@@ -189,6 +195,20 @@ const FALLBACK_IT_COURSES = [
   { courseId: "10", courseName: "Mobile Development", description: "Build mobile applications.", available: true, icon: "FaMobileAlt" },
   { courseId: "11", courseName: "DevOps", description: "CI/CD, cloud and infrastructure.", available: true, icon: "FaCogs" },
   { courseId: "12", courseName: "Cyber Security", description: "Security fundamentals and practices.", available: true, icon: "FaShieldAlt" },
+  { courseId: "13", courseName: "UI/UX Development", description: "Design user interfaces and experiences for web and mobile apps.", available: true, icon: "FaPalette" },
+  { courseId: "14", courseName: "Full Stack Development", description: "Build end-to-end applications with frontend and backend technologies.", available: true, icon: "FaCogs" },
+  { courseId: "15", courseName: "Cloud (AWS / Azure / GCP)", description: "Design and deploy solutions on major cloud platforms.", available: true, icon: "FaCloud" },
+  { courseId: "16", courseName: "Frontend Development (React / Angular)", description: "Build modern web UIs with React or Angular.", available: true, icon: "FaPalette" },
+  { courseId: "17", courseName: ".NET / C# Development", description: "Build applications with Microsoft .NET and C#.", available: true, icon: "FaCogs" },
+  { courseId: "18", courseName: "Database & SQL", description: "Design databases and write SQL for data management.", available: true, icon: "FaDatabase" },
+  { courseId: "19", courseName: "System Design & Software Architecture", description: "Design scalable systems and apply software architecture patterns.", available: true, icon: "FaCogs" },
+  { courseId: "20", courseName: "Agile / Scrum / Project Management", description: "Run projects with Agile, Scrum, and modern PM practices.", available: true, icon: "FaUserCog" },
+  { courseId: "21", courseName: "Artificial Intelligence & Deep Learning", description: "Build AI and deep learning models with Python.", available: true, icon: "FaDatabase" },
+  { courseId: "22", courseName: "Blockchain & Web3", description: "Understand blockchain, smart contracts, and Web3 development.", available: true, icon: "FaCogs" },
+  { courseId: "23", courseName: "Big Data (Hadoop / Spark)", description: "Process large-scale data with Hadoop and Apache Spark.", available: true, icon: "FaDatabase" },
+  { courseId: "24", courseName: "Docker & Kubernetes", description: "Containerize apps and orchestrate with Kubernetes.", available: true, icon: "FaCogs" },
+  { courseId: "25", courseName: "Game Development", description: "Create games with popular engines and programming.", available: true, icon: "FaCogs" },
+  { courseId: "26", courseName: "IoT (Internet of Things)", description: "Build connected devices and embedded systems.", available: true, icon: "FaMobileAlt" },
 ];
 const FALLBACK_NON_IT_COURSES = [
   { courseId: "1", courseName: "Creative Writing", description: "Master the art of storytelling and creative expression.", available: true, icon: "FaBook" },
@@ -203,6 +223,22 @@ const FALLBACK_NON_IT_COURSES = [
   { courseId: "10", courseName: "Sustainable Agriculture", description: "Eco-friendly farming and agri practices.", available: true, icon: "FaLeaf" },
   { courseId: "11", courseName: "Culinary Arts", description: "Cooking techniques and kitchen management.", available: true, icon: "FaUtensils" },
   { courseId: "12", courseName: "Environmental Studies", description: "Sustainability and environmental management.", available: true, icon: "FaGlobeAmericas" },
+  { courseId: "13", courseName: "Human Resources", description: "Manage and develop talent in organizations.", available: true, icon: "FaUserTie" },
+  { courseId: "14", courseName: "Finance & Accounting", description: "Financial statements, budgeting, and accounting basics.", available: true, icon: "FaDollarSign" },
+  { courseId: "15", courseName: "Content Writing & Copywriting", description: "Write for marketing, blogs, and ads.", available: true, icon: "FaBook" },
+  { courseId: "16", courseName: "Entrepreneurship & Startup", description: "Start a business, business plans, and funding.", available: true, icon: "FaUserTie" },
+  { courseId: "17", courseName: "Leadership & Management", description: "Lead teams, decision-making, and influence.", available: true, icon: "FaUserCog" },
+  { courseId: "18", courseName: "Event Management", description: "Plan and run events and conferences.", available: true, icon: "FaCalendar" },
+  { courseId: "19", courseName: "Interior Design", description: "Space planning, materials, and styling.", available: true, icon: "FaPalette" },
+  { courseId: "20", courseName: "Fashion Design", description: "Design and create fashion and apparel.", available: true, icon: "FaPalette" },
+  { courseId: "21", courseName: "Animation & Video Editing", description: "Create and edit video and animation content.", available: true, icon: "FaCamera" },
+  { courseId: "22", courseName: "Spoken English & Communication", description: "Fluency and professional communication.", available: true, icon: "FaMicrophone" },
+  { courseId: "23", courseName: "Psychology & Soft Skills", description: "Self-awareness, teamwork, and career development.", available: true, icon: "FaHeartbeat" },
+  { courseId: "24", courseName: "Teaching & Train the Trainer", description: "Teach and train others effectively.", available: true, icon: "FaBook" },
+  { courseId: "25", courseName: "Retail Management", description: "Store operations, merchandising, and customer experience.", available: true, icon: "FaChartBar" },
+  { courseId: "26", courseName: "Hospitality & Hotel Management", description: "Tourism, hotels, and food & beverage.", available: true, icon: "FaUserTie" },
+  { courseId: "27", courseName: "Supply Chain & Logistics", description: "Procurement, inventory, and distribution.", available: true, icon: "FaCogs" },
+  { courseId: "28", courseName: "Yoga, Fitness & Wellness", description: "Lifestyle, fitness, and wellness practices.", available: true, icon: "FaHeartbeat" },
 ];
 
 // Create Context

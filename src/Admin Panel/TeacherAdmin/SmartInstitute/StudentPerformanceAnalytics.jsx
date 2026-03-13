@@ -6,6 +6,8 @@ import { FaCheckCircle, FaArrowLeft } from "react-icons/fa";
 export default function StudentPerformanceAnalytics() {
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
+  const mutedText = useColorModeValue("gray.600", "gray.300");
+  const subtleText = useColorModeValue("gray.500", "gray.400");
 
   const features = [
     "Individual progress tracking",
@@ -20,7 +22,7 @@ export default function StudentPerformanceAnalytics() {
         Back to Smart Institute
       </Button>
       <Heading size="lg" mb={2}>Student Performance Analytics</Heading>
-      <Text color="gray.600" mb={6}>
+      <Text color={mutedText} mb={6}>
         Track student progress, strengths, and areas to improve.
       </Text>
       <Card bg={cardBg} borderWidth="1px" borderColor={borderColor}>
@@ -36,7 +38,7 @@ export default function StudentPerformanceAnalytics() {
               </ListItem>
             ))}
           </List>
-          <Text mt={4} fontSize="sm" color="gray.500">
+          <Text mt={4} fontSize="sm" color={subtleText}>
             Analytics and reports can be connected to your student and assignment data.
           </Text>
         </CardBody>

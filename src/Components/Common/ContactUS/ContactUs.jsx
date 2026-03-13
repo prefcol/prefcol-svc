@@ -163,17 +163,17 @@ class ContactPage extends React.Component {
                   Connect With Us
                 </h2>
                 <div className="flex justify-center item-center flex-wrap gap-4">
-                  <SocialButton
+                  {/* <SocialButton
                     icon={<FaFacebook />}
                     href="https://www.facebook.com/share/1DQCBRzxdo/?mibextid=wwXIfr"
-                  />
+                  /> */}
                   <SocialButton
                     icon={<FaInstagram />}
-                    href="https://www.instagram.com/chamber_of_learning?igsh=ZnFvaXdpdWs5ZHJ2"
+                    href="https://www.instagram.com/prefcol_edutech_official?igsh=ZnFvaXdpdWs5ZHJ2"
                   />
                   <SocialButton
                     icon={<FaYoutube />}
-                    href="https://www.youtube.com/@ChamberOfLearningOfficial"
+                    href="https://www.youtube.com/@PrefcolEdutech-b9b"
                   />
                   {/* <SocialButton icon={<FaGlobe />} href="https://www.prefcol.com"/> */}
                 </div>

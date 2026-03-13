@@ -11,10 +11,10 @@ export default function ComingSoonPage({ title = "Coming Soon" }) {
   return (
     <Box py={8}>
       <VStack spacing={4} align="stretch" maxW="md">
-        <Heading size="lg" color="gray.700">
+        <Heading size="lg" color={useColorModeValue("gray.700", "gray.100")}>
           {title}
         </Heading>
-        <Text color="gray.600">
+        <Text color={useColorModeValue("gray.600", "gray.300")}>
           This section is under development. You can continue using the dashboard and other available features.
         </Text>
         <Button colorScheme="blue" onClick={() => navigate("/teacher-admin/home")}>

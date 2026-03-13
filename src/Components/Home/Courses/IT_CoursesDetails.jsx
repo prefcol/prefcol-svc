@@ -25,6 +25,8 @@ import {
   FaGift,
   FaCertificate,
   FaPlay,
+  FaPalette,
+  FaCloud,
 } from "react-icons/fa";
 import {
   Box,
@@ -275,7 +277,230 @@ const coursesData = [
     relatedCourses: ["IT-101", "IT-105", "IT-110"],
     videoId: "cM1AaD7Pf8M",
   },
-  
+  {
+    id: "IT-113",
+    title: "UI/UX Development",
+    description: "Design user interfaces and experiences for web and mobile apps.",
+    available: true,
+    icon: <FaPalette className="text-3xl mb-2" />,
+    objectives: [
+      "Learn user research and wireframing",
+      "Design interfaces with modern tools",
+      "Create prototypes and design systems",
+    ],
+    prerequisites: "None",
+    duration: "6 weeks",
+    relatedCourses: ["IT-101", "IT-102", "IT-109"],
+    videoId: "eIrMbAQSU34",
+  },
+  {
+    id: "IT-114",
+    title: "Full Stack Development",
+    description: "Build end-to-end applications with frontend and backend technologies.",
+    available: true,
+    icon: <FaCogs className="text-3xl mb-2" />,
+    objectives: [
+      "Build responsive frontends with React",
+      "Develop REST APIs and databases",
+      "Deploy and maintain full stack applications",
+    ],
+    prerequisites: "Basic programming knowledge",
+    duration: "10 weeks",
+    relatedCourses: ["IT-101", "IT-102", "IT-109", "IT-111"],
+    videoId: "_uQrJ0TkZlc",
+  },
+  {
+    id: "IT-115",
+    title: "Cloud (AWS / Azure / GCP)",
+    description: "Design and deploy solutions on major cloud platforms.",
+    available: true,
+    icon: <FaCloud className="text-3xl mb-2" />,
+    objectives: [
+      "Understand cloud models (IaaS, PaaS, SaaS)",
+      "Deploy and manage resources on AWS, Azure, or GCP",
+      "Implement security and cost optimization",
+    ],
+    prerequisites: "Basic networking and OS knowledge",
+    duration: "8 weeks",
+    relatedCourses: ["IT-111", "IT-112", "IT-124"],
+    videoId: "eIrMbAQSU34",
+  },
+  {
+    id: "IT-116",
+    title: "Frontend Development (React / Angular)",
+    description: "Build modern web UIs with React or Angular.",
+    available: true,
+    icon: <FaPalette className="text-3xl mb-2" />,
+    objectives: [
+      "Build single-page applications with React or Angular",
+      "State management, routing, and APIs",
+      "Performance and accessibility best practices",
+    ],
+    prerequisites: "HTML, CSS, JavaScript basics",
+    duration: "6 weeks",
+    relatedCourses: ["IT-113", "IT-114", "IT-101"],
+    videoId: "_uQrJ0TkZlc",
+  },
+  {
+    id: "IT-117",
+    title: ".NET / C# Development",
+    description: "Build applications with Microsoft .NET and C#.",
+    available: true,
+    icon: <FaCogs className="text-3xl mb-2" />,
+    objectives: [
+      "C# language and .NET runtime",
+      "Build web APIs and web apps with ASP.NET Core",
+      "Database access with Entity Framework",
+    ],
+    prerequisites: "Basic programming knowledge",
+    duration: "8 weeks",
+    relatedCourses: ["IT-101", "IT-114", "IT-118"],
+    videoId: "eIrMbAQSU34",
+  },
+  {
+    id: "IT-118",
+    title: "Database & SQL",
+    description: "Design databases and write SQL for data management.",
+    available: true,
+    icon: <FaDatabase className="text-3xl mb-2" />,
+    objectives: [
+      "Relational design and normalization",
+      "SQL queries, joins, and optimization",
+      "Admin basics and backup/recovery",
+    ],
+    prerequisites: "None",
+    duration: "5 weeks",
+    relatedCourses: ["IT-101", "IT-102", "IT-114", "IT-110"],
+    videoId: "_uQrJ0TkZlc",
+  },
+  {
+    id: "IT-119",
+    title: "System Design & Software Architecture",
+    description: "Design scalable systems and apply software architecture patterns.",
+    available: true,
+    icon: <FaCogs className="text-3xl mb-2" />,
+    objectives: [
+      "Design patterns and architectural styles",
+      "Scalability, load balancing, and caching",
+      "Distributed systems and microservices",
+    ],
+    prerequisites: "Programming and basic CS fundamentals",
+    duration: "6 weeks",
+    relatedCourses: ["IT-101", "IT-114", "IT-111"],
+    videoId: "eIrMbAQSU34",
+  },
+  {
+    id: "IT-120",
+    title: "Agile / Scrum / Project Management",
+    description: "Run projects with Agile, Scrum, and modern PM practices.",
+    available: true,
+    icon: <FaUserCog className="text-3xl mb-2" />,
+    objectives: [
+      "Agile values, Scrum framework, and Kanban",
+      "Sprint planning, retrospectives, and ceremonies",
+      "Stakeholder communication and delivery",
+    ],
+    prerequisites: "None",
+    duration: "4 weeks",
+    relatedCourses: ["IT-107", "IT-108"],
+    videoId: "_uQrJ0TkZlc",
+  },
+  {
+    id: "IT-121",
+    title: "Artificial Intelligence & Deep Learning",
+    description: "Build AI and deep learning models with Python.",
+    available: true,
+    icon: <FaDatabase className="text-3xl mb-2" />,
+    objectives: [
+      "ML fundamentals and neural networks",
+      "Deep learning with TensorFlow/PyTorch",
+      "NLP, computer vision, and deployment",
+    ],
+    prerequisites: "Python and basic math/statistics",
+    duration: "10 weeks",
+    relatedCourses: ["IT-102", "IT-110", "IT-118"],
+    videoId: "eIrMbAQSU34",
+  },
+  {
+    id: "IT-122",
+    title: "Blockchain & Web3",
+    description: "Understand blockchain, smart contracts, and Web3 development.",
+    available: true,
+    icon: <FaCogs className="text-3xl mb-2" />,
+    objectives: [
+      "Blockchain fundamentals and consensus",
+      "Smart contracts (e.g. Solidity)",
+      "DApps and Web3 integration",
+    ],
+    prerequisites: "Programming basics",
+    duration: "6 weeks",
+    relatedCourses: ["IT-102", "IT-114"],
+    videoId: "_uQrJ0TkZlc",
+  },
+  {
+    id: "IT-123",
+    title: "Big Data (Hadoop / Spark)",
+    description: "Process large-scale data with Hadoop and Apache Spark.",
+    available: true,
+    icon: <FaDatabase className="text-3xl mb-2" />,
+    objectives: [
+      "Big data concepts and Hadoop ecosystem",
+      "Apache Spark and distributed processing",
+      "Data pipelines and cloud data services",
+    ],
+    prerequisites: "Programming and SQL basics",
+    duration: "6 weeks",
+    relatedCourses: ["IT-102", "IT-110", "IT-118", "IT-115"],
+    videoId: "eIrMbAQSU34",
+  },
+  {
+    id: "IT-124",
+    title: "Docker & Kubernetes",
+    description: "Containerize apps and orchestrate with Kubernetes.",
+    available: true,
+    icon: <FaCogs className="text-3xl mb-2" />,
+    objectives: [
+      "Docker images, containers, and Dockerfile",
+      "Kubernetes pods, services, and deployments",
+      "CI/CD and production best practices",
+    ],
+    prerequisites: "Linux and basic networking",
+    duration: "5 weeks",
+    relatedCourses: ["IT-111", "IT-115", "IT-114"],
+    videoId: "_uQrJ0TkZlc",
+  },
+  {
+    id: "IT-125",
+    title: "Game Development",
+    description: "Create games with popular engines and programming.",
+    available: true,
+    icon: <FaCogs className="text-3xl mb-2" />,
+    objectives: [
+      "Game design and mechanics",
+      "Unity or Unreal Engine basics",
+      "Scripting, physics, and publishing",
+    ],
+    prerequisites: "Basic programming",
+    duration: "8 weeks",
+    relatedCourses: ["IT-101", "IT-102", "IT-109"],
+    videoId: "eIrMbAQSU34",
+  },
+  {
+    id: "IT-126",
+    title: "IoT (Internet of Things)",
+    description: "Build connected devices and embedded systems.",
+    available: true,
+    icon: <FaMobileAlt className="text-3xl mb-2" />,
+    objectives: [
+      "Embedded systems and sensors",
+      "Protocols (MQTT, HTTP) and edge computing",
+      "Prototyping with Arduino/Raspberry Pi",
+    ],
+    prerequisites: "Basic programming and electronics",
+    duration: "6 weeks",
+    relatedCourses: ["IT-102", "IT-109", "IT-115"],
+    videoId: "_uQrJ0TkZlc",
+  },
 ];
 
 const PriceDisplay = ({ course }) => {
@@ -381,7 +606,8 @@ export default function IT_CourseDetails() {
   const toast = useToast();
   const { user, setShowForm, setRedirect, showEnrollForm, setShowEnrollForm  } = useAuth();
   
-  const bgColor = useColorModeValue("white", "teal.100");
+  // Match landing page background (soft mint on light mode)
+  const bgColor = useColorModeValue("#f4fbf8", "gray.900");
 
   // useEffect(() => {
   //   const selectedCourse = coursesData.find((c) => c.id === parseInt(courseId));
@@ -394,16 +620,27 @@ export default function IT_CourseDetails() {
   //   }
   // }, [courseId]);
 
+  // Resolve courseId from list (e.g. "1", "2" from API/fallback) to details id (e.g. "IT-101", "IT-102")
+  const resolveCourseId = (id) => {
+    if (!id) return null;
+    const n = parseInt(id, 10);
+    if (Number.isNaN(n)) return id;
+    return `IT-${100 + n}`;
+  };
+
   useEffect(() => {
-  const selectedCourse = coursesData.find((c) => c.id === courseId);
-  if (selectedCourse) {
-    setCourse(selectedCourse);
-    setRelatedCourses(
-      coursesData.filter((c) => selectedCourse.relatedCourses.includes(c.id))
-    );
-    setProgress(Math.floor(Math.random() * 101));
-  }
-}, [courseId]);
+    const resolvedId = resolveCourseId(courseId) || courseId;
+    const selectedCourse = coursesData.find((c) => c.id === resolvedId || c.id === courseId);
+    if (selectedCourse) {
+      setCourse(selectedCourse);
+      setRelatedCourses(
+        coursesData.filter((c) => selectedCourse.relatedCourses.includes(c.id))
+      );
+      setProgress(Math.floor(Math.random() * 101));
+    } else {
+      setCourse(null);
+    }
+  }, [courseId]);
 
 
   if (!course) {
@@ -1547,7 +1784,227 @@ export default function IT_CourseDetails() {
           ],
         },
       ];
-      
+
+      case "IT-113": // UI/UX Development
+      return [
+        {
+          week: 1,
+          title: "Introduction to UI/UX",
+          lessons: [
+            "What is UI and UX design",
+            "User-centered design principles",
+            "Design thinking and research basics",
+          ],
+        },
+        {
+          week: 2,
+          title: "Wireframing and Prototyping",
+          lessons: [
+            "Low-fidelity and high-fidelity wireframes",
+            "Information architecture and user flows",
+            "Tools: Figma, Adobe XD, or Sketch",
+          ],
+        },
+        {
+          week: 3,
+          title: "Visual Design Fundamentals",
+          lessons: [
+            "Typography, color theory, and layout",
+            "Design systems and component libraries",
+            "Accessibility (WCAG) basics",
+          ],
+        },
+        {
+          week: 4,
+          title: "Interaction Design",
+          lessons: [
+            "Micro-interactions and animations",
+            "Responsive and mobile-first design",
+            "Usability testing and iteration",
+          ],
+        },
+        {
+          week: 5,
+          title: "Handoff and Implementation",
+          lessons: [
+            "Design-to-dev handoff",
+            "CSS and design tokens",
+            "Collaboration with developers",
+          ],
+        },
+        {
+          week: 6,
+          title: "Portfolio and Career",
+          lessons: [
+            "Building a UI/UX portfolio",
+            "Case studies and presentation",
+            "Career paths in product design",
+          ],
+        },
+      ];
+
+      case "IT-114": // Full Stack Development
+      return [
+        {
+          week: 1,
+          title: "Introduction to Full Stack",
+          lessons: [
+            "Frontend vs backend vs full stack",
+            "Tech stack overview (React, Node, databases)",
+            "Setting up the development environment",
+          ],
+        },
+        {
+          week: 2,
+          title: "Frontend Foundations",
+          lessons: [
+            "HTML5, CSS3, and JavaScript recap",
+            "React components and state",
+            "Routing and API consumption",
+          ],
+        },
+        {
+          week: 3,
+          title: "Backend with Node.js",
+          lessons: [
+            "Node.js and Express basics",
+            "REST API design and implementation",
+            "Authentication (JWT, sessions)",
+          ],
+        },
+        {
+          week: 4,
+          title: "Databases",
+          lessons: [
+            "SQL vs NoSQL overview",
+            "Designing schemas and queries",
+            "ORM and database integration",
+          ],
+        },
+        {
+          week: 5,
+          title: "Full Stack Integration",
+          lessons: [
+            "Connecting frontend to backend",
+            "State management and data flow",
+            "Error handling and validation",
+          ],
+        },
+        {
+          week: 6,
+          title: "DevOps and Deployment",
+          lessons: [
+            "Version control and CI/CD basics",
+            "Deploying to cloud (e.g. Vercel, AWS)",
+            "Monitoring and maintenance",
+          ],
+        },
+        {
+          week: 7,
+          title: "Project Build",
+          lessons: [
+            "End-to-end project from design to deploy",
+            "Code quality and testing",
+            "Portfolio and next steps",
+          ],
+        },
+      ];
+
+      case "IT-115": // Cloud (AWS / Azure / GCP)
+      return [
+        { week: 1, title: "Cloud Fundamentals", lessons: ["Cloud models (IaaS, PaaS, SaaS)", "Shared responsibility model", "Choosing a provider (AWS, Azure, GCP)"] },
+        { week: 2, title: "Compute & Storage", lessons: ["Virtual machines and serverless", "Object and block storage", "Hands-on: deploy a simple app"] },
+        { week: 3, title: "Networking & Security", lessons: ["VPCs, subnets, and firewalls", "Identity and access (IAM)", "Encryption and compliance"] },
+        { week: 4, title: "Databases & Analytics", lessons: ["Managed databases (RDS, CosmosDB)", "Data lakes and analytics services", "Cost and performance tuning"] },
+      ];
+
+      case "IT-116": // Frontend Development (React / Angular)
+      return [
+        { week: 1, title: "JavaScript & Tooling", lessons: ["ES6+, npm, and bundlers", "Component-based thinking", "Choosing React or Angular"] },
+        { week: 2, title: "Components & State", lessons: ["Components, props, and state", "Hooks (React) or services (Angular)", "Forms and validation"] },
+        { week: 3, title: "Routing & Data", lessons: ["Client-side routing", "Consuming REST/GraphQL APIs", "State management (Redux, NgRx)"] },
+        { week: 4, title: "Performance & UX", lessons: ["Lazy loading and code splitting", "Accessibility (a11y)", "Testing and deployment"] },
+      ];
+
+      case "IT-117": // .NET / C# Development
+      return [
+        { week: 1, title: "C# Fundamentals", lessons: ["Syntax, types, and OOP", "Collections and LINQ", "Async/await and error handling"] },
+        { week: 2, title: "ASP.NET Core Web API", lessons: ["REST API with controllers", "Middleware and dependency injection", "Authentication and authorization"] },
+        { week: 3, title: "Data & ORM", lessons: ["Entity Framework Core", "Migrations and queries", "Best practices"] },
+        { week: 4, title: "Deployment & Next Steps", lessons: ["Publishing to Azure or IIS", "Testing and CI/CD", "Blazor or MVC overview"] },
+      ];
+
+      case "IT-118": // Database & SQL
+      return [
+        { week: 1, title: "Relational Design", lessons: ["Tables, keys, and normalization", "ER diagrams", "Indexes and constraints"] },
+        { week: 2, title: "SQL Basics", lessons: ["SELECT, WHERE, JOINs", "Aggregations and grouping", "Subqueries and CTEs"] },
+        { week: 3, title: "Advanced SQL", lessons: ["Window functions", "Transactions and isolation", "Performance tuning"] },
+        { week: 4, title: "Admin & Operations", lessons: ["Backup, restore, and replication", "Security and roles", "Monitoring"] },
+      ];
+
+      case "IT-119": // System Design & Software Architecture
+      return [
+        { week: 1, title: "Design Patterns", lessons: ["Creational, structural, behavioral patterns", "When to use which", "Code examples"] },
+        { week: 2, title: "Scalability", lessons: ["Horizontal vs vertical scaling", "Load balancing and caching", "CDNs and databases"] },
+        { week: 3, title: "Distributed Systems", lessons: ["Microservices vs monolith", "Messaging and event-driven design", "CAP and consistency"] },
+        { week: 4, title: "Case Studies", lessons: ["Designing a URL shortener", "Designing a chat system", "Interview-style problems"] },
+      ];
+
+      case "IT-120": // Agile / Scrum / Project Management
+      return [
+        { week: 1, title: "Agile Values & Principles", lessons: ["Manifesto and frameworks", "Scrum roles and artifacts", "Sprint cycle"] },
+        { week: 2, title: "Scrum in Practice", lessons: ["Backlog refinement", "Sprint planning and review", "Retrospectives"] },
+        { week: 3, title: "Kanban & Flow", lessons: ["Kanban boards and WIP limits", "Metrics (velocity, cycle time)", "Scaling (SAFe, LeSS overview)"] },
+        { week: 4, title: "Stakeholders & Delivery", lessons: ["Communication and reporting", "Risk and change management", "Career as Scrum Master / PM"] },
+      ];
+
+      case "IT-121": // Artificial Intelligence & Deep Learning
+      return [
+        { week: 1, title: "ML Foundations", lessons: ["Supervised vs unsupervised", "Regression and classification", "Evaluation metrics"] },
+        { week: 2, title: "Neural Networks", lessons: ["Perceptrons to deep networks", "Backpropagation", "Frameworks (TensorFlow/PyTorch)"] },
+        { week: 3, title: "CNN & Vision", lessons: ["Convolutional networks", "Image classification and detection", "Transfer learning"] },
+        { week: 4, title: "NLP & Deployment", lessons: ["Transformers and language models", "Deploying models (APIs, edge)", "Ethics and bias"] },
+      ];
+
+      case "IT-122": // Blockchain & Web3
+      return [
+        { week: 1, title: "Blockchain Basics", lessons: ["Distributed ledger and consensus", "Bitcoin and Ethereum", "Wallets and transactions"] },
+        { week: 2, title: "Smart Contracts", lessons: ["Solidity basics", "Testing and deployment", "Security (reentrancy, etc.)"] },
+        { week: 3, title: "DApps & Web3", lessons: ["Frontends and Web3.js", "IPFS and storage", "NFTs and tokens overview"] },
+        { week: 4, title: "Ecosystem & Careers", lessons: ["Layer 2 and scaling", "Regulation and use cases", "Building a portfolio project"] },
+      ];
+
+      case "IT-123": // Big Data (Hadoop / Spark)
+      return [
+        { week: 1, title: "Big Data Concepts", lessons: ["Volume, variety, velocity", "Hadoop and HDFS", "MapReduce overview"] },
+        { week: 2, title: "Apache Spark", lessons: ["RDDs and DataFrames", "Spark SQL and streaming", "Running on cluster or cloud"] },
+        { week: 3, title: "Data Pipelines", lessons: ["ETL and data lakes", "Scheduling (Airflow, etc.)", "Cloud data services"] },
+        { week: 4, title: "Production & Tuning", lessons: ["Performance tuning", "Monitoring and governance", "Case studies"] },
+      ];
+
+      case "IT-124": // Docker & Kubernetes
+      return [
+        { week: 1, title: "Containers with Docker", lessons: ["Images, containers, Dockerfile", "Docker Compose", "Registry and best practices"] },
+        { week: 2, title: "Kubernetes Basics", lessons: ["Pods, Deployments, Services", "kubectl and YAML", "ConfigMaps and Secrets"] },
+        { week: 3, title: "Kubernetes Advanced", lessons: ["Ingress, networking", "Scaling and autoscaling", "Helm and package management"] },
+        { week: 4, title: "CI/CD & Production", lessons: ["Building and pushing images", "Deploying to K8s from pipeline", "Monitoring and logging"] },
+      ];
+
+      case "IT-125": // Game Development
+      return [
+        { week: 1, title: "Game Design & Mechanics", lessons: ["Game loops and mechanics", "Level design basics", "Choosing an engine"] },
+        { week: 2, title: "Unity or Unreal Basics", lessons: ["Scenes, objects, and scripts", "Physics and collision", "Input and UI"] },
+        { week: 3, title: "Scripting & Systems", lessons: ["Character control and AI", "Audio and VFX", "Saving and progression"] },
+        { week: 4, title: "Publishing", lessons: ["Optimization and platforms", "Stores and monetization", "Portfolio and next steps"] },
+      ];
+
+      case "IT-126": // IoT (Internet of Things)
+      return [
+        { week: 1, title: "IoT Overview & Hardware", lessons: ["Sensors, actuators, and boards", "Arduino and Raspberry Pi intro", "Prototyping basics"] },
+        { week: 2, title: "Connectivity & Protocols", lessons: ["MQTT, HTTP, and CoAP", "Wi-Fi and cellular", "Edge vs cloud"] },
+        { week: 3, title: "Data & Cloud", lessons: ["Ingesting data to cloud", "Dashboards and alerts", "Security and updates"] },
+        { week: 4, title: "Projects & Careers", lessons: ["End-to-end project", "Industrial and home IoT", "Career paths"] },
+      ];
       
       default:
         return [];
@@ -1572,16 +2029,19 @@ export default function IT_CourseDetails() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Hero Section */}
+            {/* Hero Section – futuristic gradient banner */}
             <Box
-              bg={useColorModeValue("teal.900", "teal.500")}
-              color={useColorModeValue("white", "teal.900")}
-              borderRadius="lg"
+              bgGradient={useColorModeValue(
+                "linear(to-r, teal.900, teal.700)",
+                "linear(to-r, teal.800, teal.600)"
+              )}
+              color="white"
+              borderRadius="2xl"
               p={{ base: 4, md: 8 }}
               mb={{ base: 6, md: 8 }}
               position="relative"
               overflow="hidden"
-              boxShadow="xl"
+              boxShadow="0 24px 80px rgba(15,118,110,0.45)"
             >
               <Box
                 position="absolute"
@@ -1669,7 +2129,13 @@ export default function IT_CourseDetails() {
             >
               <GridItem>
                 {/* About Section */}
-                <Card mb={{ base: 4, md: 8 }}>
+                <Card
+                  mb={{ base: 4, md: 8 }}
+                  borderRadius="2xl"
+                  boxShadow="0 18px 45px rgba(15,23,42,0.08)"
+                  borderWidth="1px"
+                  borderColor="gray.100"
+                >
                   <CardHeader>
                     <Heading size={{ base: "md", md: "lg" }}>
                       About This Course
@@ -1719,7 +2185,13 @@ export default function IT_CourseDetails() {
                                         </Accordion>
                                     </CardBody>
                                 </Card> */}
-                <Card mb={{ base: 4, md: 8 }}>
+                <Card
+                  mb={{ base: 4, md: 8 }}
+                  borderRadius="2xl"
+                  boxShadow="0 18px 45px rgba(15,23,42,0.08)"
+                  borderWidth="1px"
+                  borderColor="gray.100"
+                >
                   <CardHeader>
                     <Heading size={{ base: "md", md: "lg" }}>
                       Course Content

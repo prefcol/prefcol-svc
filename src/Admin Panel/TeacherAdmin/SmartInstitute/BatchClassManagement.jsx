@@ -6,6 +6,8 @@ import { FaCheckCircle, FaArrowLeft } from "react-icons/fa";
 export default function BatchClassManagement() {
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
+  const mutedText = useColorModeValue("gray.600", "gray.300");
+  const subtleText = useColorModeValue("gray.500", "gray.400");
 
   const features = [
     "Create unlimited batches",
@@ -20,7 +22,7 @@ export default function BatchClassManagement() {
         Back to Smart Institute
       </Button>
       <Heading size="lg" mb={2}>Batch & Class Management</Heading>
-      <Text color="gray.600" mb={6}>
+      <Text color={mutedText} mb={6}>
         Manage batches, schedule classes, and handle timetables.
       </Text>
       <Card bg={cardBg} borderWidth="1px" borderColor={borderColor}>
@@ -36,7 +38,7 @@ export default function BatchClassManagement() {
               </ListItem>
             ))}
           </List>
-          <Text mt={4} fontSize="sm" color="gray.500">
+          <Text mt={4} fontSize="sm" color={subtleText}>
             Full batch creation and timetable UI will be wired here. Use the dashboard API for today&apos;s classes in the meantime.
           </Text>
         </CardBody>

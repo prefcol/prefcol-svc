@@ -472,7 +472,8 @@ const Resume = () => {
               <Button size="large" onClick={() => { setFormModalOpen(false); form.resetFields(); }}>Cancel</Button>
             </Space>
           </div>
-        </Form>
+ 
+         </Form>
       </Modal>
 
       <Modal

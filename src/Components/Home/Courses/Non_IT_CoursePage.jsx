@@ -256,9 +256,10 @@ const filteredCourses = useMemo(() => {
           </MotionFadeIn>
 
           <AnimatePresence>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredCourses.map((course, index) => {
                 const IconComponent = iconMap[course.icon] || FaGraduationCap;
+                const gradient = gradients[index % gradients.length];
 
                 return (
                   <motion.div
@@ -268,61 +269,84 @@ const filteredCourses = useMemo(() => {
                     exit={{ opacity: 0, y: -20 }}
                     whileHover={{ y: -6, scale: 1.01 }}
                     whileTap={{ scale: 0.99, y: 0 }}
-                    transition={{ type: "spring", stiffness: 220, damping: 20, delay: index * 0.05 }}
+                    transition={{ type: "spring", stiffness: 220, damping: 20, delay: index * 0.04 }}
                   >
                     <div
+                      className="h-full flex flex-col rounded-2xl overflow-hidden bg-white shadow-[0_18px_45px_rgba(15,23,42,0.12)] border border-slate-100 hover:shadow-[0_22px_55px_rgba(15,23,42,0.16)] transition-all duration-300 cursor-pointer"
                       onClick={() => handleCardClick(course)}
-                      className="h-full flex flex-col rounded-xl overflow-hidden cursor-pointer shadow-lg transition-transform transform hover:-translate-y-1"
-                      style={{
-                        background: course.available
-                          ? gradients[index % gradients.length]
-                          : "linear-gradient(135deg,#4B5563 0%,#1F2933 100%)",
-                      }}
+                      role="button"
+                      tabIndex={0}
                     >
-                      <div className="p-6 flex-grow flex flex-col relative z-10">
-                      <div className="flex items-center justify-center mb-4">
-                        <div
-                          className={`w-16 h-16 rounded-full flex items-center justify-center ${
-                            course.available
-                              ? "bg-white text-teal-900"
-                              : "bg-gray-400 text-gray-600"
-                          }`}
-                        >
-                           {React.cloneElement(<IconComponent />, { size: 30 })}
+                      {/* Top illustration / hero area */}
+                      <div
+                        className="relative h-40 w-full flex items-center justify-center overflow-hidden"
+                        style={{ backgroundImage: gradient, backgroundSize: "cover" }}
+                      >
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.48),transparent_55%)]" />
+                        <div className="relative flex flex-col items-center justify-center">
+                          <div className="w-16 h-16 rounded-2xl bg-white/95 flex items-center justify-center shadow-lg">
+                            {React.cloneElement(<IconComponent />, { size: 30, className: "text-teal-700" })}
+                          </div>
                         </div>
                       </div>
-                      <h2
-                        className="text-xl sm:text-2xl font-semibold mb-2 text-center text-white drop-shadow-sm antialiased leading-snug"
-                      >
-                        {course.courseName}
-                      </h2>
-                      <p
-                        className="text-base sm:text-lg mb-4 flex-grow text-center text-white/95 antialiased leading-relaxed"
-                      >
-                        {course.description}
-                      </p>
-                      <button
-                        className={`w-full py-2 px-4 rounded-full font-semibold transition-all duration-300 transform ${
-                          course.available
-                            ? "bg-white text-teal-900 hover:bg-gray-300 hover:translate-y-[-5px]"
-                            : "bg-gray-400 text-gray-800 cursor-not-allowed"
-                        }`}
-                      >
-                        {course.available ? "Learn More" : "Coming Soon"}
-                      </button>
-                    </div>
-                      {!course.available && (
-                        <div className="absolute top-4 right-4 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                          Coming Soon
+
+                      {/* Content section */}
+                      <div className="flex flex-col flex-1 px-5 pt-4 pb-5">
+                        {/* Meta row */}
+                        <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wide mb-2 text-slate-500">
+                          <div className="flex items-center gap-1">
+                            <span className="inline-flex items-center justify-center rounded-full bg-teal-50 text-teal-700 px-2 py-0.5">
+                              10x Lesson
+                            </span>
+                          </div>
+                          <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
+                            Non‑IT
+                          </span>
                         </div>
-                      )}
-                      <div
-                        className="absolute inset-0 opacity-10 bg-cover bg-center z-0"
-                        style={{
-                          backgroundImage: course.character ? `url(${course.character})` : undefined,
-                          imageRendering: 'auto',
-                        }}
-                      />
+
+                        {/* Title */}
+                        <h2 className="text-sm sm:text-base md:text-lg font-semibold mb-1 text-slate-900 line-clamp-2">
+                          {course.courseName}
+                        </h2>
+
+                        {/* Description */}
+                        <p className="text-xs sm:text-sm text-slate-600 mb-3 line-clamp-2">
+                          {course.description}
+                        </p>
+
+                        {/* Instructor / stats row (static meta) */}
+                        <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mb-4">
+                          <div className="flex items-center gap-1">
+                            <span className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-semibold text-slate-700">
+                              P
+                            </span>
+                            <span className="font-medium text-slate-700">Prefcol Mentor</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                            <span>50+ Students</span>
+                          </div>
+                        </div>
+
+                        {/* Footer row: rating + CTA */}
+                        <div className="mt-auto flex items-center justify-between pt-2 border-t border-slate-100">
+                          <div className="flex items-center gap-1 text-[11px] sm:text-xs text-amber-500">
+                            <span className="text-[13px]">★★★★★</span>
+                            <span className="text-slate-500">(10)</span>
+                          </div>
+                          <button
+                            onClick={() => handleCardClick(course)}
+                            disabled={!course.available}
+                            className={`text-xs sm:text-sm font-semibold inline-flex items-center gap-1 ${
+                              course.available
+                                ? "text-teal-700 hover:text-teal-900"
+                                : "text-slate-400 cursor-not-allowed"
+                            }`}
+                          >
+                            {course.available ? "Learn More+" : "Coming Soon"}
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
                 );

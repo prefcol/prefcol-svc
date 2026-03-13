@@ -39,6 +39,8 @@ export default function EmployeeLeave() {
   const [submitting, setSubmitting] = useState(false);
   const toast = useToast();
   const cardBg = useColorModeValue("white", "gray.800");
+  const mutedText = useColorModeValue("gray.600", "gray.300");
+  const subtleText = useColorModeValue("gray.500", "gray.400");
 
   useEffect(() => {
     const load = async () => {
@@ -125,10 +127,10 @@ export default function EmployeeLeave() {
 
   return (
     <Box>
-      <Heading size="lg" mb={2} color="teal.600">
+      <Heading size="lg" mb={2} color={useColorModeValue("teal.600", "teal.300")}>
         Leave Management
       </Heading>
-      <Text color="gray.600" mb={6}>
+      <Text color={mutedText} mb={6}>
         Apply for leave and track your leave status and balance.
       </Text>
 
@@ -138,10 +140,10 @@ export default function EmployeeLeave() {
             <Heading size="sm">Total Balance</Heading>
           </CardHeader>
           <CardBody>
-            <Text fontSize="2xl" fontWeight="bold" color="teal.600">
+            <Text fontSize="2xl" fontWeight="bold" color={useColorModeValue("teal.600", "teal.300")}>
               {(balance.total ?? (balance.casualBalance ?? balance.casual ?? 0) + (balance.sickBalance ?? balance.sick ?? 0) + (balance.emergencyBalance ?? balance.paid ?? 0))}
             </Text>
-            <Text fontSize="xs" color="gray.500">
+            <Text fontSize="xs" color={subtleText}>
               Casual: {balance.casualBalance ?? balance.casual ?? 0} · Sick: {balance.sickBalance ?? balance.sick ?? 0} · Emergency: {balance.emergencyBalance ?? balance.paid ?? 0}
             </Text>
           </CardBody>
@@ -204,7 +206,7 @@ export default function EmployeeLeave() {
           </CardHeader>
           <CardBody>
             {leaves.length === 0 ? (
-              <Text color="gray.500">No leave applications yet.</Text>
+              <Text color={subtleText}>No leave applications yet.</Text>
             ) : (
               <Table size="sm">
                 <Thead>

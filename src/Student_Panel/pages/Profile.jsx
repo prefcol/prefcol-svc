@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   Row,
@@ -252,7 +253,6 @@ const Profile = ({ windowWidth }) => {
   const [activeTab, setActiveTab] = useState("personal");
   const [profileData, setProfileData] = useState(DEFAULT_PROFILE);
   const [error, setError] = useState(null);
-  const [refreshing, setRefreshing] = useState(false);
   const isMobile = windowWidth < 768;
   const userId = user?.id || "student_001";
 
@@ -286,11 +286,10 @@ const Profile = ({ windowWidth }) => {
     }
   };
 
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    await loadProfileData();
-    message.success("Profile refreshed successfully!");
-    setRefreshing(false);
+  const navigate = useNavigate();
+
+  const handleRefresh = () => {
+    navigate("/");
   };
 
   // Extract initials from user name
@@ -1497,7 +1496,6 @@ const Profile = ({ windowWidth }) => {
           type="primary"
           icon={<ReloadOutlined />}
           onClick={handleRefresh}
-          loading={refreshing}
           style={{ animation: "fadeInUp 0.6s ease-out 0.2s both" }}
         >
           Refresh

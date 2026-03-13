@@ -12311,7 +12311,7 @@ const MotionVStack = createMotion(VStack);
 const stats = [
   {
     title: "Courses Offered",
-    count: 120,
+    count: 54,
     description: "Courses available for enrollment",
     duration: 2000,
     color: "teal.600",

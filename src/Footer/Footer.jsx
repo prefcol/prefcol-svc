@@ -19,12 +19,12 @@ const socialLinks = [
   {
     name: "LinkedIn",
     icon: Linkedin,
-    href: "https://www.linkedin.com/in/chamber-of-learning-713815323?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+    href: "https://www.linkedin.com/company/111609727/",
   },
   {
     name: "YouTube",
     icon: Youtube,
-    href: "https://www.youtube.com/@ChamberOfLearningOfficial",  },
+    href: "https://www.youtube.com/@PrefcolEdutech-b9b",  },
   {
     name: "WhatsApp",
     icon: MessageCircle,

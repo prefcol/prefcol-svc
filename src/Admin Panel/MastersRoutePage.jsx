@@ -200,55 +200,123 @@
 // export default MasterAdminRoutes;
 
 // MasterAdminRoutes.jsx
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import MasterAdminHome from "../Admin Panel/MasterAdmin/MasterAdminHome";
 import AdminLayout from "./MasterAdmin/Layout"; // ✅ Your layout
-import CreateUser from "./MasterAdmin/MasterTabs/User Management/CreateUser";
-import VideoManagement from "./MasterAdmin/MasterTabs/CourseandContentControl/components/VideoManagement";
-import UpdateTeacher from "./MasterAdmin/MasterTabs/Update_User";
-import DeleteUser from "./MasterAdmin/MasterTabs/User Management/DeleteUser";
-import RolesPermissions from "./MasterAdmin/MasterTabs/User Management/RolesPermissions";
-import EnquiriesPage from "./MasterAdmin/MasterTabs/Enquiries/EnquiriesPage";
-import AddStudentPage from "./MasterAdmin/MasterTabs/User Management/AddStudentPage";
-import AddTeacherPage from "./MasterAdmin/MasterTabs/User Management/AddTeacherPage";
-import AddEmployeePage from "./MasterAdmin/MasterTabs/User Management/AddEmployeePage";
+
+// Eager-load only the dashboard to keep first paint fast
+const MasterAdminHome = lazy(() => import("../Admin Panel/MasterAdmin/MasterAdminHome"));
+
+// Lazily load heavier screens so admin portal bundles are smaller and faster
+const CreateUser = lazy(() => import("./MasterAdmin/MasterTabs/User Management/CreateUser"));
+const VideoManagement = lazy(
+  () => import("./MasterAdmin/MasterTabs/CourseandContentControl/components/VideoManagement")
+);
+const UpdateTeacher = lazy(() => import("./MasterAdmin/MasterTabs/Update_User"));
+const DeleteUser = lazy(() => import("./MasterAdmin/MasterTabs/User Management/DeleteUser"));
+const RolesPermissions = lazy(
+  () => import("./MasterAdmin/MasterTabs/User Management/RolesPermissions")
+);
+const EnquiriesPage = lazy(() => import("./MasterAdmin/MasterTabs/Enquiries/EnquiriesPage"));
+const AddStudentPage = lazy(
+  () => import("./MasterAdmin/MasterTabs/User Management/AddStudentPage")
+);
+const AddTeacherPage = lazy(
+  () => import("./MasterAdmin/MasterTabs/User Management/AddTeacherPage")
+);
+const AddEmployeePage = lazy(
+  () => import("./MasterAdmin/MasterTabs/User Management/AddEmployeePage")
+);
+const BulkPayslips = lazy(() => import("./MasterAdmin/MasterTabs/Payroll/BulkPayslips"));
+const PayslipHistory = lazy(() => import("./MasterAdmin/MasterTabs/Payroll/PayslipHistory"));
 
 const MasterAdminRoutes = () => {
   return (
     <AdminLayout> {/* ✅ Wrap all routes with layout */}
-      <Routes>
-        {/* Redirect root of /master-admin to home */}
-        <Route index element={<Navigate to="home" replace />} />
+      <Suspense
+        fallback={
+          <div
+            style={{
+              minHeight: "50vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#a5b4fc",
+            }}
+          >
+            Loading admin page...
+          </div>
+        }
+      >
+        <Routes>
+          {/* Redirect root of /master-admin to home */}
+          <Route index element={<Navigate to="home" replace />} />
 
-        {/* Master Admin Routes (relative paths!) */}
-        <Route path="home" element={<MasterAdminHome />} />
-        <Route path="enquiries" element={<EnquiriesPage />} />
-        <Route path="add-student" element={<AddStudentPage />} />
-        <Route path="add-teacher" element={<AddTeacherPage />} />
-        <Route path="add-employee" element={<AddEmployeePage />} />
-        <Route path="videos/upload" element={<VideoManagement />} />
-        <Route path="course-control/add-update-remove" element={<h1>Add/Update/Remove Courses</h1>} />
-        <Route path="course-control/restrict-access" element={<h1>Restrict Content Access</h1>} />
-        <Route path="course-control/video-organization" element={<h1>Oversee Video Organization</h1>} />
-        <Route path="create/user" element={<CreateUser />} />
-        <Route path="user-management/update" element={<UpdateTeacher />} />
-        <Route path="user-management/delete" element={<DeleteUser />} />
-        <Route path="user-management/roles" element={<RolesPermissions />} />
-        <Route path="user-management/teacher-approvals" element={<h1>Teacher Applications</h1>} />
-        <Route path="analytics/student-performance" element={<h1>View Student Performance</h1>} />
-        <Route path="analytics/teacher-effectiveness" element={<h1>Track Teacher Effectiveness</h1>} />
-        <Route path="analytics/platform-usage" element={<h1>Platform Usage Reports</h1>} />
-        <Route path="settings/payment-gateway" element={<h1>Configure Payment Gateway</h1>} />
-        <Route path="settings/notification-templates" element={<h1>Manage Notification Templates</h1>} />
-        <Route path="settings/platform-preferences" element={<h1>Customize Platform Preferences</h1>} />
-        <Route path="audit-logs/view-logs" element={<h1>View System Logs</h1>} />
-        <Route path="audit-logs/accountability" element={<h1>Ensure Accountability</h1>} />
-        <Route path="support/manage-requests" element={<h1>Manage Support Requests</h1>} />
+          {/* Master Admin Routes (relative paths!) */}
+          <Route path="home" element={<MasterAdminHome />} />
+          <Route path="enquiries" element={<EnquiriesPage />} />
+          <Route path="add-student" element={<AddStudentPage />} />
+          <Route path="add-teacher" element={<AddTeacherPage />} />
+          <Route path="add-employee" element={<AddEmployeePage />} />
+          <Route path="videos/upload" element={<VideoManagement />} />
+          {/* HR & Payroll */}
+          <Route path="payslips/bulk-generate" element={<BulkPayslips />} />
+          <Route path="payslips" element={<PayslipHistory />} />
+          <Route
+            path="course-control/add-update-remove"
+            element={<h1>Add/Update/Remove Courses</h1>}
+          />
+          <Route
+            path="course-control/restrict-access"
+            element={<h1>Restrict Content Access</h1>}
+          />
+          <Route
+            path="course-control/video-organization"
+            element={<h1>Oversee Video Organization</h1>}
+          />
+          <Route path="create/user" element={<CreateUser />} />
+          <Route path="user-management/update" element={<UpdateTeacher />} />
+          <Route path="user-management/delete" element={<DeleteUser />} />
+          <Route path="user-management/roles" element={<RolesPermissions />} />
+          <Route
+            path="user-management/teacher-approvals"
+            element={<h1>Teacher Applications</h1>}
+          />
+          <Route
+            path="analytics/student-performance"
+            element={<h1>View Student Performance</h1>}
+          />
+          <Route
+            path="analytics/teacher-effectiveness"
+            element={<h1>Track Teacher Effectiveness</h1>}
+          />
+          <Route
+            path="analytics/platform-usage"
+            element={<h1>Platform Usage Reports</h1>}
+          />
+          <Route
+            path="settings/payment-gateway"
+            element={<h1>Configure Payment Gateway</h1>}
+          />
+          <Route
+            path="settings/notification-templates"
+            element={<h1>Manage Notification Templates</h1>}
+          />
+          <Route
+            path="settings/platform-preferences"
+            element={<h1>Customize Platform Preferences</h1>}
+          />
+          <Route path="audit-logs/view-logs" element={<h1>View System Logs</h1>} />
+          <Route
+            path="audit-logs/accountability"
+            element={<h1>Ensure Accountability</h1>}
+          />
+          <Route path="support/manage-requests" element={<h1>Manage Support Requests</h1>} />
 
-        {/* Catch-all: redirect unknown routes to home */}
-        <Route path="*" element={<Navigate to="home" replace />} />
-      </Routes>
+          {/* Catch-all: redirect unknown routes to home */}
+          <Route path="*" element={<Navigate to="home" replace />} />
+        </Routes>
+      </Suspense>
     </AdminLayout>
   );
 };

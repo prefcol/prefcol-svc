@@ -44,6 +44,8 @@ export default function EmployeeAttendance() {
   const [punching, setPunching] = useState(false);
   const toast = useToast();
   const cardBg = useColorModeValue("white", "gray.800");
+  const mutedText = useColorModeValue("gray.600", "gray.300");
+  const subtleText = useColorModeValue("gray.500", "gray.400");
 
   // Map backend Attendance to UI shape (date, punchInTime, punchOutTime, totalMinutes, status)
   const mapRecord = (r) => ({
@@ -149,10 +151,10 @@ export default function EmployeeAttendance() {
 
   return (
     <Box>
-      <Heading size="lg" mb={2} color="teal.600">
+      <Heading size="lg" mb={2} color={useColorModeValue("teal.600", "teal.300")}>
         Attendance
       </Heading>
-      <Text color="gray.600" mb={6}>
+      <Text color={mutedText} mb={6}>
         Punch in / out and review your attendance history.
       </Text>
 
@@ -162,12 +164,12 @@ export default function EmployeeAttendance() {
             <Heading size="md">Today&apos;s Status</Heading>
           </CardHeader>
           <CardBody>
-            <Text fontSize="sm" color="gray.500" mb={2}>
+            <Text fontSize="sm" color={subtleText} mb={2}>
               {today.date || new Date().toISOString().split("T")[0]}
             </Text>
             <SimpleGrid columns={2} spacing={3} mb={4}>
               <Box>
-                <Text fontSize="xs" color="gray.500">
+                <Text fontSize="xs" color={subtleText}>
                   Punch In
                 </Text>
                 <Text fontWeight="semibold">
@@ -175,7 +177,7 @@ export default function EmployeeAttendance() {
                 </Text>
               </Box>
               <Box>
-                <Text fontSize="xs" color="gray.500">
+                <Text fontSize="xs" color={subtleText}>
                   Punch Out
                 </Text>
                 <Text fontWeight="semibold">
@@ -222,7 +224,7 @@ export default function EmployeeAttendance() {
           <CardBody>
             <SimpleGrid columns={3} spacing={4} mb={4}>
               <Box textAlign="center">
-                <Text fontSize="xs" color="gray.500">
+                <Text fontSize="xs" color={subtleText}>
                   Present
                 </Text>
                 <Text fontSize="xl" fontWeight="bold" color="green.600">
@@ -230,7 +232,7 @@ export default function EmployeeAttendance() {
                 </Text>
               </Box>
               <Box textAlign="center">
-                <Text fontSize="xs" color="gray.500">
+                <Text fontSize="xs" color={subtleText}>
                   Absent
                 </Text>
                 <Text fontSize="xl" fontWeight="bold" color="red.500">
@@ -238,7 +240,7 @@ export default function EmployeeAttendance() {
                 </Text>
               </Box>
               <Box textAlign="center">
-                <Text fontSize="xs" color="gray.500">
+                <Text fontSize="xs" color={subtleText}>
                   Leave
                 </Text>
                 <Text fontSize="xl" fontWeight="bold" color="orange.500">
@@ -246,7 +248,7 @@ export default function EmployeeAttendance() {
                 </Text>
               </Box>
             </SimpleGrid>
-            <Flex align="center" gap={2} color="gray.600">
+            <Flex align="center" gap={2} color={mutedText}>
               <FaClock />
               <Text fontSize="sm">
                 Last 2 days:{" "}

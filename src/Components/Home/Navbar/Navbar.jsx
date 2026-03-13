@@ -90,14 +90,14 @@ export default function Navigationbar() {
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link
-            to="/it-courses"
+            to="/"
             className="flex items-center h-full py-2"
           >
             <span
               className="text-[1.75rem] font-bold text-teal-900 hover:text-teal-700 transition-colors"
               style={{ fontFamily: '"London", serif' }}
             >
-              Prefcol
+              PREFCOL
             </span>
           </Link>
 

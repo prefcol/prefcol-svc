@@ -60,6 +60,8 @@ export default function EmployeeDashboard() {
   }, []);
 
   const cardBg = useColorModeValue("white", "gray.800");
+  const mutedText = useColorModeValue("gray.600", "gray.300");
+  const subtleText = useColorModeValue("gray.500", "gray.400");
   const todayStr = new Date().toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
 
   if (loading) {
@@ -72,10 +74,10 @@ export default function EmployeeDashboard() {
 
   return (
     <Box>
-      <Heading size="lg" mb={2} color="teal.600">
+      <Heading size="lg" mb={2} color={useColorModeValue("teal.600", "teal.300")}>
         Employee Dashboard
       </Heading>
-      <Text color="gray.600" mb={6}>
+      <Text color={mutedText} mb={6}>
         Welcome back, {employee.name}. Here’s your overview for today.
       </Text>
 
@@ -89,12 +91,12 @@ export default function EmployeeDashboard() {
                 <Text fontWeight="bold">{employee.name}</Text>
                 <Badge colorScheme="teal">{employee.role}</Badge>
               </Flex>
-              <Text fontSize="sm" color="gray.600">
+              <Text fontSize="sm" color={mutedText}>
                 Emp ID: {employee.empId} · {employee.department}
               </Text>
             </Box>
             <Box>
-              <Text fontSize="sm" color="gray.500">Today’s date</Text>
+              <Text fontSize="sm" color={subtleText}>Today’s date</Text>
               <Text fontWeight="semibold">{todayStr}</Text>
               <Badge colorScheme={todayAttendance.punchInTime ? "green" : "gray"} mt={1}>
                 {todayAttendance.punchInTime ? "Working" : "Not punched in"}

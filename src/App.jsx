@@ -165,44 +165,39 @@
 //   );
 // }
 
-import React, { useState, useEffect } from "react";
 // Use BrowserRouter so the app uses clean URLs (no # in the path).
 // Note: BrowserRouter requires server-side routing (rewrite to index.html) when deployed.
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 // import Lenis from "@studio-freight/lenis";
 import COLChatbot from "./Chatbot/ColChatbot";
 import Footer from "./Footer/Footer";
+import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 
-// Import Components
+// Landing page loaded eagerly for fast first paint
 import Homepage from "./Components/Home/Home";
-import ConversionHomepage from "./Components/Homepage/Homepage";
-import CareersPage from "./Components/Home/CareerLogin/CareersPage";
-import IT_CourseDetails from "./Components/Home/Courses/IT_CoursesDetails";
-import IT_Courses from "./Components/Home/Courses/IT_CoursesPage";
-import Non_IT_CourseDetails from "./Components/Home/Courses/Non_IT_CoursesDetails";
 import Navigationbar from "./Components/Home/Navbar/Navbar";
-import AboutUs from "./Components/Home/AboutUs.jsx/AboutUs";
-import ContactPage from "./Components/Common/ContactUS/ContactUs";
-import Non_IT_Courses from "./Components/Home/Courses/Non_IT_CoursePage";
-import EnrollmentForm from "./Components/Home/Courses/EnrollmentForm";
-import LiveCodePage from "./Components/LiveCode/LiveCodePage";
-import Cancellation_Refund_Policy from "./Components/Home/Support/Cancellation_Refund_Policy";
-import Privacy_Policy from "./Components/Home/Support/Privacy_Policy";
-import Shipping_Delivery_Policy from "./Components/Home/Support/Shipping_Delivery_Policy";
 
-// Student Panel
-import StudentPortal from "./Student_Panel/page";
+// Route-level code splitting: load other pages on demand (faster initial load, better mobile)
+const ConversionHomepage = lazy(() => import("./Components/Homepage/Homepage"));
+const CareersPage = lazy(() => import("./Components/Home/CareerLogin/CareersPage"));
+const IT_CourseDetails = lazy(() => import("./Components/Home/Courses/IT_CoursesDetails"));
+const IT_Courses = lazy(() => import("./Components/Home/Courses/IT_CoursesPage"));
+const Non_IT_CourseDetails = lazy(() => import("./Components/Home/Courses/Non_IT_CoursesDetails"));
+const AboutUs = lazy(() => import("./Components/Home/AboutUs.jsx/AboutUs"));
+const ContactPage = lazy(() => import("./Components/Common/ContactUS/ContactUs"));
+const Non_IT_Courses = lazy(() => import("./Components/Home/Courses/Non_IT_CoursePage"));
+const EnrollmentForm = lazy(() => import("./Components/Home/Courses/EnrollmentForm"));
+const LiveCodePage = lazy(() => import("./Components/LiveCode/LiveCodePage"));
+const Cancellation_Refund_Policy = lazy(() => import("./Components/Home/Support/Cancellation_Refund_Policy"));
+const Privacy_Policy = lazy(() => import("./Components/Home/Support/Privacy_Policy"));
+const Shipping_Delivery_Policy = lazy(() => import("./Components/Home/Support/Shipping_Delivery_Policy"));
+const StudentPortal = lazy(() => import("./Student_Panel/page"));
+const MasterAdminRoutes = lazy(() => import("./Admin Panel/MastersRoutePage"));
+const TeacherAdminRoute = lazy(() => import("./Admin Panel/TeacherAdminRoute"));
+const TermsAndConditions = lazy(() => import("./Footer/terms-and-conditions"));
 
-
-// Admin Panel
-import MasterAdminRoutes from "./Admin Panel/MastersRoutePage";
 import { AdminGuard } from "./Admin Panel/MasterAdmin/AdminLoginPage";
-import TeacherAdminRoute from "./Admin Panel/TeacherAdminRoute";
-
-
-// Support Pages
-import TermsAndConditions from "./Footer/terms-and-conditions";
 
 // Spinner Component
 const FuturisticSpinner = () => (
@@ -237,11 +232,33 @@ const FuturisticSpinner = () => (
 //   return null;
 // };
 
-// Scroll to Top on Route Change
-const ScrollToTop = ({ setLoading }) => {
+// When user clicks browser refresh on any page, redirect to landing page
+const RefreshToHome = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   useEffect(() => {
+    const nav = performance.getEntriesByType?.("navigation")?.[0];
+    const isReload = nav?.type === "reload";
+    if (isReload && pathname !== "/") {
+      navigate("/", { replace: true });
+    }
+  }, []); // run once on mount
+
+  return null;
+};
+
+// Scroll to Top on Route Change (skip loading overlay on initial mount so content shows immediately)
+const ScrollToTop = ({ setLoading }) => {
+  const { pathname } = useLocation();
+  const isInitialMount = useRef(true);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      window.scrollTo({ top: 0, behavior: "auto" });
+      return;
+    }
     setLoading(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
     const timer = setTimeout(() => setLoading(false), 800);
@@ -275,7 +292,8 @@ const AppContent = ({ isDarkMode, onThemeToggle, loading, setLoading }) => {
           <Navigationbar onThemeToggle={onThemeToggle} />
         )}
 
-        {/* Main Routes */}
+        {/* Main Routes — Suspense for lazy-loaded route chunks */}
+        <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><div className="w-10 h-10 border-4 border-teal-600 border-t-transparent rounded-full animate-spin" /></div>}>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Homepage />} />
@@ -301,14 +319,13 @@ const AppContent = ({ isDarkMode, onThemeToggle, loading, setLoading }) => {
           <Route path="/master-admin/*" element={<AdminGuard><MasterAdminRoutes /></AdminGuard>} />
           <Route path="/teacher-admin/*" element={<TeacherAdminRoute />} />
         </Routes>
+        </Suspense>
 
         {/* Footer: hidden on admin & student routes */}
         {!isStudentPortal && !isAdminRoute && <Footer />}
 
-        {/* Chatbot (commented out as in original) */}
-        {/* <div className="fixed bottom-4 right-4 z-50">
-          <COLChatbot />
-        </div> */}
+        {/* Sanjana Chatbot: show only on public (marketing) pages */}
+        {!isStudentPortal && !isAdminRoute && <COLChatbot />}
       </div>
     </>
   );
@@ -326,6 +343,7 @@ export default function App() {
   return (
     <ChakraProvider>
       <Router>
+        <RefreshToHome />
         {/* <SmoothScroll /> */}
         <ScrollToTop setLoading={setLoading} />
         <AppContent

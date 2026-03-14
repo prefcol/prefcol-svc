@@ -42,7 +42,7 @@ import {
   Kbd,
 } from '@chakra-ui/react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMessageSquare, FiSend, FiMic, FiMicOff, FiVolume2, FiVolumeX, FiChevronDown, FiSettings, FiTrash2, FiClock, FiHelpCircle, FiDownload, FiUpload, FiMoon, FiSun, FiMoreVertical, FiRefreshCw } from 'react-icons/fi';
+import { FiMessageSquare, FiSend, FiMic, FiMicOff, FiVolume2, FiVolumeX, FiChevronDown, FiTrash2, FiClock, FiHelpCircle, FiDownload, FiUpload, FiMoon, FiSun, FiMoreVertical, FiRefreshCw } from 'react-icons/fi';
 import { keyframes } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
 import sanjanaAnimate from '../assets/animate.mp4';
@@ -123,7 +123,19 @@ const COLChatbot = () => {
   const lastTranscriptRef = useRef('');
   const handleSendRef = useRef(null);
   const setShowTextBoxRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
   const toast = useToast();
+
+  useEffect(() => {
+    const check = () => {
+      const ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
+      const small = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+      setIsMobile(!!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua) || small);
+    };
+    check();
+    if (typeof window !== 'undefined') window.matchMedia('(max-width: 768px)').addEventListener('change', check);
+    return () => { typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').removeEventListener('change', check); };
+  }, []);
 
   const { isOpen: isDrawerOpen, onOpen: onDrawerOpen, onClose: onDrawerClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
@@ -157,10 +169,8 @@ const COLChatbot = () => {
       welcomeSpokenRef.current = true;
       const welcomeText = getWelcomeMessage();
       setMessages([{ text: welcomeText, isBot: true, timestamp: new Date() }]);
-      const speakWelcome = () => {
-        speakResponse(welcomeText);
-      };
-      if (typeof window !== 'undefined' && window.speechSynthesis) {
+      if (!isMobile && typeof window !== 'undefined' && window.speechSynthesis) {
+        const speakWelcome = () => speakResponse(welcomeText);
         const voices = window.speechSynthesis.getVoices();
         if (voices.length) {
           setTimeout(speakWelcome, 150);
@@ -169,7 +179,7 @@ const COLChatbot = () => {
         }
       }
     }
-  }, [isOpen, messages.length]);
+  }, [isOpen, messages.length, isMobile]);
 
   useEffect(() => {
     if ('webkitSpeechRecognition' in window) {
@@ -333,7 +343,7 @@ const COLChatbot = () => {
     const voices = synthesis.current.getVoices();
     const isFemale = (v) => /female|woman|siri|samantha|karen|victoria|moira|tessa|zira|veena|priya|heera|rishi|aisha|meera/i.test(v.name) || v.name.toLowerCase().includes('female');
     const females = voices.filter(isFemale);
-    const siriLikePriority = ['siri', 'samantha', 'karen', 'victoria', 'moira', 'tessa', 'zira', 'google uk', 'english female', 'female'];
+    const siriLikePriority = ['karen', 'siri', 'samantha', 'victoria', 'moira', 'tessa', 'zira', 'google uk', 'english female', 'female'];
     const female = siriLikePriority.reduce((found, key) => found || females.find(v => v.name.toLowerCase().includes(key)), null)
       || females.find(v => /en-us|en_us/i.test(v.lang))
       || females.find(v => /en-in|en-gb/i.test(v.lang))
@@ -504,14 +514,6 @@ const COLChatbot = () => {
                   </Text>
                 </HStack>
                 <HStack spacing={1}>
-                  <IconButton
-                    icon={<FiSettings />}
-                    onClick={onDrawerOpen}
-                    variant="ghost"
-                    size="sm"
-                    colorScheme="gray"
-                    aria-label="Settings"
-                  />
                   <Tooltip label="Close chat" placement="bottom">
                     <CloseButton onClick={toggleChatbot} color="gray.600" size="sm" aria-label="Close chat" />
                   </Tooltip>
@@ -680,9 +682,23 @@ const COLChatbot = () => {
                             ))}
                           </VStack>
                         )}
-                        <Text fontSize="xs" color="gray.500" mt={1}>
-                          {message.timestamp.toLocaleTimeString()}
-                        </Text>
+                        <Flex align="center" justify="space-between" mt={1} gap={2}>
+                          <Text fontSize="xs" color="gray.500">
+                            {message.timestamp.toLocaleTimeString()}
+                          </Text>
+                          {message.isBot && (
+                            <Tooltip label="Hear this message">
+                              <IconButton
+                                aria-label="Hear this message"
+                                icon={<FiVolume2 size={14} />}
+                                size="xs"
+                                variant="ghost"
+                                colorScheme="gray"
+                                onClick={() => speakResponse(message.text)}
+                              />
+                            </Tooltip>
+                          )}
+                        </Flex>
                       </Box>
                     </Flex>
                   </motion.div>
@@ -701,6 +717,20 @@ const COLChatbot = () => {
                   </Flex>
                 )}
               </Box>
+              {isMobile && messages.length === 1 && (
+                <Box px={3} pt={2} pb={1}>
+                  <Button
+                    size="sm"
+                    leftIcon={<FiVolume2 />}
+                    colorScheme="teal"
+                    variant="outline"
+                    w="100%"
+                    onClick={() => speakResponse(getWelcomeMessage())}
+                  >
+                    Tap to hear greeting
+                  </Button>
+                </Box>
+              )}
               <Box
                 p={3}
                 borderTopWidth="1px"
